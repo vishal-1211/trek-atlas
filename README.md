@@ -62,3 +62,7 @@ Download `index.html` and open it in any browser.
 
 - India and state outlines: Survey of India boundaries, via [DataMeet](https://github.com/datameet/maps).
 - Built with [Claude](https://claude.ai).
+
+## Licence
+
+The code is released under the [MIT licence](LICENSE). The map outlines come from DataMeet and keep their own terms.
