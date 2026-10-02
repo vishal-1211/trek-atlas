@@ -1,0 +1,1223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Vishal's treks across India as a hand-painted field journal.">
+<style>body{margin:0}img{max-width:100%}</style>
+<title>Vishal's Trek Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap">
+<style>
+/* Layout: a painted landscape that follows the viewer's clock, then a field journal: watercolour map of India beside a postcard, a cairn, rucksack patches, and the logbook */
+:root{
+  --paper:#eef1e9;
+  --paper-2:#e4e9df;
+  --card:#f7f8f3;
+  --land:#f8f6ee;
+  --water:#dce8e9;
+  --ink:#1e2e27;
+  --mute:#5c6b63;
+  --faint:#8d9a92;
+  --line:rgba(30,46,39,.14);
+  --moss:#5d7f4e;
+  --river:#4f86a6;
+  --marigold:#d98f1f;
+  --stone:#b9b8ae;
+  --good:#3f8a5a; --warn:#b7791f; --hard:#b4475a;
+  --display:"Gloock",Georgia,"Times New Roman",serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --hand:"Caveat","Segoe Print","Bradley Hand",cursive;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#131b17;--paper-2:#18221d;--card:#1b2620;--land:#25322b;--water:#152027;
+  --ink:#e9eee6;--mute:#a1b0a7;--faint:#6e7d74;--line:rgba(233,238,230,.13);
+  --moss:#8db27a;--river:#7fb2cf;--marigold:#f0b552;--stone:#5d625d;
+  --good:#7fcf9a;--warn:#f0b552;--hard:#ef8a9c;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#131b17;--paper-2:#18221d;--card:#1b2620;--land:#25322b;--water:#152027;
+  --ink:#e9eee6;--mute:#a1b0a7;--faint:#6e7d74;--line:rgba(233,238,230,.13);
+  --moss:#8db27a;--river:#7fb2cf;--marigold:#f0b552;--stone:#5d625d;
+  --good:#7fcf9a;--warn:#f0b552;--hard:#ef8a9c;color-scheme:dark}
+[hidden]{display:none!important}
+html,body{background:var(--paper)}
+body{color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:400}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--marigold);outline-offset:2px;border-radius:6px}
+.kicker{font-family:var(--hand);font-size:1.45rem;line-height:1;color:var(--moss)}
+
+/* hero painting */
+.hero{position:relative;overflow:hidden;background:#8fb6d8}
+#hero{display:block;width:100%;height:clamp(500px,74vh,740px)}
+.hero-copy{position:absolute;inset:0 0 auto 0;pointer-events:none;color:var(--hero-ink,#16261e)}
+.hero-copy .wrap{padding-top:clamp(26px,5.5vw,64px);display:grid;gap:10px}
+.hero .kicker{color:inherit;opacity:.85}
+.hero h1{font-family:var(--display);font-size:clamp(2.6rem,7.4vw,5.6rem);line-height:.98;letter-spacing:-.01em;max-width:11ch}
+.hero p{margin:0;max-width:40ch;font-size:clamp(1rem,1.7vw,1.15rem);opacity:.85}
+.clock{position:absolute;right:clamp(16px,4vw,40px);bottom:12px;font-family:var(--hand);font-size:1.15rem;color:rgba(255,255,255,.82);pointer-events:none;text-shadow:0 1px 6px rgba(0,0,0,.35)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,3vw,36px);padding-block:clamp(30px,5vw,52px);border-bottom:1px solid var(--line)}
+.stat{display:grid;gap:2px;min-width:0}
+.stat b{font-family:var(--display);font-weight:400;font-size:clamp(2rem,4.6vw,3.2rem);line-height:1.05;font-variant-numeric:tabular-nums}
+.stat b small{font-family:var(--body);font-size:.36em;color:var(--mute);margin-left:.25em}
+.stat span{color:var(--mute);font-size:.9rem}
+@media (max-width:720px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+section{padding-block:clamp(52px,8vw,100px);border-bottom:1px solid var(--line)}
+.head{display:grid;gap:8px;margin-bottom:clamp(22px,3vw,34px)}
+h2{font-family:var(--display);font-size:clamp(1.9rem,4.2vw,3rem);line-height:1.08}
+.lede{color:var(--mute);max-width:60ch;margin:0}
+
+/* map + postcard */
+.atlas{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:start}
+@media (max-width:900px){.atlas{grid-template-columns:1fr}}
+.mapcol{display:grid;gap:12px;min-width:0}
+.mapframe{position:relative;border-radius:18px;overflow:hidden;background:var(--water);border:1px solid var(--line)}
+#map{display:block;width:100%;height:auto;aspect-ratio:549/628;max-height:78vh;touch-action:manipulation}
+#map .st{stroke:var(--paper);stroke-width:.7;fill:var(--land);transition:fill .3s}
+#map .st.visited{cursor:pointer}
+#map .st.visited:hover{filter:brightness(1.06)}
+#map .coastline{fill:none;stroke:var(--ink);stroke-opacity:.45;stroke-width:.8;stroke-linejoin:round}
+#map .halo{fill:none;stroke:var(--river);stroke-linejoin:round}
+#map .glyph{fill:none;stroke:var(--ink);stroke-opacity:.35;stroke-width:.8;stroke-linejoin:round;stroke-linecap:round}
+#map .sea{font-family:var(--hand);fill:var(--river);opacity:.75}
+#map .tropic{stroke:var(--marigold);stroke-dasharray:3 4;stroke-opacity:.55}
+#map .trail{fill:none;stroke-dasharray:1.5 3;stroke-linecap:round;opacity:.8}
+#map .pin{cursor:pointer}
+#map .pin circle.dot{stroke:var(--card)}
+#map .pin .ring{fill:none;transform-box:fill-box;transform-origin:center;opacity:0}
+#map .pin.sel .ring{animation:ripple 2.2s ease-out infinite}
+@keyframes ripple{0%{transform:scale(.6);opacity:.8}100%{transform:scale(2.4);opacity:0}}
+#map .lbl{font-family:var(--hand);fill:var(--ink);paint-order:stroke;stroke:var(--land);stroke-linejoin:round;pointer-events:none}
+#map .hint{font-family:var(--hand);fill:var(--ink);cursor:pointer}
+.mapchips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 13px;font-size:.85rem;cursor:pointer;color:var(--mute);display:inline-flex;align-items:center;gap:7px}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+.postcard{position:relative;background:var(--card);border-radius:6px;padding:12px 12px 18px;box-shadow:0 1px 0 var(--line),0 18px 40px -18px rgba(20,35,28,.35);transform:rotate(-1.2deg);display:grid;gap:14px}
+.pc-img{position:relative;border-radius:3px;overflow:hidden;aspect-ratio:4/3;background:var(--paper-2)}
+#pc{display:block;width:100%;height:100%}
+.postmark{position:absolute;right:10px;top:10px;width:84px;height:84px;color:rgba(255,255,255,.92);transform:rotate(9deg);filter:drop-shadow(0 1px 2px rgba(0,0,0,.25))}
+.pc-body{padding-inline:6px;display:grid;gap:6px}
+.pc-name{font-family:var(--hand);font-weight:700;font-size:clamp(1.9rem,3.6vw,2.4rem);line-height:1}
+.pc-meta{color:var(--mute);font-size:.92rem}
+.pc-note{margin:0;font-size:.98rem}
+.pc-nav{display:flex;gap:8px;align-items:center;margin-top:6px}
+.pc-nav .spacer{flex:1}
+.ibtn{border:1px solid var(--line);background:var(--paper);border-radius:999px;width:38px;height:38px;cursor:pointer;font-size:1.05rem;display:grid;place-items:center}
+.ibtn:hover{background:var(--paper-2)}
+.tbtn{border:0;background:none;color:var(--moss);font-weight:600;cursor:pointer;padding:6px 4px;font-size:.9rem}
+
+/* cairn */
+.cairn-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,5vw,64px);align-items:end}
+@media (max-width:820px){.cairn-grid{grid-template-columns:1fr}}
+.cairn-wrap{display:grid;justify-items:center;min-width:0}
+#cairn{width:100%;max-width:360px;height:auto;overflow:visible}
+#cairn .stone{cursor:pointer;transition:transform .25s}
+#cairn .stone path:first-child{stroke:var(--paper);stroke-width:1.2}
+#cairn .stone:hover,#cairn .stone.on{transform:translateX(4px)}
+#cairn .grass{fill:none;stroke:var(--moss);stroke-width:1.4;stroke-linecap:round}
+.cairn-copy{display:grid;gap:18px;align-self:center}
+.big-line{font-family:var(--display);font-size:clamp(1.6rem,3.6vw,2.5rem);line-height:1.15}
+.big-line em{font-style:normal;color:var(--marigold)}
+.ladder{display:grid;border-top:1px solid var(--line)}
+.ladder div{display:flex;justify-content:space-between;gap:12px;padding-block:9px;border-bottom:1px solid var(--line);font-size:.95rem}
+.ladder div span:last-child{color:var(--mute);font-variant-numeric:tabular-nums}
+.ladder .passed span:first-child::before{content:"✓  ";color:var(--good);font-weight:700}
+.ladder .next span:first-child::before{content:"→  ";color:var(--marigold);font-weight:700}
+
+/* patches */
+.patches{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:clamp(18px,3vw,30px)}
+.patch{margin:0;display:grid;justify-items:center;gap:8px;text-align:center}
+.patch svg{width:100%;max-width:138px;transform:rotate(var(--r));transition:transform .3s}
+.patch:hover svg{transform:rotate(0) scale(1.05)}
+.patch .bg{fill:color-mix(in srgb,var(--c) 22%,var(--card));stroke:var(--c);stroke-width:5}
+.patch .stitch{fill:none;stroke:var(--card);stroke-width:1.4;stroke-dasharray:3 3}
+.patch .arc{fill:var(--ink);font-family:var(--body);font-weight:700;font-size:10px;letter-spacing:.08em}
+.patch .big{fill:var(--ink);font-family:var(--display);font-size:28px}
+.patch .ico{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.patch figcaption{font-weight:600;font-size:.95rem;line-height:1.3;display:grid;gap:1px}
+.patch figcaption span{font-weight:400;color:var(--mute);font-size:.82rem}
+.patch.locked svg{opacity:.45;filter:grayscale(1)}
+.patch.locked .bg{fill:none;stroke-dasharray:7 6;stroke-width:2.5}
+
+/* logbook */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:20px}
+.toolbar .mapchips{flex:1 1 420px}
+.select{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.9rem}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:9px 16px;font-weight:600;font-size:.9rem;cursor:pointer}
+.btn:hover{background:var(--paper-2)}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn.primary:hover{opacity:.88}
+.btn.danger{color:var(--hard)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:grid;align-content:start;cursor:pointer;transition:transform .25s,box-shadow .25s}
+.card:hover,.card.on{transform:translateY(-3px);box-shadow:0 14px 30px -16px rgba(20,35,28,.4)}
+.thumb{aspect-ratio:16/9;background:var(--paper-2)}
+.thumb canvas{display:block;width:100%;height:100%}
+.cbody{padding:14px 16px 16px;display:grid;gap:8px}
+.ctop{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.st-name{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:inline-flex;align-items:center;gap:6px}
+.st-name i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.diff{font-size:.72rem;font-weight:600;padding:1px 9px;border-radius:999px;border:1px solid currentColor}
+.d-Easy{color:var(--good)}.d-Moderate{color:var(--warn)}.d-Hard{color:var(--hard)}
+.card h3{font-family:var(--display);font-size:1.3rem;line-height:1.2}
+.card h3 .x{font-family:var(--hand);font-size:1.2rem;color:var(--marigold);margin-left:6px}
+.altrow{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:.88rem;color:var(--mute)}
+.altrow b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.note{margin:0;color:var(--mute);font-size:.9rem}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tag{font-size:.75rem;color:var(--mute);background:var(--paper-2);border-radius:6px;padding:1px 8px}
+.tag.when{color:var(--moss);font-weight:600}
+.meta .tbtn{margin-left:auto;font-size:.82rem}
+.empty{color:var(--mute)}
+
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tools p{flex:1 1 320px;margin:0;color:var(--mute);font-size:.92rem;min-width:0}
+#restoreBox{margin-top:14px;display:grid;gap:10px}
+textarea{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;width:100%;min-height:120px;font-size:.8rem;font-family:ui-monospace,Menlo,monospace}
+footer{padding-block:34px;color:var(--faint);font-size:.85rem}
+footer .kicker{font-size:1.3rem;color:var(--mute)}
+
+#tip{position:fixed;z-index:20;pointer-events:none;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:7px 12px;display:grid;gap:0;font-size:.85rem;transform:translate(-50%,calc(-100% - 12px));max-width:240px;box-shadow:0 10px 24px -10px rgba(0,0,0,.35)}
+#tip b{font-family:var(--hand);font-size:1.25rem;line-height:1.1}
+#tip span{color:var(--mute);font-size:.78rem}
+.overlay{position:fixed;inset:0;z-index:30;background:rgba(10,18,14,.55);display:grid;place-items:center;padding:16px;backdrop-filter:blur(3px)}
+.modal{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(18px,3vw,28px);width:min(560px,100%);max-height:calc(100% - 32px);overflow:auto;display:grid;gap:16px}
+.modal h3{font-family:var(--display);font-size:1.6rem}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fgrid .full{grid-column:1/-1}
+@media (max-width:480px){.fgrid{grid-template-columns:1fr}}
+label{display:grid;gap:5px;font-size:.8rem;color:var(--mute)}
+label input,label select,label textarea{background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:.95rem;color:var(--ink);min-width:0;width:100%;font-family:var(--body)}
+label textarea{min-height:70px}
+.mactions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;align-items:center}
+.mactions .spacer{flex:1}
+.err{color:var(--hard);font-size:.85rem;margin:0}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);font-weight:600;padding:9px 18px;border-radius:999px;z-index:40;font-size:.9rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+</head>
+<body>
+<div class="hero">
+  <canvas id="hero" aria-label="A painted mountain landscape whose sky follows the time of day, with Vishal's highest treks named on the ridgeline"></canvas>
+  <div class="hero-copy" id="heroCopy"><div class="wrap">
+    <div class="kicker" id="kicker">field journal</div>
+    <h1>Vishal's Trek Atlas</h1>
+    <p id="heroLine"></p>
+  </div></div>
+  <div class="clock" id="clock"></div>
+</div>
+
+<div class="wrap">
+  <div class="stats" id="stats"></div>
+
+  <section id="atlas">
+    <div class="head">
+      <div class="kicker">the map</div>
+      <h2>Where your boots have been</h2>
+      <p class="lede">States you've walked are washed in colour. Tap a state to fly into it, and tap any trek to turn over its postcard.</p>
+    </div>
+    <div class="atlas">
+      <div class="mapcol">
+        <div class="mapchips" id="zoomChips"></div>
+        <div class="mapframe"><svg id="map" role="img" aria-label="Watercolour map of India with Vishal's treks"></svg></div>
+      </div>
+      <div class="postcard" id="postcard">
+        <div class="pc-img"><canvas id="pc" aria-label="Painted postcard of the selected trek"></canvas><svg class="postmark" id="postmark" viewBox="0 0 100 100" aria-hidden="true"></svg></div>
+        <div class="pc-body">
+          <div class="pc-name" id="pcName"></div>
+          <div class="pc-meta" id="pcMeta"></div>
+          <p class="pc-note" id="pcNote"></p>
+          <div class="pc-nav">
+            <button class="ibtn" id="prevBtn" type="button" aria-label="Previous trek">←</button>
+            <button class="ibtn" id="nextBtn" type="button" aria-label="Next trek">→</button>
+            <span class="spacer"></span>
+            <button class="tbtn" id="pcEdit" type="button">Edit this trek</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cairn-sec">
+    <div class="cairn-grid">
+      <div class="cairn-wrap"><svg id="cairn" role="img" aria-label="A cairn of stones, one for every trek"></svg></div>
+      <div class="cairn-copy">
+        <div class="kicker">a cairn for every trek</div>
+        <div class="big-line" id="cairnLine"></div>
+        <p class="lede">Each stone is one trek, sized by its high point, with the biggest climbs at the base. Kalsubai gets two stones because you went back.</p>
+        <div class="ladder" id="ladder"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="patches-sec">
+    <div class="head">
+      <div class="kicker">sewn on the rucksack</div>
+      <h2>Patches you've earned</h2>
+      <p class="lede">They stitch themselves on as you log treks. The faded ones are still out there waiting.</p>
+    </div>
+    <div class="patches" id="patches"></div>
+  </section>
+
+  <section id="log">
+    <div class="head">
+      <div class="kicker">the logbook</div>
+      <h2 id="logTitle">Every trail</h2>
+      <p class="lede">Every trek gets its own painting. Heights are approximate high points, so fix any with Edit and add the month you went.</p>
+    </div>
+    <div class="toolbar">
+      <div class="mapchips" id="chips"></div>
+      <select class="select" id="sort" aria-label="Sort treks">
+        <option value="lon">West to east</option>
+        <option value="alt">Highest first</option>
+        <option value="az">A to Z</option>
+      </select>
+      <button class="btn primary" id="addBtn" type="button">Add a trek</button>
+    </div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section id="data">
+    <div class="tools">
+      <p>Your edits are saved in this browser. Copy a backup to keep them safe or move them to another device.</p>
+      <button class="btn" id="copyBtn" type="button">Copy backup</button>
+      <button class="btn" id="restoreBtn" type="button">Restore backup</button>
+      <button class="btn danger" id="resetBtn" type="button">Reset to original list</button>
+    </div>
+    <div id="restoreBox" hidden>
+      <label for="restoreText">Paste a backup here</label>
+      <textarea id="restoreText" spellcheck="false"></textarea>
+      <div class="mactions"><p class="err" id="restoreErr" hidden></p><span class="spacer"></span><button class="btn" id="restoreCancel" type="button">Cancel</button><button class="btn primary" id="restoreLoad" type="button">Load backup</button></div>
+    </div>
+  </section>
+  <footer><div class="kicker">see you on the next ridge</div>Map outline from the Survey of India via DataMeet. Heights and positions are approximate.</footer>
+</div>
+
+<div id="tip" hidden></div>
+<div id="toast" hidden></div>
+<div class="overlay" id="overlay" hidden>
+  <form class="modal" id="form" novalidate>
+    <h3 id="formTitle">Add a trek</h3>
+    <div class="fgrid">
+      <label class="full">Trek name<input id="f-name" autocomplete="off"></label>
+      <label>State<input id="f-state" list="stateList" autocomplete="off"></label>
+      <label>High point (m)<input id="f-alt" type="number" min="0" max="9000" inputmode="numeric"></label>
+      <label>Difficulty<select id="f-diff"><option>Easy</option><option>Moderate</option><option>Hard</option></select></label>
+      <label>Month you went<input id="f-when" type="month"></label>
+      <label>Days<input id="f-days" type="number" min="1" max="60" inputmode="numeric"></label>
+      <label>Times done<input id="f-times" type="number" min="1" max="50" inputmode="numeric"></label>
+      <label>Latitude<input id="f-lat" type="number" step="0.01" inputmode="decimal" placeholder="e.g. 32.27"></label>
+      <label>Longitude<input id="f-lon" type="number" step="0.01" inputmode="decimal" placeholder="e.g. 77.33"></label>
+      <label class="full">Type (comma separated)<input id="f-tags" placeholder="Waterfall, Fort, Pass, Lake, Summit, Pilgrimage, Forest" autocomplete="off"></label>
+      <label class="full">Memory or note<textarea id="f-note"></textarea></label>
+    </div>
+    <p class="err" id="formErr" hidden></p>
+    <div class="mactions">
+      <button type="button" class="btn danger" id="delBtn">Delete</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="cancelBtn">Cancel</button>
+      <button type="submit" class="btn primary">Save</button>
+    </div>
+  </form>
+</div>
+<datalist id="stateList"></datalist>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const STORE = 'trekAtlas.v2';
+const STATES_GEO = [{"n":"Andaman & Nicobar Island","r":[[[93.85,7.24],[93.95,7.0],[93.9,6.81],[93.83,6.76],[93.75,6.96],[93.66,7.01],[93.66,7.13],[93.69,7.19],[93.85,7.24]],[[92.52,10.9],[92.59,10.79],[92.57,10.58],[92.51,10.51],[92.39,10.53],[92.42,10.62],[92.38,10.78],[92.52,10.9]],[[92.7,12.24],[92.78,12.05],[92.74,12.04],[92.77,12.0],[92.73,12.0],[92.68,11.8],[92.75,11.93],[92.79,11.92],[92.76,11.7],[92.67,11.65],[92.7,11.62],[92.72,11.69],[92.76,11.66],[92.71,11.48],[92.62,11.56],[92.64,11.64],[92.59,11.72],[92.56,11.69],[92.51,11.85],[92.56,11.95],[92.61,11.86],[92.62,12.1],[92.7,12.24]],[[92.83,12.3],[92.89,12.29],[92.88,12.2],[92.76,12.06],[92.74,12.25],[92.77,12.31],[92.83,12.3]],[[92.9,12.92],[92.98,12.71],[92.97,12.5],[92.91,12.41],[92.81,12.44],[92.9,12.32],[92.72,12.3],[92.68,12.61],[92.79,12.68],[92.73,12.67],[92.72,12.83],[92.9,12.92]],[[93.03,13.57],[93.02,13.43],[93.07,13.41],[93.03,13.37],[93.09,13.34],[92.95,13.34],[93.07,13.27],[93.03,13.08],[92.97,13.01],[92.9,13.08],[92.94,12.97],[92.88,12.98],[92.84,12.88],[92.79,13.02],[92.85,13.14],[92.81,13.15],[92.84,13.4],[92.91,13.53],[93.03,13.57]]]},{"n":"Andhra Pradesh","r":[[[84.68,19.17],[84.77,19.08],[84.56,18.87],[84.55,18.78],[84.14,18.35],[83.99,18.36],[84.12,18.34],[84.12,18.3],[83.56,18.02],[83.34,17.71],[83.2,17.64],[83.22,17.59],[82.62,17.3],[82.31,17.03],[82.25,16.89],[82.36,16.82],[82.34,16.98],[82.38,16.88],[82.33,16.58],[82.29,16.62],[82.26,16.56],[82.31,16.55],[82.15,16.49],[82.18,16.56],[82.14,16.48],[81.73,16.31],[81.72,16.36],[81.71,16.3],[81.55,16.39],[81.53,16.35],[81.31,16.36],[81.25,16.3],[81.15,15.97],[81.08,16.0],[81.14,15.96],[81.01,15.85],[81.01,15.76],[80.94,15.81],[80.99,15.76],[80.94,15.73],[80.86,15.82],[80.92,15.73],[80.84,15.71],[80.76,15.88],[80.5,15.86],[80.28,15.68],[80.22,15.55],[80.14,15.56],[80.21,15.5],[80.1,15.33],[80.08,15.2],[80.03,15.21],[80.07,15.18],[80.07,14.81],[80.18,14.59],[80.09,14.53],[80.19,14.56],[80.12,14.24],[80.14,14.02],[80.25,13.79],[80.24,13.47],[80.01,13.54],[80.05,13.5],[79.99,13.48],[79.94,13.35],[79.73,13.28],[79.8,13.24],[79.76,13.21],[79.68,13.29],[79.59,13.26],[79.55,13.32],[79.41,13.33],[79.44,13.2],[79.32,13.11],[79.23,13.15],[79.16,13.02],[78.99,13.09],[78.93,13.08],[78.94,13.03],[78.89,13.1],[78.71,13.07],[78.63,12.99],[78.66,12.93],[78.56,12.7],[78.5,12.75],[78.47,12.62],[78.38,12.62],[78.28,12.7],[78.2,12.69],[78.25,12.86],[78.31,12.86],[78.36,12.94],[78.47,12.86],[78.41,12.94],[78.58,13.17],[78.59,13.27],[78.38,13.33],[78.4,13.59],[78.19,13.57],[78.17,13.66],[78.09,13.64],[78.11,13.86],[78.05,13.9],[77.95,13.83],[77.99,13.96],[77.92,13.91],[77.83,13.94],[77.84,13.87],[77.72,13.8],[77.72,13.74],[77.66,13.78],[77.46,13.68],[77.43,13.84],[77.26,13.85],[77.24,13.9],[77.19,13.87],[77.18,13.92],[77.13,13.86],[77.17,13.76],[77.0,13.75],[76.97,13.82],[77.04,13.93],[76.94,14.03],[76.98,14.07],[76.9,14.17],[77.03,14.18],[77.03,14.06],[77.15,14.0],[77.32,14.03],[77.4,13.89],[77.44,13.98],[77.33,14.03],[77.4,14.11],[77.35,14.13],[77.52,14.18],[77.5,14.28],[77.4,14.34],[77.4,14.2],[77.37,14.28],[77.29,14.28],[77.29,14.34],[77.14,14.34],[77.1,14.22],[76.95,14.24],[76.89,14.4],[76.98,14.48],[76.87,14.47],[76.77,14.6],[76.78,14.78],[76.85,14.81],[76.87,14.94],[76.77,14.97],[76.78,15.08],[77.08,15.01],[77.16,15.13],[77.13,15.23],[77.17,15.26],[77.07,15.33],[76.97,15.5],[77.03,15.5],[77.03,15.64],[77.13,15.64],[77.03,15.84],[77.08,15.91],[77.25,15.96],[77.8,15.87],[78.01,15.87],[78.03,15.91],[78.12,15.83],[78.24,15.94],[78.26,16.04],[78.41,16.09],[78.57,16.06],[78.62,16.11],[78.78,16.03],[78.85,16.16],[78.92,16.11],[78.93,16.21],[79.23,16.25],[79.27,16.57],[79.78,16.74],[79.97,16.65],[80.08,16.82],[80.0,16.87],[80.02,16.91],[80.19,17.05],[80.27,17.02],[80.38,16.82],[80.41,16.86],[80.57,16.77],[80.61,16.8],[80.56,16.83],[80.59,16.93],[80.37,16.98],[80.38,17.06],[80.45,17.02],[80.57,17.15],[80.65,17.06],[80.84,17.03],[80.91,17.21],[81.17,17.24],[81.19,17.33],[81.28,17.33],[81.33,17.4],[81.42,17.37],[81.5,17.46],[81.59,17.73],[81.79,17.84],[81.81,17.94],[82.03,18.07],[82.25,17.99],[82.28,18.06],[82.34,18.06],[82.37,18.15],[82.31,18.2],[82.4,18.31],[82.34,18.33],[82.48,18.54],[82.56,18.45],[82.54,18.4],[82.61,18.38],[82.59,18.28],[82.64,18.24],[82.78,18.34],[82.81,18.45],[82.91,18.36],[83.06,18.39],[83.02,18.45],[83.1,18.54],[83.04,18.56],[83.06,18.62],[83.42,18.86],[83.31,19.0],[83.42,19.0],[83.46,18.95],[83.47,19.08],[83.54,19.01],[83.63,19.16],[83.75,18.93],[83.79,18.92],[83.75,18.99],[83.8,19.02],[83.88,18.83],[84.03,18.81],[84.09,18.75],[84.34,18.8],[84.34,18.88],[84.44,18.92],[84.42,19.02],[84.48,18.99],[84.57,19.07],[84.6,19.02],[84.67,19.08],[84.6,19.13],[84.68,19.17]]]},{"n":"Arunanchal Pradesh","r":[[[96.16,29.38],[96.25,29.23],[96.4,29.25],[96.35,29.17],[96.12,29.07],[96.19,28.98],[96.17,28.9],[96.35,29.03],[96.53,29.08],[96.48,28.99],[96.62,28.77],[96.48,28.68],[96.5,28.63],[96.33,28.53],[96.38,28.48],[96.27,28.41],[96.4,28.34],[96.46,28.41],[96.67,28.46],[96.78,28.37],[96.9,28.38],[97.0,28.31],[97.09,28.36],[97.4,28.19],[97.31,28.07],[97.42,28.01],[97.39,27.89],[97.26,27.9],[96.9,27.61],[96.91,27.45],[97.17,27.14],[97.14,27.09],[96.87,27.19],[96.89,27.25],[96.8,27.35],[96.62,27.36],[96.52,27.29],[96.31,27.29],[96.1,27.22],[95.95,27.05],[95.81,27.01],[95.73,26.88],[95.67,26.9],[95.61,26.81],[95.53,26.82],[95.42,26.69],[95.24,26.68],[95.2,27.04],[95.46,27.13],[95.52,27.26],[95.59,27.22],[95.81,27.28],[95.89,27.26],[96.02,27.36],[95.98,27.43],[95.85,27.42],[95.88,27.55],[95.79,27.62],[95.76,27.73],[95.98,27.96],[95.61,27.95],[95.39,27.84],[95.32,27.87],[94.87,27.74],[94.46,27.55],[94.43,27.6],[94.28,27.59],[94.25,27.64],[94.21,27.61],[94.26,27.52],[93.81,27.15],[93.83,27.07],[93.68,26.97],[93.49,26.94],[93.02,26.91],[92.88,27.01],[92.66,27.04],[92.59,26.96],[92.11,26.89],[92.03,27.16],[92.07,27.22],[92.04,27.27],[92.12,27.29],[92.06,27.33],[92.02,27.48],[91.66,27.48],[91.57,27.58],[91.65,27.76],[91.56,27.86],[91.83,27.81],[91.92,27.71],[92.22,27.86],[92.32,27.78],[92.57,27.82],[92.74,27.99],[92.67,28.06],[92.69,28.13],[92.97,28.26],[93.01,28.23],[93.03,28.3],[93.22,28.33],[93.19,28.44],[93.34,28.64],[93.85,28.71],[93.93,28.67],[94.0,28.84],[94.16,28.95],[94.22,29.08],[94.44,29.23],[94.56,29.23],[94.63,29.35],[94.78,29.24],[94.8,29.16],[95.03,29.13],[95.0,29.17],[95.41,29.03],[95.5,29.14],[95.55,29.13],[95.54,29.21],[95.78,29.35],[95.96,29.38],[96.09,29.46],[96.16,29.38]]]},{"n":"Assam","r":[[[95.97,27.95],[95.76,27.73],[95.79,27.62],[95.88,27.55],[95.85,27.42],[95.98,27.43],[96.02,27.36],[95.89,27.26],[95.81,27.28],[95.59,27.22],[95.51,27.26],[95.46,27.13],[95.02,26.92],[94.89,26.93],[94.76,26.77],[94.47,26.66],[94.32,26.46],[94.28,26.55],[94.19,26.46],[94.18,26.34],[94.11,26.32],[94.0,26.17],[93.98,25.92],[93.8,25.81],[93.77,25.96],[93.69,25.91],[93.71,25.84],[93.33,25.54],[93.46,25.43],[93.47,25.31],[93.25,25.02],[93.2,24.81],[93.11,24.81],[93.11,24.58],[93.06,24.57],[93.04,24.41],[92.83,24.37],[92.76,24.52],[92.69,24.35],[92.47,24.13],[92.42,24.25],[92.21,24.25],[92.27,24.39],[92.23,24.47],[92.23,24.68],[92.28,24.79],[92.24,24.9],[92.5,24.87],[92.42,24.98],[92.48,25.11],[92.63,25.12],[92.8,25.22],[92.78,25.33],[92.57,25.47],[92.65,25.59],[92.57,25.56],[92.39,25.75],[92.16,25.67],[92.15,25.81],[92.23,25.91],[92.16,25.94],[92.3,26.08],[91.92,26.0],[91.82,26.12],[91.73,26.06],[91.67,25.9],[91.61,25.94],[91.63,26.02],[91.58,26.03],[91.48,25.88],[91.53,25.87],[91.34,25.84],[91.23,25.72],[91.2,25.86],[91.0,25.82],[91.03,25.89],[90.97,25.89],[90.95,25.95],[90.92,25.91],[90.81,25.95],[90.78,25.91],[90.69,25.95],[90.63,25.9],[90.59,25.96],[90.52,25.9],[90.54,25.96],[90.48,26.02],[90.12,25.96],[89.9,25.74],[90.02,25.61],[89.88,25.55],[89.86,25.48],[89.88,25.62],[89.82,25.82],[89.89,25.94],[89.83,25.95],[89.87,25.98],[89.79,26.02],[89.8,26.09],[89.7,26.19],[89.72,26.31],[89.86,26.38],[89.87,26.74],[90.13,26.75],[90.22,26.85],[90.41,26.9],[90.7,26.77],[91.1,26.82],[91.34,26.78],[91.41,26.83],[91.5,26.79],[91.69,26.8],[91.86,26.91],[92.06,26.85],[92.59,26.96],[92.66,27.04],[92.88,27.01],[93.02,26.91],[93.66,26.96],[93.83,27.07],[93.81,27.15],[94.26,27.52],[94.21,27.61],[94.25,27.64],[94.28,27.59],[94.43,27.6],[94.46,27.55],[94.87,27.74],[95.32,27.87],[95.39,27.84],[95.61,27.95],[95.97,27.95]]]},{"n":"Bihar","r":[[[84.12,27.51],[84.29,27.38],[84.63,27.34],[84.69,27.22],[84.65,27.05],[84.96,26.96],[85.06,26.88],[85.03,26.85],[85.2,26.87],[85.21,26.76],[85.34,26.74],[85.64,26.87],[85.73,26.82],[85.74,26.65],[85.85,26.57],[86.03,26.67],[86.22,26.59],[86.35,26.62],[86.74,26.42],[86.9,26.46],[87.07,26.59],[87.09,26.45],[87.34,26.35],[87.46,26.44],[87.61,26.38],[87.89,26.49],[88.02,26.35],[88.1,26.43],[88.11,26.53],[88.24,26.55],[88.19,26.49],[88.27,26.42],[88.24,26.39],[88.29,26.34],[87.97,26.15],[87.98,26.08],[87.85,26.04],[87.81,25.92],[87.92,25.85],[87.9,25.77],[88.05,25.69],[88.03,25.59],[88.08,25.48],[87.93,25.54],[87.79,25.45],[87.79,25.33],[87.86,25.29],[87.84,25.2],[87.59,25.35],[87.55,25.28],[87.49,25.3],[87.48,25.2],[87.33,25.22],[87.3,25.09],[87.15,25.02],[87.16,24.89],[87.08,24.82],[87.06,24.61],[86.94,24.64],[86.92,24.54],[86.81,24.57],[86.78,24.62],[86.67,24.56],[86.61,24.61],[86.46,24.37],[86.29,24.46],[86.33,24.58],[86.14,24.6],[86.13,24.71],[86.05,24.74],[86.06,24.78],[85.96,24.73],[85.74,24.82],[85.66,24.69],[85.67,24.58],[85.58,24.6],[85.53,24.52],[85.29,24.53],[85.1,24.38],[85.08,24.44],[84.91,24.37],[84.8,24.53],[84.67,24.39],[84.53,24.38],[84.5,24.29],[84.51,24.33],[84.42,24.33],[84.3,24.45],[84.3,24.57],[84.2,24.55],[84.19,24.51],[84.15,24.54],[84.12,24.48],[84.0,24.64],[83.88,24.53],[83.51,24.53],[83.55,24.62],[83.39,24.78],[83.33,25.02],[83.36,25.2],[83.85,25.44],[83.82,25.46],[83.93,25.56],[84.08,25.64],[84.1,25.72],[84.29,25.66],[84.34,25.74],[84.5,25.68],[84.64,25.73],[84.54,25.88],[84.17,25.99],[84.06,26.1],[84.01,26.23],[84.17,26.24],[84.18,26.37],[83.91,26.45],[83.91,26.52],[84.06,26.54],[84.09,26.64],[84.42,26.62],[84.31,26.75],[84.24,26.74],[84.25,26.86],[84.18,26.83],[84.15,26.88],[84.06,26.89],[84.03,27.09],[83.95,27.09],[84.0,27.18],[83.91,27.26],[83.93,27.31],[83.84,27.32],[83.89,27.37],[83.85,27.45],[84.03,27.44],[84.12,27.51]]]},{"n":"Chandigarh","r":[]},{"n":"Chhattisgarh","r":[[[83.34,24.1],[83.51,24.03],[83.57,23.86],[83.7,23.82],[83.78,23.6],[83.94,23.56],[83.95,23.62],[84.01,23.63],[83.97,23.38],[84.08,23.33],[84.04,23.14],[84.14,23.08],[84.16,22.97],[84.2,23.03],[84.22,22.98],[84.38,22.98],[84.38,22.88],[84.23,22.74],[84.23,22.67],[84.01,22.57],[83.98,22.5],[84.05,22.47],[84.01,22.37],[83.87,22.35],[83.63,22.2],[83.56,22.1],[83.61,22.07],[83.54,22.04],[83.59,21.85],[83.47,21.79],[83.43,21.68],[83.49,21.63],[83.39,21.62],[83.34,21.5],[83.41,21.35],[83.28,21.38],[83.2,21.14],[83.13,21.1],[82.96,21.18],[82.64,21.15],[82.63,21.04],[82.47,20.83],[82.35,20.89],[82.38,20.63],[82.33,20.56],[82.44,20.43],[82.4,20.06],[82.72,20.0],[82.72,19.85],[82.59,19.78],[82.6,19.87],[82.45,19.91],[82.35,19.84],[82.24,20.0],[82.07,20.05],[82.03,20.01],[81.95,20.11],[81.88,20.05],[81.86,19.91],[82.07,19.79],[82.03,19.51],[82.1,19.52],[82.13,19.43],[82.19,19.42],[82.15,19.37],[82.19,19.33],[82.17,19.13],[82.22,19.1],[82.25,18.92],[82.18,18.9],[82.17,18.8],[82.09,18.72],[81.98,18.7],[81.96,18.64],[81.89,18.66],[81.96,18.57],[81.75,18.35],[81.54,18.27],[81.49,17.98],[81.39,17.81],[81.17,17.86],[81.05,17.79],[80.95,18.09],[80.98,18.17],[80.87,18.14],[80.84,18.24],[80.81,18.17],[80.74,18.18],[80.8,18.26],[80.73,18.41],[80.5,18.63],[80.35,18.59],[80.25,18.76],[80.36,18.82],[80.27,18.99],[80.39,19.24],[80.58,19.4],[80.62,19.31],[80.76,19.29],[80.85,19.36],[80.8,19.43],[80.9,19.47],[80.83,19.57],[80.66,19.62],[80.67,19.7],[80.55,19.82],[80.48,19.83],[80.49,19.78],[80.4,19.8],[80.5,19.87],[80.41,19.94],[80.53,19.93],[80.55,20.07],[80.5,20.14],[80.4,20.15],[80.39,20.24],[80.62,20.34],[80.63,20.61],[80.49,20.62],[80.59,20.69],[80.55,20.94],[80.47,20.93],[80.43,21.01],[80.46,21.17],[80.68,21.3],[80.74,21.47],[80.73,21.71],[80.82,21.75],[80.83,21.96],[80.91,22.11],[81.01,22.07],[80.98,22.12],[81.12,22.29],[81.12,22.44],[81.33,22.52],[81.4,22.44],[81.53,22.54],[81.62,22.54],[81.66,22.63],[81.77,22.66],[81.78,22.87],[81.95,22.96],[81.95,23.08],[82.16,23.14],[82.19,23.32],[81.98,23.41],[81.92,23.53],[81.83,23.51],[81.74,23.57],[81.61,23.51],[81.58,23.59],[81.69,23.72],[81.62,23.9],[81.67,23.92],[81.79,23.81],[81.92,23.87],[82.52,23.78],[82.81,23.96],[82.96,23.87],[83.14,23.89],[83.34,24.1]]]},{"n":"Dadara & Nagar Havelli","r":[[[73.21,20.12],[73.18,20.05],[73.04,20.07],[72.91,20.27],[73.03,20.29],[73.1,20.36],[73.1,20.31],[73.17,20.29],[73.07,20.23],[73.06,20.16],[73.17,20.21],[73.22,20.18],[73.21,20.12]]]},{"n":"Daman & Diu","r":[]},{"n":"Goa","r":[[[73.87,15.78],[73.99,15.61],[74.18,15.68],[74.25,15.66],[74.25,15.49],[74.34,15.3],[74.25,15.26],[74.32,15.19],[74.3,15.04],[74.21,14.92],[74.04,14.92],[74.05,14.99],[73.91,15.08],[73.96,15.18],[73.88,15.35],[73.78,15.41],[73.94,15.43],[73.79,15.46],[73.83,15.51],[73.77,15.49],[73.73,15.6],[73.77,15.63],[73.73,15.61],[73.68,15.73],[73.87,15.78]]]},{"n":"Gujarat","r":[[[68.36,23.81],[68.43,23.79],[68.39,23.65],[68.31,23.58],[68.27,23.59],[68.31,23.63],[68.2,23.6],[68.2,23.65],[68.31,23.65],[68.23,23.64],[68.33,23.71],[68.36,23.81]],[[68.36,23.98],[68.43,23.96],[68.27,23.79],[68.24,23.68],[68.19,23.73],[68.21,23.83],[68.29,23.84],[68.26,23.87],[68.32,23.88],[68.26,23.89],[68.36,23.98]],[[72.66,21.47],[72.74,21.55],[72.64,21.53],[72.63,21.62],[72.84,21.67],[72.52,21.68],[72.64,21.95],[72.58,21.88],[72.51,21.9],[72.55,22.15],[72.6,22.21],[72.75,22.17],[72.92,22.27],[72.75,22.23],[72.64,22.28],[72.54,22.24],[72.54,22.28],[72.49,22.2],[72.38,22.39],[72.42,22.23],[72.36,22.27],[72.39,22.17],[72.36,22.19],[72.34,22.12],[72.29,22.2],[72.28,21.93],[72.24,22.05],[72.3,22.11],[72.23,22.02],[72.17,22.04],[72.22,21.96],[72.15,21.98],[72.25,21.9],[72.27,21.74],[72.18,21.82],[72.31,21.63],[72.09,21.29],[72.11,21.2],[71.07,20.74],[70.85,20.75],[70.87,20.7],[70.82,20.69],[70.44,20.85],[70.1,21.1],[69.8,21.46],[69.24,21.94],[68.94,22.31],[69.07,22.48],[69.07,22.4],[69.19,22.42],[69.16,22.31],[69.23,22.26],[69.33,22.33],[69.49,22.34],[69.5,22.44],[69.59,22.36],[69.58,22.32],[69.73,22.47],[69.8,22.4],[69.83,22.48],[69.91,22.46],[69.98,22.54],[70.16,22.55],[70.49,23.08],[70.35,22.93],[70.2,22.99],[70.23,22.96],[70.16,22.94],[70.14,23.01],[70.09,22.95],[70.13,22.92],[69.8,22.85],[69.71,22.73],[69.63,22.8],[69.6,22.76],[69.19,22.84],[68.59,23.22],[68.63,23.21],[68.6,23.24],[68.67,23.27],[68.63,23.3],[68.69,23.31],[68.5,23.47],[68.49,23.64],[68.76,23.88],[68.6,23.85],[68.53,23.76],[68.52,23.82],[68.66,23.92],[68.55,23.97],[68.75,23.97],[68.76,24.29],[68.82,24.32],[68.87,24.21],[68.94,24.3],[69.01,24.22],[69.09,24.27],[69.19,24.24],[69.59,24.29],[69.73,24.17],[70.02,24.17],[70.11,24.29],[70.57,24.42],[70.58,24.25],[70.83,24.23],[70.95,24.35],[71.12,24.41],[71.0,24.45],[70.99,24.55],[71.01,24.64],[71.1,24.69],[71.29,24.61],[71.48,24.68],[71.65,24.64],[71.79,24.67],[71.85,24.61],[71.87,24.68],[71.94,24.63],[72.05,24.71],[72.16,24.62],[72.35,24.62],[72.25,24.58],[72.44,24.51],[72.46,24.41],[72.54,24.51],[72.69,24.46],[72.73,24.36],[72.92,24.33],[72.99,24.36],[73.0,24.47],[73.09,24.49],[73.08,24.39],[73.23,24.36],[73.08,24.18],[73.22,24.1],[73.19,24.05],[73.24,24.01],[73.37,24.13],[73.42,23.93],[73.36,23.79],[73.5,23.7],[73.51,23.62],[73.57,23.65],[73.66,23.62],[73.63,23.45],[73.72,23.41],[73.83,23.45],[73.89,23.34],[73.96,23.38],[74.1,23.29],[74.12,23.18],[74.24,23.19],[74.36,22.93],[74.46,22.91],[74.38,22.64],[74.26,22.64],[74.15,22.52],[74.04,22.54],[74.12,22.42],[74.19,22.48],[74.29,22.39],[74.19,22.32],[74.07,22.36],[74.07,22.22],[74.18,22.08],[74.09,22.01],[74.14,21.96],[73.8,21.82],[73.89,21.67],[73.78,21.62],[73.86,21.49],[74.06,21.56],[74.31,21.57],[74.33,21.52],[74.25,21.46],[74.06,21.48],[74.04,21.42],[73.95,21.4],[73.94,21.3],[73.83,21.27],[73.82,21.17],[73.63,21.13],[73.58,21.17],[73.81,21.08],[73.8,21.05],[73.9,20.98],[73.94,20.74],[73.82,20.69],[73.83,20.62],[73.66,20.56],[73.45,20.71],[73.39,20.64],[73.49,20.54],[73.38,20.39],[73.42,20.21],[73.3,20.21],[73.21,20.12],[73.17,20.21],[73.06,20.16],[73.07,20.23],[73.17,20.29],[73.1,20.31],[73.1,20.36],[73.03,20.29],[72.91,20.28],[72.96,20.21],[72.86,20.23],[72.82,20.15],[72.73,20.14],[72.76,20.33],[72.9,20.41],[72.84,20.47],[72.88,20.61],[72.78,20.9],[72.85,20.95],[72.76,20.93],[72.76,21.05],[72.69,21.07],[72.72,21.14],[72.67,21.16],[72.62,21.09],[72.65,21.23],[72.59,21.29],[72.7,21.46],[72.65,21.43],[72.66,21.47]]]},{"n":"Haryana","r":[[[76.85,30.88],[76.92,30.89],[77.03,30.74],[77.17,30.68],[77.12,30.56],[77.22,30.48],[77.41,30.41],[77.46,30.46],[77.45,30.4],[77.52,30.44],[77.61,30.37],[77.43,30.1],[77.28,30.04],[77.13,29.77],[77.13,29.1],[77.22,29.0],[77.23,28.9],[77.15,28.84],[77.09,28.88],[76.95,28.82],[76.94,28.63],[76.84,28.58],[76.89,28.5],[77.08,28.51],[77.18,28.4],[77.34,28.51],[77.48,28.41],[77.47,28.27],[77.55,28.25],[77.5,28.21],[77.55,28.18],[77.48,28.08],[77.55,27.94],[77.24,27.78],[77.05,27.81],[77.09,27.73],[77.0,27.74],[76.98,27.65],[76.89,27.69],[76.97,28.14],[76.87,28.22],[76.66,28.09],[76.67,28.01],[76.55,27.97],[76.55,28.03],[76.46,28.04],[76.51,28.06],[76.46,28.09],[76.51,28.1],[76.48,28.15],[76.3,28.18],[76.36,28.12],[76.31,28.1],[76.36,28.07],[76.35,28.02],[76.19,28.05],[76.22,28.03],[76.16,27.99],[76.23,27.84],[76.18,27.8],[76.1,27.86],[75.97,27.86],[75.93,27.93],[76.04,28.07],[75.94,28.09],[76.04,28.17],[76.1,28.15],[75.93,28.36],[75.78,28.4],[75.79,28.45],[75.56,28.61],[75.48,28.92],[75.52,29.01],[75.44,29.01],[75.37,29.14],[75.41,29.26],[75.32,29.23],[75.33,29.29],[75.09,29.23],[74.85,29.4],[74.6,29.33],[74.54,29.45],[74.62,29.53],[74.58,29.56],[74.61,29.75],[74.48,29.74],[74.47,29.79],[74.56,29.87],[74.53,29.95],[74.66,29.9],[74.81,29.99],[75.0,29.85],[75.1,29.91],[75.1,29.8],[75.16,29.78],[75.19,29.84],[75.24,29.75],[75.17,29.66],[75.23,29.54],[75.31,29.57],[75.33,29.67],[75.45,29.81],[75.58,29.74],[75.71,29.75],[75.78,29.82],[75.89,29.74],[76.05,29.75],[76.25,29.87],[76.18,29.93],[76.27,30.1],[76.22,30.16],[76.33,30.1],[76.34,30.15],[76.4,30.12],[76.42,30.2],[76.46,30.1],[76.55,30.08],[76.65,30.19],[76.6,30.25],[76.54,30.22],[76.56,30.26],[76.73,30.33],[76.74,30.42],[76.85,30.43],[76.9,30.35],[76.94,30.39],[76.9,30.44],[76.93,30.6],[76.88,30.68],[76.83,30.66],[76.86,30.79],[76.78,30.89],[76.82,30.93],[76.85,30.88]]]},{"n":"Himachal Pradesh","r":[[[76.8,33.25],[76.85,33.25],[76.82,33.15],[76.94,33.03],[77.15,32.98],[77.16,32.91],[77.35,32.82],[77.41,32.88],[77.47,32.86],[77.73,32.97],[77.81,32.9],[77.78,32.86],[77.93,32.76],[77.92,32.69],[78.0,32.58],[78.39,32.76],[78.41,32.62],[78.31,32.57],[78.3,32.5],[78.46,32.5],[78.54,32.41],[78.46,32.24],[78.61,32.21],[78.61,32.12],[78.79,32.0],[78.71,31.79],[78.85,31.61],[78.72,31.51],[79.01,31.11],[78.89,31.1],[78.81,31.2],[78.49,31.2],[78.37,31.29],[78.03,31.15],[77.9,31.15],[77.82,31.06],[77.83,30.95],[77.75,30.95],[77.81,30.92],[77.8,30.85],[77.76,30.88],[77.7,30.76],[77.79,30.66],[77.74,30.59],[77.82,30.53],[77.58,30.38],[77.52,30.44],[77.43,30.4],[77.46,30.46],[77.41,30.41],[77.14,30.54],[77.17,30.68],[77.03,30.74],[76.92,30.89],[76.87,30.87],[76.62,31.0],[76.6,31.18],[76.65,31.21],[76.59,31.21],[76.58,31.28],[76.45,31.28],[76.38,31.44],[76.31,31.32],[76.19,31.3],[75.91,31.95],[75.59,32.08],[75.68,32.16],[75.64,32.23],[75.95,32.42],[75.87,32.51],[75.94,32.64],[75.93,32.76],[75.8,32.89],[75.85,32.94],[76.0,32.9],[76.11,33.0],[76.25,33.03],[76.41,33.19],[76.75,33.18],[76.8,33.25]]]},{"n":"Jammu & Kashmir","r":[[[74.73,37.02],[74.84,37.02],[74.92,36.91],[75.34,37.05],[75.47,36.81],[75.62,36.76],[75.77,36.57],[76.08,36.47],[76.25,36.35],[76.35,36.36],[76.56,36.17],[76.64,36.18],[76.8,36.05],[76.72,35.95],[76.81,35.84],[77.36,35.72],[77.49,35.53],[77.32,35.53],[77.44,35.46],[77.72,35.48],[77.73,35.52],[77.98,35.46],[77.93,35.52],[77.95,35.61],[78.14,35.54],[78.2,35.67],[78.26,35.65],[78.27,35.72],[78.42,35.79],[78.52,35.76],[78.66,35.86],[78.96,35.89],[79.13,35.84],[79.22,35.98],[79.38,36.0],[79.42,35.9],[79.74,35.8],[79.87,35.78],[80.0,35.84],[80.11,35.68],[80.29,35.61],[80.33,35.47],[80.18,35.17],[80.07,34.71],[79.78,34.63],[79.79,34.49],[79.51,34.47],[79.59,34.24],[79.51,34.21],[79.43,34.02],[79.17,34.07],[78.91,33.98],[79.02,33.78],[79.06,33.78],[79.02,33.71],[79.09,33.69],[79.11,33.62],[78.91,33.63],[78.99,33.33],[79.45,33.26],[79.39,33.04],[79.33,33.01],[79.63,32.74],[79.45,32.53],[79.32,32.59],[79.14,32.48],[79.12,32.38],[78.98,32.34],[78.83,32.44],[78.76,32.7],[78.33,32.47],[78.31,32.57],[78.41,32.62],[78.39,32.76],[78.0,32.58],[77.92,32.69],[77.93,32.76],[77.78,32.86],[77.81,32.9],[77.73,32.97],[77.47,32.86],[77.41,32.88],[77.35,32.82],[77.16,32.91],[77.15,32.98],[76.94,33.03],[76.82,33.15],[76.85,33.25],[76.8,33.25],[76.75,33.18],[76.41,33.19],[76.25,33.03],[76.11,33.0],[75.96,32.89],[75.82,32.93],[75.94,32.64],[75.82,32.49],[75.56,32.36],[75.51,32.28],[75.49,32.34],[75.31,32.34],[75.03,32.49],[74.95,32.44],[74.69,32.48],[74.63,32.6],[74.69,32.65],[74.65,32.7],[74.7,32.84],[74.64,32.81],[74.63,32.75],[74.37,32.76],[73.96,32.99],[73.83,33.01],[73.79,32.97],[73.74,33.07],[73.63,33.09],[73.66,33.21],[73.56,33.37],[73.63,33.53],[73.56,33.62],[73.59,33.88],[73.52,34.0],[73.48,34.29],[73.39,34.38],[73.45,34.57],[73.65,34.57],[73.75,34.79],[74.03,34.88],[74.11,35.02],[74.07,35.05],[74.13,35.11],[73.81,35.24],[73.72,35.23],[73.7,35.36],[73.8,35.46],[73.78,35.53],[73.41,35.56],[73.27,35.63],[73.14,35.72],[73.15,35.84],[73.1,35.88],[72.93,35.85],[72.83,35.89],[72.69,35.83],[72.6,35.87],[72.53,35.93],[72.6,36.03],[72.53,36.07],[72.55,36.18],[72.6,36.26],[72.69,36.25],[72.87,36.37],[72.88,36.44],[72.99,36.46],[73.11,36.61],[73.09,36.7],[73.44,36.75],[73.63,36.69],[73.88,36.7],[73.9,36.75],[73.72,36.83],[73.69,36.91],[74.06,36.81],[74.17,36.9],[74.26,36.89],[74.43,36.99],[74.58,36.95],[74.59,37.05],[74.71,37.08],[74.73,37.02]]]},{"n":"Jharkhand","r":[[[87.61,25.32],[87.79,25.25],[87.78,25.09],[87.98,24.9],[87.82,24.77],[87.91,24.72],[87.88,24.61],[87.92,24.6],[87.85,24.55],[87.77,24.58],[87.82,24.41],[87.76,24.31],[87.64,24.24],[87.69,24.15],[87.57,24.16],[87.61,24.13],[87.58,24.09],[87.5,24.12],[87.52,24.04],[87.44,24.01],[87.46,23.98],[87.24,24.04],[87.3,23.9],[87.25,23.91],[87.25,23.83],[87.14,23.87],[87.17,23.82],[87.13,23.8],[86.9,23.88],[86.89,23.82],[86.8,23.83],[86.8,23.69],[86.45,23.63],[86.31,23.42],[86.15,23.48],[86.15,23.57],[86.05,23.59],[86.02,23.55],[86.05,23.5],[85.87,23.45],[85.9,23.37],[85.84,23.2],[85.92,23.13],[86.04,23.15],[86.22,22.99],[86.55,22.99],[86.44,22.93],[86.42,22.78],[86.62,22.68],[86.66,22.58],[86.77,22.58],[86.8,22.49],[86.76,22.45],[86.85,22.4],[86.89,22.26],[86.8,22.27],[86.81,22.22],[86.75,22.21],[86.51,22.34],[86.44,22.31],[86.29,22.45],[86.11,22.49],[86.04,22.57],[85.96,22.46],[86.05,22.31],[85.98,22.25],[86.03,22.19],[85.91,21.97],[85.77,21.99],[85.84,22.08],[85.81,22.11],[85.69,22.05],[85.4,22.16],[85.24,22.0],[85.1,22.1],[84.99,22.09],[85.12,22.29],[85.07,22.48],[84.9,22.42],[84.53,22.42],[84.3,22.34],[84.01,22.52],[84.09,22.64],[84.23,22.67],[84.4,22.94],[84.2,23.03],[84.16,22.97],[84.14,23.08],[84.04,23.14],[84.08,23.33],[83.97,23.38],[84.01,23.63],[83.95,23.62],[83.94,23.56],[83.78,23.6],[83.7,23.82],[83.57,23.86],[83.51,24.03],[83.33,24.1],[83.41,24.27],[83.38,24.31],[83.46,24.36],[83.4,24.5],[83.88,24.53],[84.0,24.64],[84.12,24.48],[84.15,24.54],[84.31,24.56],[84.3,24.45],[84.42,24.33],[84.51,24.33],[84.5,24.29],[84.53,24.38],[84.67,24.39],[84.8,24.53],[84.91,24.37],[85.08,24.44],[85.1,24.38],[85.29,24.53],[85.53,24.52],[85.58,24.6],[85.67,24.58],[85.66,24.69],[85.74,24.82],[85.96,24.73],[86.06,24.78],[86.05,24.74],[86.13,24.71],[86.14,24.6],[86.33,24.58],[86.29,24.46],[86.46,24.37],[86.61,24.61],[86.67,24.56],[86.78,24.62],[86.81,24.57],[86.92,24.54],[86.94,24.64],[87.06,24.61],[87.18,25.06],[87.3,25.09],[87.33,25.22],[87.47,25.19],[87.5,25.31],[87.55,25.28],[87.59,25.35],[87.61,25.32]]]},{"n":"Karnataka","r":[[[77.34,18.44],[77.41,18.39],[77.37,18.31],[77.47,18.26],[77.51,18.31],[77.61,18.28],[77.57,18.2],[77.6,18.09],[77.55,18.06],[77.66,17.97],[77.51,17.8],[77.57,17.75],[77.45,17.69],[77.44,17.58],[77.69,17.5],[77.51,17.43],[77.53,17.38],[77.46,17.37],[77.46,17.28],[77.38,17.22],[77.36,17.16],[77.47,17.11],[77.5,17.01],[77.43,16.72],[77.47,16.68],[77.42,16.67],[77.47,16.65],[77.47,16.59],[77.4,16.57],[77.42,16.52],[77.37,16.49],[77.24,16.47],[77.35,16.38],[77.6,16.34],[77.6,16.29],[77.49,16.25],[77.51,15.93],[77.18,15.95],[77.03,15.84],[77.13,15.66],[77.03,15.64],[77.03,15.5],[76.97,15.5],[77.07,15.33],[77.17,15.26],[77.13,15.23],[77.17,15.17],[77.08,15.01],[76.78,15.08],[76.77,14.97],[76.87,14.94],[76.85,14.81],[76.78,14.78],[76.77,14.6],[76.87,14.47],[76.98,14.48],[76.89,14.4],[76.95,14.24],[77.11,14.22],[77.16,14.34],[77.29,14.34],[77.39,14.2],[77.39,14.33],[77.51,14.27],[77.51,14.16],[77.35,14.13],[77.4,14.11],[77.33,14.03],[77.44,13.98],[77.4,13.89],[77.32,14.03],[77.15,14.0],[77.03,14.06],[77.03,14.18],[76.9,14.17],[76.98,14.07],[76.94,14.03],[77.04,13.93],[76.97,13.82],[77.0,13.75],[77.17,13.76],[77.13,13.86],[77.18,13.92],[77.19,13.87],[77.24,13.9],[77.26,13.85],[77.43,13.84],[77.48,13.69],[77.53,13.75],[77.63,13.74],[77.66,13.78],[77.72,13.74],[77.72,13.8],[77.84,13.87],[77.83,13.94],[77.92,13.91],[77.99,13.96],[77.95,13.83],[78.05,13.9],[78.12,13.85],[78.09,13.64],[78.17,13.66],[78.19,13.57],[78.4,13.59],[78.38,13.33],[78.59,13.27],[78.58,13.17],[78.41,12.94],[78.47,12.86],[78.36,12.94],[78.31,12.86],[78.25,12.86],[78.23,12.76],[78.06,12.85],[78.01,12.8],[77.96,12.86],[77.92,12.83],[77.93,12.89],[77.84,12.87],[77.74,12.67],[77.6,12.67],[77.59,12.48],[77.64,12.49],[77.63,12.42],[77.48,12.21],[77.74,12.18],[77.78,12.12],[77.68,11.95],[77.5,11.94],[77.43,11.76],[77.25,11.81],[77.11,11.77],[77.12,11.72],[77.01,11.81],[76.91,11.79],[76.85,11.58],[76.57,11.62],[76.51,11.71],[76.42,11.67],[76.42,11.76],[76.34,11.74],[76.19,11.87],[76.11,11.86],[76.11,11.98],[76.0,11.93],[75.87,11.95],[75.8,12.08],[75.67,12.1],[75.49,12.29],[75.42,12.29],[75.37,12.41],[75.42,12.5],[75.34,12.46],[75.27,12.54],[75.33,12.59],[75.28,12.62],[75.22,12.57],[75.15,12.68],[75.05,12.66],[74.99,12.79],[74.86,12.76],[74.69,13.36],[74.69,13.45],[74.74,13.39],[74.71,13.43],[74.75,13.46],[74.69,13.46],[74.66,13.63],[74.76,13.64],[74.67,13.71],[74.67,13.64],[74.63,13.86],[74.52,13.99],[74.43,14.26],[74.53,14.24],[74.43,14.28],[74.36,14.5],[74.39,14.45],[74.44,14.47],[74.37,14.56],[74.31,14.52],[74.29,14.59],[74.43,14.62],[74.28,14.61],[74.25,14.74],[74.09,14.8],[74.25,14.87],[74.12,14.84],[74.09,14.9],[74.26,14.97],[74.32,15.19],[74.25,15.26],[74.34,15.3],[74.25,15.49],[74.25,15.66],[74.09,15.67],[74.22,15.79],[74.24,15.74],[74.36,15.78],[74.38,15.85],[74.34,15.85],[74.37,15.89],[74.41,15.85],[74.46,16.04],[74.36,16.05],[74.49,16.1],[74.5,16.23],[74.32,16.27],[74.32,16.38],[74.36,16.4],[74.29,16.5],[74.25,16.5],[74.27,16.55],[74.31,16.5],[74.32,16.56],[74.38,16.53],[74.47,16.66],[74.55,16.63],[74.57,16.55],[74.69,16.61],[74.69,16.72],[74.92,16.77],[74.93,16.94],[75.09,16.95],[75.21,16.84],[75.28,16.88],[75.29,16.96],[75.47,16.99],[75.49,16.94],[75.57,17.01],[75.67,16.96],[75.63,17.17],[75.66,17.26],[75.58,17.38],[75.63,17.48],[75.8,17.37],[75.82,17.42],[75.89,17.42],[75.93,17.33],[76.12,17.37],[76.18,17.3],[76.17,17.35],[76.24,17.38],[76.38,17.31],[76.41,17.37],[76.33,17.43],[76.38,17.5],[76.33,17.6],[76.49,17.66],[76.52,17.76],[76.57,17.76],[76.57,17.7],[76.62,17.77],[76.69,17.68],[76.72,17.78],[76.79,17.83],[76.74,17.9],[76.8,17.87],[76.92,17.92],[76.96,18.19],[77.11,18.15],[77.24,18.41],[77.34,18.44]]]},{"n":"Kerala","r":[[[75.0,12.79],[75.05,12.66],[75.15,12.68],[75.22,12.57],[75.28,12.62],[75.33,12.59],[75.27,12.56],[75.34,12.46],[75.42,12.5],[75.37,12.41],[75.42,12.29],[75.49,12.29],[75.58,12.16],[75.72,12.07],[75.8,12.08],[75.88,11.95],[76.11,11.98],[76.12,11.85],[76.19,11.87],[76.34,11.74],[76.42,11.76],[76.44,11.64],[76.23,11.57],[76.25,11.47],[76.55,11.36],[76.46,11.19],[76.74,11.22],[76.7,11.15],[76.75,11.06],[76.8,11.05],[76.72,11.04],[76.66,10.93],[76.83,10.87],[76.91,10.78],[76.88,10.64],[76.82,10.63],[76.83,10.3],[76.98,10.22],[77.24,10.35],[77.29,10.22],[77.27,10.13],[77.2,10.1],[77.28,9.97],[77.17,9.61],[77.36,9.6],[77.41,9.51],[77.28,9.3],[77.27,9.15],[77.15,9.02],[77.26,8.87],[77.17,8.75],[77.28,8.55],[77.21,8.5],[77.18,8.32],[77.1,8.29],[76.98,8.38],[76.55,8.9],[76.34,9.4],[76.24,9.97],[76.07,10.54],[76.04,10.57],[76.03,10.51],[75.9,10.8],[75.82,11.17],[75.7,11.42],[75.62,11.48],[75.54,11.71],[75.36,11.85],[75.32,11.97],[75.2,12.0],[74.86,12.76],[75.0,12.79]]]},{"n":"Lakshadweep","r":[]},{"n":"Madhya Pradesh","r":[[[78.37,26.86],[78.57,26.75],[78.72,26.79],[78.95,26.66],[79.0,26.68],[78.99,26.57],[79.06,26.45],[79.14,26.44],[79.09,26.36],[79.14,26.34],[79.05,26.26],[79.07,26.23],[78.99,26.24],[79.01,26.15],[78.95,26.13],[79.01,26.08],[78.85,25.86],[78.87,25.79],[78.82,25.82],[78.75,25.74],[78.81,25.62],[78.44,25.56],[78.43,25.47],[78.3,25.37],[78.45,25.12],[78.33,25.08],[78.33,24.99],[78.17,24.85],[78.27,24.66],[78.23,24.52],[78.37,24.38],[78.33,24.33],[78.39,24.27],[78.51,24.39],[78.68,24.24],[78.77,24.25],[78.8,24.18],[78.97,24.35],[78.99,24.44],[78.92,24.46],[78.97,24.49],[78.89,24.64],[78.76,24.6],[78.79,24.81],[78.63,24.96],[78.65,25.06],[78.58,25.25],[78.43,25.28],[78.53,25.3],[78.53,25.36],[78.58,25.35],[78.57,25.39],[78.66,25.44],[78.71,25.42],[78.67,25.38],[78.77,25.35],[78.75,25.41],[78.82,25.43],[78.76,25.43],[78.74,25.5],[78.84,25.43],[78.89,25.56],[78.95,25.55],[78.91,25.44],[78.99,25.37],[78.88,25.38],[78.79,25.3],[78.85,25.22],[78.88,25.34],[78.96,25.34],[78.98,25.28],[78.88,25.25],[78.88,25.16],[78.96,25.22],[79.0,25.19],[79.01,25.27],[79.06,25.22],[79.03,25.14],[79.09,25.19],[79.13,25.11],[79.19,25.15],[79.25,25.11],[79.25,25.16],[79.28,25.12],[79.32,25.15],[79.28,25.24],[79.35,25.21],[79.35,25.27],[79.26,25.27],[79.31,25.33],[79.36,25.26],[79.5,25.27],[79.39,25.17],[79.41,25.11],[79.48,25.13],[79.5,25.08],[79.57,25.17],[79.61,25.13],[79.86,25.09],[79.86,25.24],[80.0,25.26],[80.03,25.34],[80.13,25.33],[80.26,25.42],[80.32,25.38],[80.31,25.28],[80.43,25.17],[80.36,25.14],[80.35,25.05],[80.29,25.06],[80.32,25.0],[80.45,25.08],[80.5,25.04],[80.43,25.03],[80.46,24.98],[80.55,25.0],[80.48,25.1],[80.61,25.07],[80.6,25.15],[80.68,25.05],[80.78,25.06],[80.71,25.13],[80.84,25.11],[80.89,25.19],[80.91,25.16],[80.81,24.94],[81.08,24.95],[81.14,24.89],[81.17,24.95],[81.22,24.93],[81.28,25.16],[81.49,25.07],[81.48,25.13],[81.57,25.19],[81.63,25.16],[81.61,25.06],[81.91,25.01],[81.9,24.89],[81.97,24.83],[82.2,24.82],[82.18,24.74],[82.25,24.77],[82.24,24.67],[82.3,24.67],[82.3,24.61],[82.42,24.6],[82.43,24.7],[82.54,24.65],[82.67,24.7],[82.8,24.6],[82.81,24.55],[82.72,24.55],[82.72,24.38],[82.77,24.37],[82.77,24.29],[82.73,24.14],[82.67,24.13],[82.77,24.08],[82.75,24.02],[82.82,23.96],[82.66,23.91],[82.64,23.84],[82.5,23.78],[81.92,23.87],[81.82,23.81],[81.67,23.92],[81.6,23.89],[81.69,23.72],[81.58,23.59],[81.61,23.51],[81.74,23.57],[81.83,23.51],[81.92,23.53],[81.98,23.41],[82.19,23.32],[82.16,23.14],[81.95,23.08],[81.95,22.96],[81.78,22.87],[81.77,22.66],[81.66,22.63],[81.62,22.54],[81.53,22.54],[81.4,22.44],[81.33,22.52],[81.12,22.44],[81.12,22.29],[80.98,22.12],[81.01,22.07],[80.91,22.11],[80.83,21.96],[80.82,21.75],[80.73,21.71],[80.74,21.47],[80.67,21.34],[80.41,21.38],[80.38,21.52],[80.27,21.62],[79.92,21.52],[79.74,21.6],[79.54,21.54],[79.49,21.67],[79.23,21.72],[79.23,21.65],[78.92,21.59],[78.94,21.49],[78.43,21.5],[78.38,21.62],[78.19,21.56],[78.17,21.5],[77.94,21.39],[77.59,21.36],[77.53,21.42],[77.49,21.38],[77.42,21.53],[77.61,21.54],[77.55,21.7],[77.48,21.77],[77.29,21.76],[77.21,21.69],[77.08,21.72],[76.9,21.6],[76.8,21.6],[76.79,21.46],[76.63,21.33],[76.66,21.28],[76.62,21.19],[76.49,21.2],[76.38,21.08],[76.17,21.08],[76.11,21.16],[76.17,21.19],[76.1,21.37],[75.22,21.41],[74.9,21.63],[74.79,21.61],[74.56,21.68],[74.51,21.72],[74.52,21.91],[74.44,22.02],[74.29,21.93],[74.14,21.95],[74.09,22.01],[74.18,22.08],[74.07,22.22],[74.07,22.36],[74.19,22.32],[74.29,22.39],[74.19,22.48],[74.12,22.42],[74.04,22.54],[74.15,22.52],[74.26,22.64],[74.38,22.64],[74.48,22.86],[74.45,22.92],[74.36,22.93],[74.32,23.06],[74.39,23.11],[74.51,23.09],[74.74,23.21],[74.52,23.33],[74.61,23.46],[74.94,23.63],[74.91,23.87],[74.99,24.03],[74.89,24.26],[74.75,24.28],[74.86,24.46],[74.71,24.51],[74.82,24.67],[74.78,24.68],[74.8,24.79],[74.89,24.65],[75.02,24.77],[74.85,24.79],[74.83,24.96],[75.05,24.86],[75.12,24.89],[75.16,25.04],[75.35,25.04],[75.32,24.9],[75.28,24.97],[75.26,24.89],[75.42,24.86],[75.31,24.81],[75.21,24.91],[75.25,24.83],[75.19,24.76],[75.22,24.72],[75.62,24.68],[75.76,24.76],[75.84,24.73],[75.83,24.61],[75.92,24.57],[75.91,24.45],[75.85,24.41],[75.79,24.47],[75.73,24.4],[75.83,24.24],[75.75,24.14],[75.84,24.07],[75.7,23.97],[75.67,24.03],[75.59,23.99],[75.52,24.05],[75.46,23.92],[75.58,23.8],[75.69,23.76],[75.7,23.9],[75.78,23.85],[75.98,23.93],[75.96,24.02],[76.14,24.09],[76.19,24.33],[76.22,24.21],[76.47,24.23],[76.53,24.16],[76.7,24.28],[76.7,24.17],[76.9,24.13],[76.95,24.2],[76.84,24.33],[76.82,24.53],[76.92,24.54],[76.97,24.46],[77.07,24.57],[77.03,24.71],[76.96,24.76],[76.85,24.75],[76.81,24.82],[76.95,24.87],[76.86,25.01],[77.17,25.11],[77.4,25.11],[77.42,25.19],[77.34,25.32],[77.37,25.41],[77.29,25.42],[77.21,25.31],[77.08,25.33],[76.95,25.27],[76.9,25.32],[76.78,25.31],[76.57,25.44],[76.49,25.71],[76.6,25.87],[76.75,25.9],[76.89,26.09],[77.13,26.23],[77.82,26.55],[77.9,26.66],[78.09,26.68],[78.11,26.79],[78.37,26.86]]]},{"n":"Maharashtra","r":[[[74.45,22.01],[74.52,21.91],[74.51,21.72],[74.59,21.66],[74.9,21.63],[75.06,21.56],[75.12,21.45],[75.3,21.39],[76.1,21.37],[76.17,21.19],[76.11,21.17],[76.14,21.12],[76.28,21.07],[76.45,21.11],[76.49,21.2],[76.62,21.19],[76.66,21.28],[76.63,21.33],[76.79,21.46],[76.8,21.6],[76.9,21.6],[77.08,21.72],[77.21,21.69],[77.29,21.76],[77.48,21.77],[77.55,21.7],[77.61,21.54],[77.42,21.53],[77.49,21.38],[77.53,21.42],[77.59,21.36],[77.94,21.39],[78.17,21.5],[78.19,21.56],[78.38,21.62],[78.43,21.5],[78.94,21.49],[78.92,21.59],[79.23,21.65],[79.23,21.72],[79.49,21.67],[79.54,21.54],[79.74,21.6],[79.92,21.52],[80.27,21.62],[80.38,21.52],[80.41,21.38],[80.52,21.39],[80.68,21.31],[80.46,21.17],[80.44,21.1],[80.46,20.93],[80.55,20.94],[80.59,20.69],[80.49,20.62],[80.63,20.61],[80.62,20.34],[80.39,20.24],[80.4,20.15],[80.5,20.14],[80.55,20.07],[80.53,19.93],[80.41,19.94],[80.5,19.87],[80.4,19.8],[80.49,19.78],[80.48,19.83],[80.55,19.82],[80.67,19.7],[80.66,19.62],[80.83,19.57],[80.9,19.47],[80.8,19.43],[80.85,19.36],[80.76,19.29],[80.62,19.31],[80.58,19.4],[80.48,19.34],[80.27,18.99],[80.35,18.82],[80.25,18.76],[80.25,18.71],[80.12,18.68],[79.9,18.83],[79.95,18.86],[79.94,19.03],[79.87,19.04],[79.86,19.11],[79.95,19.17],[79.98,19.4],[79.79,19.6],[79.48,19.5],[79.25,19.61],[79.23,19.47],[79.18,19.46],[78.96,19.55],[78.97,19.65],[78.86,19.66],[78.85,19.76],[78.5,19.79],[78.31,19.91],[78.3,19.85],[78.37,19.78],[78.27,19.66],[78.31,19.46],[78.19,19.41],[78.17,19.24],[78.06,19.24],[77.95,19.34],[77.86,19.3],[77.91,19.27],[77.85,19.09],[77.81,19.1],[77.76,19.03],[77.95,18.82],[77.84,18.81],[77.79,18.69],[77.74,18.68],[77.74,18.56],[77.6,18.55],[77.6,18.48],[77.55,18.46],[77.59,18.45],[77.53,18.43],[77.57,18.31],[77.47,18.26],[77.37,18.31],[77.41,18.39],[77.32,18.46],[77.24,18.41],[77.11,18.15],[76.96,18.19],[76.92,17.92],[76.8,17.87],[76.74,17.9],[76.79,17.83],[76.72,17.78],[76.69,17.68],[76.62,17.77],[76.57,17.7],[76.57,17.76],[76.52,17.76],[76.49,17.66],[76.33,17.6],[76.38,17.5],[76.33,17.43],[76.41,17.37],[76.38,17.31],[76.24,17.38],[76.17,17.35],[76.18,17.3],[76.12,17.37],[75.93,17.33],[75.89,17.42],[75.82,17.42],[75.8,17.37],[75.63,17.48],[75.58,17.38],[75.66,17.26],[75.63,17.17],[75.67,16.96],[75.57,17.01],[75.49,16.94],[75.47,16.99],[75.29,16.96],[75.28,16.88],[75.21,16.84],[75.09,16.95],[74.93,16.94],[74.92,16.77],[74.69,16.72],[74.69,16.61],[74.57,16.55],[74.55,16.63],[74.47,16.66],[74.38,16.53],[74.26,16.54],[74.25,16.5],[74.29,16.5],[74.36,16.4],[74.32,16.38],[74.33,16.27],[74.42,16.28],[74.51,16.2],[74.48,16.09],[74.43,16.11],[74.36,16.05],[74.46,16.04],[74.41,15.85],[74.37,15.89],[74.34,15.85],[74.38,15.85],[74.36,15.78],[74.24,15.74],[74.22,15.79],[74.02,15.61],[73.86,15.8],[73.82,15.74],[73.68,15.73],[73.46,16.06],[73.47,16.16],[73.39,16.34],[73.42,16.36],[73.37,16.38],[73.47,16.42],[73.37,16.39],[73.31,16.53],[73.32,16.6],[73.4,16.59],[73.32,16.64],[73.3,16.74],[73.28,16.95],[73.33,16.97],[73.27,16.98],[73.26,17.05],[73.31,17.08],[73.19,17.3],[73.25,17.32],[73.17,17.4],[73.2,17.44],[73.14,17.56],[73.09,17.83],[73.13,17.83],[73.03,17.94],[73.01,18.02],[73.05,18.04],[72.99,18.05],[72.98,18.2],[72.93,18.21],[72.96,18.32],[72.89,18.46],[72.93,18.53],[72.79,18.94],[72.8,19.33],[72.68,19.71],[72.72,19.82],[72.66,19.81],[72.65,19.94],[72.71,19.97],[72.77,19.9],[72.7,20.08],[72.86,20.23],[72.96,20.21],[72.96,20.13],[73.03,20.07],[73.17,20.05],[73.3,20.21],[73.42,20.2],[73.38,20.39],[73.49,20.54],[73.39,20.65],[73.45,20.71],[73.66,20.56],[73.83,20.62],[73.82,20.69],[73.94,20.74],[73.9,20.98],[73.8,21.05],[73.81,21.08],[73.58,21.17],[73.63,21.13],[73.82,21.17],[73.83,21.27],[73.94,21.3],[73.95,21.4],[74.04,21.42],[74.06,21.48],[74.3,21.48],[74.33,21.54],[74.06,21.56],[73.86,21.49],[73.78,21.62],[73.88,21.64],[73.89,21.7],[73.8,21.82],[74.45,22.01]]]},{"n":"Manipur","r":[[[94.58,25.64],[94.56,25.51],[94.68,25.45],[94.58,25.21],[94.74,25.13],[94.74,25.02],[94.61,24.72],[94.55,24.71],[94.32,24.33],[94.16,23.85],[93.95,23.94],[93.81,23.92],[93.75,24.0],[93.62,24.01],[93.51,23.94],[93.35,24.11],[93.25,24.02],[93.25,24.08],[93.1,24.04],[93.08,24.1],[92.98,24.11],[93.04,24.34],[93.0,24.4],[93.06,24.57],[93.11,24.58],[93.11,24.81],[93.2,24.81],[93.25,25.02],[93.4,25.26],[93.47,25.31],[93.61,25.2],[93.81,25.46],[93.77,25.54],[93.84,25.56],[94.01,25.59],[94.31,25.49],[94.57,25.69],[94.58,25.64]]]},{"n":"Meghalaya","r":[[[91.86,26.1],[91.92,26.0],[92.3,26.07],[92.16,25.94],[92.23,25.91],[92.15,25.81],[92.16,25.67],[92.39,25.75],[92.57,25.56],[92.66,25.58],[92.57,25.47],[92.78,25.33],[92.8,25.22],[92.62,25.12],[92.53,25.14],[92.54,25.1],[92.48,25.11],[92.46,25.03],[92.07,25.19],[91.65,25.12],[91.61,25.17],[91.48,25.13],[91.27,25.21],[90.45,25.14],[89.98,25.3],[89.84,25.3],[89.87,25.54],[90.02,25.61],[89.9,25.74],[90.12,25.96],[90.48,26.02],[90.54,25.96],[90.52,25.9],[90.59,25.96],[90.63,25.9],[90.69,25.95],[90.78,25.91],[90.81,25.95],[90.92,25.91],[90.95,25.95],[90.97,25.89],[91.03,25.89],[91.0,25.82],[91.2,25.86],[91.23,25.72],[91.34,25.84],[91.53,25.87],[91.48,25.88],[91.58,26.03],[91.63,26.02],[91.61,25.94],[91.67,25.9],[91.73,26.06],[91.86,26.1]]]},{"n":"Mizoram","r":[[[92.8,24.42],[92.83,24.37],[93.02,24.39],[92.98,24.11],[93.08,24.1],[93.1,24.04],[93.15,24.08],[93.22,24.05],[93.25,24.08],[93.25,24.02],[93.34,24.05],[93.44,23.68],[93.41,23.38],[93.36,23.35],[93.39,23.13],[93.3,23.0],[93.13,23.04],[93.17,22.92],[93.1,22.81],[93.14,22.58],[93.11,22.53],[93.19,22.42],[93.21,22.26],[93.14,22.24],[93.15,22.18],[93.04,22.2],[93.06,22.1],[93.01,22.1],[93.01,21.98],[92.95,22.03],[92.91,21.94],[92.87,22.06],[92.72,22.15],[92.68,22.02],[92.61,21.98],[92.52,22.7],[92.45,22.89],[92.38,22.93],[92.36,23.23],[92.41,23.24],[92.26,23.81],[92.33,23.91],[92.3,24.25],[92.42,24.25],[92.47,24.13],[92.69,24.35],[92.76,24.52],[92.8,24.42]]]},{"n":"Nagaland","r":[[[95.21,26.93],[95.23,26.88],[95.18,26.86],[95.24,26.78],[95.24,26.68],[95.07,26.45],[95.14,26.38],[95.12,26.1],[95.18,26.07],[95.02,25.9],[95.05,25.76],[94.94,25.66],[94.9,25.56],[94.63,25.46],[94.56,25.51],[94.57,25.69],[94.31,25.49],[94.21,25.49],[94.19,25.55],[94.09,25.53],[94.01,25.59],[93.84,25.56],[93.77,25.54],[93.81,25.46],[93.61,25.2],[93.5,25.24],[93.46,25.43],[93.33,25.54],[93.71,25.84],[93.69,25.91],[93.77,25.96],[93.8,25.81],[93.98,25.92],[94.0,26.17],[94.11,26.32],[94.18,26.34],[94.19,26.46],[94.28,26.55],[94.32,26.46],[94.47,26.66],[94.76,26.77],[94.93,26.95],[95.02,26.92],[95.2,27.04],[95.21,26.93]]]},{"n":"NCT of Delhi","r":[[[77.09,28.87],[77.22,28.86],[77.21,28.79],[77.33,28.71],[77.3,28.56],[77.35,28.5],[77.25,28.48],[77.22,28.41],[77.13,28.44],[77.08,28.51],[76.89,28.5],[76.85,28.55],[76.89,28.63],[76.94,28.63],[76.95,28.82],[77.09,28.87]]]},{"n":"Puducherry","r":[]},{"n":"Punjab","r":[[[75.88,32.49],[75.95,32.42],[75.64,32.23],[75.68,32.16],[75.59,32.08],[75.91,31.95],[76.19,31.3],[76.31,31.32],[76.38,31.44],[76.45,31.28],[76.48,31.31],[76.64,31.22],[76.62,31.0],[76.73,30.96],[76.86,30.79],[76.7,30.74],[76.75,30.69],[76.88,30.68],[76.94,30.38],[76.9,30.35],[76.85,30.43],[76.74,30.42],[76.73,30.33],[76.56,30.26],[76.54,30.22],[76.6,30.25],[76.65,30.19],[76.55,30.08],[76.46,30.1],[76.42,30.2],[76.4,30.12],[76.34,30.15],[76.33,30.1],[76.22,30.16],[76.27,30.1],[76.18,29.93],[76.25,29.87],[76.05,29.75],[75.89,29.74],[75.78,29.82],[75.71,29.75],[75.58,29.74],[75.45,29.81],[75.33,29.67],[75.31,29.57],[75.23,29.54],[75.17,29.66],[75.24,29.75],[75.19,29.84],[75.16,29.78],[75.1,29.8],[75.1,29.91],[75.0,29.85],[74.81,29.99],[74.65,29.9],[74.53,29.95],[73.9,29.97],[73.98,30.12],[73.97,30.26],[73.89,30.36],[73.97,30.43],[73.94,30.49],[73.96,30.46],[74.01,30.53],[74.08,30.53],[74.1,30.61],[74.29,30.74],[74.26,30.77],[74.43,30.94],[74.71,31.1],[74.63,31.14],[74.56,31.09],[74.52,31.14],[74.53,31.32],[74.65,31.46],[74.58,31.5],[74.62,31.57],[74.49,31.72],[74.57,31.76],[74.61,31.89],[74.82,31.96],[74.93,32.07],[75.01,32.03],[75.27,32.1],[75.38,32.24],[75.34,32.34],[75.49,32.34],[75.51,32.28],[75.54,32.35],[75.73,32.42],[75.89,32.58],[75.88,32.49]]]},{"n":"Rajasthan","r":[[[73.9,29.98],[74.53,29.94],[74.56,29.87],[74.47,29.79],[74.48,29.74],[74.61,29.75],[74.58,29.56],[74.62,29.53],[74.54,29.45],[74.6,29.33],[74.85,29.4],[75.09,29.23],[75.33,29.29],[75.32,29.23],[75.41,29.26],[75.37,29.14],[75.44,29.01],[75.52,29.01],[75.48,28.92],[75.56,28.61],[75.79,28.45],[75.78,28.4],[75.93,28.36],[76.1,28.15],[76.04,28.17],[75.94,28.09],[76.04,28.07],[75.93,27.93],[75.97,27.86],[76.1,27.86],[76.18,27.8],[76.23,27.84],[76.16,27.99],[76.22,28.03],[76.19,28.05],[76.35,28.02],[76.36,28.07],[76.31,28.1],[76.36,28.12],[76.3,28.18],[76.48,28.15],[76.51,28.1],[76.46,28.09],[76.51,28.06],[76.46,28.04],[76.55,28.03],[76.55,27.97],[76.67,28.01],[76.66,28.09],[76.8,28.15],[76.81,28.21],[76.91,28.2],[76.97,28.14],[76.91,27.65],[76.98,27.65],[77.0,27.74],[77.09,27.73],[77.05,27.81],[77.14,27.77],[77.2,27.82],[77.3,27.79],[77.34,27.52],[77.44,27.46],[77.44,27.39],[77.62,27.34],[77.6,27.29],[77.68,27.19],[77.51,27.09],[77.64,27.01],[77.76,27.02],[77.43,26.86],[77.46,26.74],[77.51,26.84],[77.61,26.83],[77.76,26.93],[78.01,26.9],[78.03,26.86],[78.12,26.95],[78.27,26.92],[78.2,26.88],[78.19,26.79],[78.11,26.79],[78.09,26.68],[77.9,26.66],[77.82,26.55],[77.13,26.23],[76.89,26.09],[76.75,25.9],[76.6,25.87],[76.49,25.71],[76.57,25.44],[76.78,25.31],[76.9,25.32],[76.95,25.27],[77.08,25.33],[77.21,25.31],[77.29,25.42],[77.37,25.41],[77.34,25.32],[77.42,25.19],[77.4,25.11],[77.17,25.11],[76.86,25.01],[76.95,24.87],[76.81,24.82],[76.85,24.75],[76.96,24.76],[77.03,24.71],[77.07,24.57],[76.97,24.46],[76.92,24.54],[76.82,24.53],[76.84,24.33],[76.95,24.2],[76.9,24.13],[76.7,24.17],[76.7,24.28],[76.53,24.16],[76.47,24.23],[76.22,24.21],[76.19,24.33],[76.14,24.09],[75.96,24.02],[75.98,23.93],[75.78,23.85],[75.7,23.9],[75.69,23.76],[75.58,23.8],[75.46,23.92],[75.52,24.05],[75.59,23.99],[75.67,24.03],[75.7,23.97],[75.84,24.07],[75.75,24.14],[75.83,24.24],[75.73,24.4],[75.79,24.47],[75.85,24.41],[75.91,24.45],[75.92,24.57],[75.83,24.61],[75.84,24.73],[75.76,24.76],[75.62,24.68],[75.22,24.72],[75.19,24.76],[75.25,24.83],[75.21,24.91],[75.31,24.81],[75.42,24.86],[75.26,24.89],[75.28,24.97],[75.32,24.9],[75.35,25.04],[75.16,25.04],[75.12,24.89],[75.05,24.86],[74.85,24.97],[74.85,24.79],[75.01,24.79],[75.02,24.75],[74.89,24.65],[74.8,24.79],[74.78,24.68],[74.82,24.67],[74.71,24.51],[74.86,24.46],[74.75,24.28],[74.89,24.26],[74.99,24.03],[74.91,23.87],[74.94,23.63],[74.61,23.46],[74.52,23.33],[74.74,23.21],[74.51,23.09],[74.39,23.11],[74.32,23.06],[74.24,23.19],[74.12,23.18],[74.13,23.27],[73.97,23.38],[73.89,23.34],[73.83,23.45],[73.72,23.41],[73.63,23.45],[73.66,23.62],[73.57,23.65],[73.51,23.62],[73.5,23.7],[73.36,23.79],[73.42,23.93],[73.37,24.13],[73.24,24.01],[73.19,24.05],[73.22,24.1],[73.08,24.18],[73.23,24.36],[73.08,24.39],[73.09,24.49],[73.0,24.47],[72.99,24.36],[72.92,24.33],[72.73,24.36],[72.69,24.46],[72.54,24.51],[72.46,24.41],[72.44,24.51],[72.25,24.58],[72.35,24.62],[72.16,24.62],[72.05,24.71],[71.94,24.63],[71.87,24.68],[71.85,24.61],[71.79,24.67],[71.65,24.64],[71.48,24.68],[71.29,24.61],[71.11,24.67],[70.94,24.94],[70.89,25.15],[70.67,25.4],[70.66,25.71],[70.28,25.71],[70.1,25.94],[70.09,26.09],[70.17,26.24],[70.17,26.55],[70.06,26.6],[69.8,26.6],[69.51,26.74],[69.48,26.81],[69.59,27.18],[70.02,27.56],[70.13,27.81],[70.37,28.01],[70.59,28.01],[70.74,27.74],[70.88,27.71],[71.27,27.85],[71.66,27.88],[71.9,27.96],[71.94,28.13],[72.21,28.39],[72.3,28.67],[72.39,28.77],[72.95,29.03],[73.28,29.56],[73.4,29.94],[73.8,30.07],[73.98,30.2],[73.9,29.98]]]},{"n":"Sikkim","r":[[[88.65,28.1],[88.84,28.01],[88.89,27.89],[88.85,27.67],[88.77,27.56],[88.91,27.28],[88.81,27.25],[88.74,27.14],[88.57,27.19],[88.44,27.08],[88.1,27.14],[88.02,27.22],[88.05,27.49],[88.2,27.79],[88.13,27.95],[88.4,27.98],[88.62,28.13],[88.65,28.1]]]},{"n":"Tamil Nadu","r":[[[79.7,11.88],[79.81,11.84],[79.71,11.79],[79.8,11.78],[79.76,11.56],[79.84,11.35],[79.86,11.01],[79.72,10.96],[79.85,10.83],[79.88,10.29],[79.64,10.34],[79.77,10.27],[79.55,10.31],[79.61,10.33],[79.53,10.36],[79.52,10.31],[79.4,10.32],[79.3,10.26],[79.23,10.15],[79.26,10.04],[78.99,9.71],[78.89,9.48],[79.05,9.3],[79.19,9.28],[78.86,9.25],[78.42,9.11],[78.27,9.01],[78.21,9.05],[78.27,9.0],[78.17,8.88],[78.17,8.76],[78.21,8.77],[78.14,8.69],[78.13,8.49],[78.07,8.37],[77.73,8.17],[77.59,8.14],[77.55,8.08],[77.32,8.12],[77.1,8.29],[77.18,8.32],[77.21,8.5],[77.28,8.55],[77.17,8.75],[77.26,8.87],[77.15,9.02],[77.27,9.15],[77.28,9.3],[77.41,9.51],[77.36,9.6],[77.17,9.61],[77.28,9.97],[77.2,10.1],[77.27,10.13],[77.29,10.22],[77.24,10.35],[76.98,10.22],[76.83,10.3],[76.82,10.63],[76.88,10.64],[76.91,10.78],[76.83,10.87],[76.66,10.93],[76.72,11.04],[76.8,11.05],[76.75,11.06],[76.7,11.15],[76.74,11.22],[76.46,11.19],[76.55,11.36],[76.25,11.47],[76.23,11.57],[76.36,11.59],[76.51,11.71],[76.57,11.62],[76.85,11.58],[76.91,11.79],[77.01,11.81],[77.12,11.72],[77.11,11.77],[77.25,11.81],[77.43,11.76],[77.5,11.94],[77.68,11.95],[77.78,12.12],[77.73,12.18],[77.49,12.2],[77.47,12.25],[77.62,12.37],[77.6,12.67],[77.74,12.67],[77.84,12.87],[77.93,12.89],[77.92,12.83],[77.96,12.86],[77.99,12.81],[78.06,12.85],[78.23,12.76],[78.2,12.69],[78.47,12.62],[78.5,12.75],[78.56,12.7],[78.66,12.93],[78.63,12.99],[78.71,13.07],[78.89,13.1],[78.94,13.03],[78.93,13.08],[78.99,13.09],[79.16,13.02],[79.23,13.15],[79.32,13.11],[79.44,13.2],[79.44,13.29],[79.39,13.31],[79.44,13.34],[79.55,13.32],[79.59,13.26],[79.68,13.29],[79.76,13.21],[79.8,13.24],[79.73,13.28],[79.94,13.35],[79.99,13.48],[80.05,13.5],[80.02,13.55],[80.24,13.47],[80.27,13.56],[80.32,13.46],[80.29,13.4],[80.33,13.39],[80.33,13.44],[80.25,12.77],[80.16,12.47],[79.85,12.05],[79.84,11.95],[79.75,11.92],[79.76,12.0],[79.66,12.01],[79.74,11.91],[79.7,11.88]]]},{"n":"Telangana","r":[[[78.34,19.88],[78.5,19.79],[78.84,19.76],[78.86,19.66],[78.97,19.65],[78.96,19.55],[79.18,19.46],[79.23,19.47],[79.25,19.61],[79.48,19.5],[79.79,19.6],[79.98,19.4],[79.95,19.17],[79.86,19.11],[79.87,19.04],[79.94,19.03],[79.92,18.81],[80.12,18.68],[80.27,18.72],[80.35,18.59],[80.49,18.63],[80.64,18.52],[80.8,18.26],[80.74,18.18],[80.81,18.17],[80.84,18.24],[80.87,18.14],[80.98,18.17],[80.95,18.09],[81.04,17.8],[81.17,17.86],[81.49,17.81],[81.77,17.9],[81.8,17.85],[81.59,17.73],[81.44,17.38],[81.33,17.4],[81.28,17.33],[81.19,17.33],[81.17,17.24],[81.04,17.2],[80.91,17.21],[80.84,17.03],[80.65,17.06],[80.57,17.15],[80.45,17.02],[80.38,17.07],[80.37,16.98],[80.59,16.93],[80.56,16.83],[80.61,16.8],[80.57,16.77],[80.41,16.86],[80.38,16.82],[80.27,17.02],[80.19,17.05],[80.02,16.91],[80.0,16.87],[80.08,16.82],[79.97,16.65],[79.78,16.74],[79.27,16.57],[79.23,16.25],[78.93,16.21],[78.92,16.11],[78.85,16.16],[78.78,16.03],[78.62,16.11],[78.57,16.06],[78.41,16.09],[78.26,16.04],[78.24,15.94],[78.12,15.83],[78.04,15.91],[78.01,15.87],[77.66,15.88],[77.51,15.93],[77.5,16.04],[77.49,16.25],[77.6,16.29],[77.6,16.34],[77.35,16.38],[77.24,16.47],[77.37,16.49],[77.42,16.52],[77.4,16.57],[77.47,16.59],[77.47,16.65],[77.42,16.67],[77.47,16.68],[77.43,16.72],[77.5,17.01],[77.47,17.11],[77.36,17.16],[77.38,17.22],[77.46,17.28],[77.46,17.37],[77.53,17.38],[77.51,17.43],[77.69,17.49],[77.44,17.58],[77.45,17.69],[77.57,17.75],[77.51,17.8],[77.66,17.97],[77.55,18.06],[77.6,18.09],[77.57,18.2],[77.61,18.28],[77.52,18.35],[77.53,18.43],[77.59,18.45],[77.55,18.46],[77.6,18.48],[77.6,18.55],[77.74,18.56],[77.73,18.67],[77.84,18.81],[77.95,18.82],[77.76,19.03],[77.81,19.1],[77.85,19.09],[77.91,19.27],[77.86,19.3],[77.95,19.34],[78.06,19.24],[78.17,19.24],[78.19,19.41],[78.31,19.46],[78.27,19.66],[78.37,19.75],[78.3,19.85],[78.31,19.91],[78.34,19.88]]]},{"n":"Tripura","r":[[[92.22,24.5],[92.27,24.39],[92.21,24.25],[92.3,24.25],[92.34,24.14],[92.27,23.72],[92.22,23.65],[92.15,23.73],[92.08,23.65],[91.96,23.73],[91.98,23.48],[91.84,23.4],[91.78,23.28],[91.84,23.1],[91.62,22.94],[91.55,23.0],[91.45,23.26],[91.41,23.28],[91.38,23.2],[91.42,23.07],[91.36,23.1],[91.32,23.36],[91.16,23.6],[91.21,23.68],[91.15,23.73],[91.23,23.75],[91.28,23.98],[91.39,23.98],[91.38,24.1],[91.6,24.08],[91.67,24.23],[91.76,24.14],[91.75,24.24],[91.85,24.23],[91.91,24.14],[91.93,24.34],[92.0,24.33],[92.01,24.39],[92.12,24.38],[92.17,24.42],[92.16,24.52],[92.22,24.5]]]},{"n":"Uttar Pradesh","r":[[[77.6,30.4],[77.94,30.24],[77.8,30.09],[77.71,29.87],[77.8,29.68],[77.96,29.7],[78.0,29.54],[78.34,29.79],[78.43,29.77],[78.62,29.56],[78.94,29.45],[78.73,29.31],[78.86,29.26],[78.91,29.14],[79.14,29.12],[79.17,29.02],[79.37,28.96],[79.42,28.85],[79.79,28.89],[79.8,28.8],[79.87,28.84],[79.98,28.71],[80.07,28.83],[80.12,28.83],[80.52,28.56],[80.51,28.67],[80.57,28.69],[80.91,28.46],[81.22,28.36],[81.32,28.14],[81.43,28.17],[81.48,28.08],[81.89,27.86],[81.97,27.93],[82.07,27.92],[82.46,27.68],[82.71,27.73],[82.74,27.5],[83.18,27.45],[83.31,27.33],[83.41,27.4],[83.39,27.48],[83.61,27.47],[83.84,27.37],[83.84,27.32],[83.93,27.32],[83.91,27.26],[84.0,27.18],[83.95,27.09],[84.03,27.09],[84.06,26.89],[84.15,26.88],[84.18,26.83],[84.25,26.86],[84.24,26.74],[84.31,26.75],[84.42,26.62],[84.09,26.64],[84.06,26.54],[83.91,26.52],[83.91,26.45],[84.18,26.37],[84.17,26.24],[84.02,26.24],[84.01,26.18],[84.17,25.99],[84.54,25.88],[84.64,25.73],[84.5,25.68],[84.34,25.74],[84.29,25.66],[84.1,25.72],[84.08,25.64],[83.93,25.56],[83.82,25.46],[83.85,25.44],[83.34,25.18],[83.36,24.87],[83.55,24.62],[83.51,24.53],[83.4,24.5],[83.46,24.36],[83.38,24.31],[83.36,24.13],[83.2,23.92],[82.95,23.88],[82.67,24.12],[82.73,24.14],[82.77,24.29],[82.77,24.37],[82.72,24.38],[82.72,24.55],[82.81,24.55],[82.77,24.64],[82.67,24.7],[82.54,24.65],[82.44,24.7],[82.42,24.6],[82.3,24.61],[82.3,24.67],[82.24,24.67],[82.25,24.77],[82.18,24.74],[82.2,24.82],[81.97,24.83],[81.9,24.89],[81.91,25.01],[81.61,25.06],[81.63,25.16],[81.57,25.19],[81.48,25.13],[81.49,25.07],[81.28,25.16],[81.22,24.93],[81.17,24.95],[81.14,24.89],[81.08,24.95],[80.81,24.94],[80.91,25.16],[80.89,25.19],[80.84,25.11],[80.71,25.13],[80.78,25.06],[80.68,25.05],[80.6,25.15],[80.61,25.07],[80.48,25.1],[80.55,25.0],[80.46,24.98],[80.43,25.03],[80.5,25.04],[80.45,25.08],[80.37,25.05],[80.39,25.01],[80.29,25.02],[80.43,25.17],[80.31,25.28],[80.32,25.38],[80.26,25.42],[80.13,25.33],[80.03,25.34],[80.0,25.26],[79.86,25.24],[79.86,25.09],[79.61,25.13],[79.57,25.17],[79.5,25.08],[79.48,25.13],[79.41,25.11],[79.39,25.17],[79.5,25.27],[79.36,25.26],[79.35,25.33],[79.3,25.34],[79.27,25.27],[79.35,25.27],[79.35,25.21],[79.28,25.24],[79.31,25.13],[79.24,25.16],[79.25,25.11],[79.19,25.15],[79.14,25.11],[79.09,25.19],[79.03,25.14],[79.06,25.22],[79.01,25.27],[79.0,25.19],[78.88,25.16],[78.88,25.25],[78.98,25.28],[78.96,25.34],[78.88,25.34],[78.85,25.22],[78.79,25.29],[78.88,25.38],[78.99,25.37],[78.91,25.44],[78.94,25.55],[78.84,25.5],[78.84,25.43],[78.74,25.5],[78.76,25.43],[78.82,25.43],[78.75,25.41],[78.77,25.35],[78.67,25.38],[78.71,25.42],[78.66,25.44],[78.57,25.39],[78.58,25.35],[78.53,25.36],[78.53,25.3],[78.43,25.28],[78.58,25.25],[78.65,25.06],[78.63,24.96],[78.79,24.81],[78.76,24.6],[78.89,24.64],[78.97,24.49],[78.92,24.46],[78.99,24.44],[78.97,24.35],[78.8,24.18],[78.77,24.25],[78.68,24.24],[78.51,24.39],[78.41,24.27],[78.35,24.3],[78.37,24.38],[78.22,24.53],[78.27,24.66],[78.17,24.85],[78.33,24.99],[78.33,25.08],[78.45,25.12],[78.3,25.37],[78.43,25.47],[78.44,25.56],[78.81,25.62],[78.75,25.74],[78.82,25.82],[78.87,25.79],[78.85,25.86],[79.01,26.08],[78.95,26.13],[79.01,26.15],[78.99,26.24],[79.07,26.23],[79.05,26.26],[79.14,26.31],[79.09,26.36],[79.14,26.44],[79.06,26.45],[78.99,26.57],[79.0,26.68],[78.95,26.66],[78.72,26.79],[78.57,26.75],[78.36,26.87],[78.22,26.83],[78.2,26.88],[78.27,26.92],[78.22,26.95],[78.12,26.95],[78.03,26.86],[78.01,26.9],[77.76,26.93],[77.61,26.83],[77.51,26.84],[77.49,26.75],[77.44,26.76],[77.43,26.86],[77.76,27.02],[77.52,27.06],[77.68,27.19],[77.6,27.29],[77.62,27.34],[77.44,27.39],[77.32,27.61],[77.35,27.69],[77.28,27.8],[77.55,27.94],[77.48,28.08],[77.55,28.24],[77.48,28.26],[77.48,28.41],[77.31,28.56],[77.33,28.71],[77.2,28.8],[77.22,29.0],[77.13,29.1],[77.17,29.33],[77.1,29.6],[77.2,29.92],[77.28,30.04],[77.43,30.1],[77.58,30.31],[77.6,30.4]]]},{"n":"Uttarakhand","r":[[[79.21,31.35],[79.43,31.03],[79.52,31.03],[79.6,30.94],[79.75,31.0],[79.87,30.97],[80.12,30.77],[80.17,30.81],[80.24,30.76],[80.2,30.66],[80.23,30.57],[80.54,30.45],[80.6,30.48],[80.83,30.31],[81.03,30.25],[81.04,30.2],[80.9,30.22],[80.74,30.0],[80.6,29.95],[80.5,29.8],[80.37,29.75],[80.41,29.6],[80.25,29.44],[80.32,29.32],[80.3,29.2],[80.25,29.22],[80.27,29.14],[80.15,29.1],[80.0,28.71],[79.85,28.8],[79.87,28.84],[79.8,28.8],[79.79,28.89],[79.42,28.85],[79.37,28.96],[79.17,29.02],[79.14,29.12],[78.91,29.14],[78.86,29.26],[78.73,29.31],[78.94,29.45],[78.62,29.56],[78.49,29.74],[78.34,29.79],[78.0,29.54],[77.96,29.7],[77.8,29.68],[77.71,29.87],[77.8,30.09],[77.94,30.24],[77.58,30.41],[77.82,30.53],[77.74,30.59],[77.79,30.66],[77.7,30.76],[77.76,30.88],[77.8,30.85],[77.81,30.92],[77.75,30.95],[77.83,30.95],[77.82,31.06],[77.9,31.15],[78.03,31.15],[78.37,31.29],[78.49,31.2],[78.81,31.2],[78.88,31.11],[78.96,31.1],[79.01,31.11],[78.93,31.23],[78.94,31.32],[79.06,31.46],[79.21,31.35]]]},{"n":"West Bengal","r":[[[88.14,21.88],[88.17,21.74],[88.11,21.63],[88.04,21.68],[88.14,21.88]],[[88.09,27.16],[88.16,27.11],[88.44,27.08],[88.6,27.19],[88.88,27.11],[88.88,26.95],[88.93,27.0],[88.97,26.92],[89.03,26.94],[89.14,26.81],[89.38,26.87],[89.65,26.78],[89.64,26.72],[89.86,26.7],[89.87,26.45],[89.76,26.29],[89.72,26.3],[89.7,26.19],[89.74,26.17],[89.65,26.23],[89.66,26.17],[89.6,26.16],[89.65,26.07],[89.55,25.97],[89.43,26.04],[89.34,26.02],[89.16,26.14],[89.09,26.4],[88.98,26.41],[88.97,26.46],[88.92,26.4],[89.06,26.3],[89.05,26.24],[88.91,26.29],[88.85,26.23],[88.8,26.31],[88.68,26.27],[88.75,26.35],[88.71,26.34],[88.63,26.47],[88.44,26.55],[88.42,26.63],[88.38,26.59],[88.36,26.45],[88.49,26.46],[88.53,26.36],[88.46,26.37],[88.35,26.22],[88.18,26.15],[88.18,26.03],[88.1,25.92],[88.11,25.8],[88.27,25.81],[88.46,25.66],[88.45,25.6],[88.54,25.51],[88.7,25.47],[88.8,25.52],[88.85,25.36],[89.01,25.27],[88.92,25.17],[88.85,25.21],[88.81,25.17],[88.44,25.21],[88.45,25.03],[88.4,24.94],[88.35,24.94],[88.33,24.87],[88.27,24.88],[88.23,24.96],[88.14,24.93],[88.18,24.86],[88.01,24.66],[88.34,24.38],[88.74,24.27],[88.75,24.14],[88.7,24.11],[88.77,23.99],[88.74,23.91],[88.58,23.86],[88.57,23.64],[88.75,23.48],[88.8,23.5],[88.75,23.31],[88.7,23.3],[88.72,23.26],[89.0,23.21],[88.85,23.01],[88.97,22.85],[88.92,22.76],[88.96,22.61],[88.84,22.51],[88.85,22.43],[88.77,22.56],[88.77,22.51],[88.69,22.52],[88.68,22.59],[88.67,22.55],[88.85,22.43],[88.88,22.36],[88.82,22.36],[88.94,22.3],[88.95,22.23],[88.84,22.29],[88.92,22.17],[88.84,22.21],[88.88,22.25],[88.84,22.22],[88.88,22.2],[88.81,22.21],[88.81,22.28],[88.84,22.17],[88.75,22.2],[88.79,22.26],[88.73,22.2],[88.64,22.21],[88.67,22.34],[88.62,22.11],[88.57,22.19],[88.64,22.05],[88.6,22.07],[88.61,21.91],[88.58,21.89],[88.55,21.97],[88.57,21.9],[88.53,21.85],[88.49,21.88],[88.55,22.04],[88.47,21.9],[88.46,22.01],[88.41,21.89],[88.38,21.97],[88.39,21.8],[88.36,21.92],[88.35,21.86],[88.27,21.88],[88.31,21.85],[88.26,21.81],[88.28,21.76],[88.25,21.8],[88.27,21.73],[88.16,21.88],[88.2,22.17],[88.07,22.21],[88.11,22.3],[88.05,22.22],[87.98,22.25],[87.95,22.41],[87.88,22.44],[87.94,22.26],[88.14,22.18],[88.19,22.1],[88.06,22.01],[87.96,22.1],[88.05,22.01],[87.96,21.83],[87.71,21.64],[87.49,21.6],[87.45,21.77],[87.28,21.81],[87.24,21.96],[87.17,21.98],[87.1,21.87],[87.03,21.87],[87.02,22.05],[86.72,22.15],[86.73,22.22],[86.89,22.26],[86.89,22.3],[86.83,22.33],[86.85,22.4],[86.77,22.43],[86.75,22.48],[86.8,22.5],[86.77,22.58],[86.66,22.58],[86.62,22.68],[86.42,22.78],[86.44,22.93],[86.55,22.99],[86.21,23.0],[86.04,23.15],[85.92,23.13],[85.83,23.27],[85.9,23.37],[85.87,23.47],[86.05,23.5],[86.04,23.59],[86.15,23.57],[86.15,23.48],[86.31,23.42],[86.45,23.63],[86.8,23.69],[86.8,23.83],[86.89,23.82],[86.9,23.88],[87.13,23.8],[87.17,23.82],[87.14,23.87],[87.25,23.83],[87.25,23.91],[87.3,23.9],[87.24,24.04],[87.46,23.98],[87.44,24.01],[87.52,24.04],[87.5,24.12],[87.58,24.09],[87.61,24.13],[87.57,24.16],[87.7,24.16],[87.64,24.24],[87.76,24.31],[87.82,24.41],[87.77,24.58],[87.85,24.55],[87.92,24.6],[87.88,24.61],[87.91,24.72],[87.82,24.77],[87.98,24.9],[87.78,25.1],[87.79,25.22],[87.84,25.2],[87.86,25.28],[87.77,25.41],[87.93,25.54],[88.08,25.5],[88.03,25.59],[88.05,25.69],[87.9,25.77],[87.92,25.85],[87.81,25.92],[87.85,26.04],[87.97,26.08],[87.97,26.15],[88.08,26.18],[88.3,26.35],[88.19,26.49],[88.24,26.55],[88.15,26.51],[88.11,26.55],[88.19,26.72],[88.18,26.86],[88.13,26.99],[87.99,27.11],[88.02,27.22],[88.09,27.16]]]},{"n":"Odisha","r":[[[86.08,22.53],[86.29,22.45],[86.44,22.31],[86.51,22.34],[86.73,22.22],[86.72,22.15],[86.97,22.08],[87.03,22.03],[87.03,21.87],[87.1,21.87],[87.17,21.98],[87.24,21.96],[87.28,21.81],[87.47,21.73],[87.49,21.6],[87.41,21.54],[87.34,21.58],[87.4,21.53],[87.22,21.54],[87.07,21.46],[86.87,21.22],[86.85,21.1],[86.98,20.82],[86.79,20.75],[86.99,20.77],[87.01,20.71],[86.9,20.71],[87.06,20.72],[86.73,20.48],[86.71,20.4],[86.78,20.39],[86.78,20.33],[86.54,20.18],[86.38,19.95],[85.44,19.63],[84.92,19.27],[84.77,19.08],[84.67,19.17],[84.6,19.13],[84.67,19.08],[84.6,19.02],[84.57,19.07],[84.48,18.99],[84.42,19.02],[84.44,18.92],[84.34,18.88],[84.32,18.79],[84.09,18.75],[84.03,18.81],[83.89,18.81],[83.8,19.02],[83.75,18.99],[83.79,18.92],[83.75,18.93],[83.63,19.16],[83.54,19.01],[83.47,19.08],[83.46,18.95],[83.42,19.0],[83.31,19.0],[83.42,18.86],[83.06,18.62],[83.04,18.56],[83.1,18.55],[83.02,18.45],[83.06,18.38],[82.91,18.36],[82.81,18.45],[82.78,18.34],[82.64,18.24],[82.59,18.28],[82.61,18.38],[82.54,18.4],[82.56,18.45],[82.48,18.54],[82.37,18.42],[82.34,18.33],[82.4,18.31],[82.31,18.2],[82.37,18.14],[82.28,17.99],[82.03,18.07],[81.62,17.82],[81.39,17.81],[81.49,17.98],[81.54,18.27],[81.75,18.35],[81.96,18.57],[81.89,18.66],[81.96,18.64],[81.98,18.7],[82.09,18.72],[82.17,18.8],[82.18,18.9],[82.25,18.92],[82.22,19.1],[82.17,19.13],[82.19,19.33],[82.15,19.37],[82.19,19.42],[82.13,19.43],[82.1,19.52],[82.03,19.51],[82.07,19.79],[81.86,19.91],[81.87,20.04],[81.95,20.11],[82.03,20.01],[82.07,20.05],[82.24,20.0],[82.35,19.84],[82.45,19.91],[82.6,19.87],[82.59,19.78],[82.71,19.84],[82.72,20.0],[82.4,20.06],[82.44,20.43],[82.33,20.56],[82.38,20.63],[82.35,20.89],[82.47,20.83],[82.63,21.04],[82.64,21.15],[82.96,21.18],[83.13,21.1],[83.27,21.27],[83.28,21.38],[83.41,21.35],[83.34,21.5],[83.39,21.62],[83.49,21.63],[83.43,21.68],[83.47,21.79],[83.59,21.85],[83.54,22.04],[83.61,22.07],[83.56,22.1],[83.63,22.21],[84.01,22.37],[84.05,22.47],[84.0,22.53],[84.3,22.34],[84.53,22.42],[84.9,22.42],[85.07,22.48],[85.12,22.29],[84.99,22.08],[85.1,22.1],[85.24,22.0],[85.37,22.16],[85.69,22.05],[85.81,22.11],[85.84,22.08],[85.77,21.99],[85.91,21.97],[86.03,22.19],[85.98,22.25],[86.05,22.31],[85.96,22.48],[86.04,22.57],[86.08,22.53]]]}];
+const INDIA_GEO = [[[84.77,19.08],[84.56,18.87],[84.55,18.78],[84.41,18.67],[84.44,18.65],[84.27,18.52],[84.34,18.54],[84.14,18.35],[83.99,18.36],[84.12,18.34],[84.12,18.3],[83.56,18.02],[83.55,17.96],[83.45,17.92],[83.34,17.71],[83.24,17.63],[83.2,17.64],[83.22,17.59],[82.62,17.3],[82.31,17.03],[82.25,16.89],[82.36,16.82],[82.34,16.98],[82.38,16.88],[82.32,16.72],[82.37,16.7],[82.33,16.58],[82.29,16.62],[82.26,16.56],[82.31,16.55],[82.15,16.49],[82.18,16.56],[82.14,16.48],[81.73,16.31],[81.72,16.36],[81.71,16.3],[81.55,16.39],[81.53,16.35],[81.31,16.36],[81.25,16.3],[81.15,15.97],[81.08,16.0],[81.14,15.96],[81.01,15.85],[81.01,15.76],[80.94,15.81],[80.99,15.76],[80.94,15.73],[80.86,15.82],[80.92,15.73],[80.84,15.71],[80.76,15.88],[80.5,15.86],[80.28,15.68],[80.22,15.55],[80.13,15.56],[80.19,15.56],[80.21,15.5],[80.1,15.33],[80.08,15.2],[80.03,15.21],[80.07,15.18],[80.07,14.81],[80.18,14.59],[80.09,14.53],[80.19,14.56],[80.13,14.14],[80.25,13.8],[80.24,13.63],[80.32,13.46],[80.28,13.43],[80.33,13.38],[80.33,13.44],[80.35,13.29],[80.16,12.47],[79.89,12.07],[79.77,11.74],[79.76,11.54],[79.85,11.2],[79.88,10.29],[79.79,10.27],[79.64,10.34],[79.77,10.27],[79.55,10.31],[79.61,10.33],[79.53,10.36],[79.52,10.31],[79.39,10.32],[79.28,10.24],[79.23,10.15],[79.26,10.04],[78.99,9.71],[78.89,9.48],[79.05,9.3],[79.19,9.28],[78.86,9.25],[78.58,9.13],[78.42,9.11],[78.27,9.01],[78.21,9.05],[78.27,9.0],[78.17,8.88],[78.17,8.76],[78.21,8.77],[78.14,8.69],[78.13,8.49],[78.07,8.37],[77.73,8.17],[77.59,8.14],[77.55,8.08],[77.32,8.12],[77.01,8.36],[76.55,8.89],[76.34,9.4],[76.24,9.97],[76.04,10.49],[76.07,10.54],[76.04,10.57],[76.03,10.51],[75.9,10.8],[75.82,11.17],[75.53,11.7],[75.32,11.9],[75.31,11.94],[75.35,11.93],[75.32,11.97],[75.2,12.0],[74.83,12.83],[74.69,13.36],[74.69,13.45],[74.74,13.39],[74.71,13.43],[74.75,13.46],[74.69,13.46],[74.66,13.63],[74.76,13.64],[74.67,13.71],[74.67,13.64],[74.63,13.86],[74.52,13.99],[74.43,14.26],[74.53,14.24],[74.43,14.28],[74.36,14.5],[74.39,14.45],[74.44,14.47],[74.37,14.56],[74.31,14.52],[74.29,14.59],[74.43,14.62],[74.28,14.61],[74.25,14.74],[74.2,14.72],[74.09,14.8],[74.25,14.87],[74.12,14.84],[74.04,14.92],[74.05,14.99],[73.91,15.08],[73.96,15.19],[73.88,15.36],[73.78,15.41],[73.94,15.43],[73.79,15.46],[73.83,15.51],[73.77,15.49],[73.73,15.6],[73.77,15.63],[73.72,15.62],[73.59,15.91],[73.49,15.97],[73.47,16.16],[73.46,16.11],[73.39,16.34],[73.42,16.36],[73.37,16.37],[73.47,16.42],[73.37,16.39],[73.32,16.51],[73.32,16.6],[73.4,16.59],[73.32,16.64],[73.32,16.89],[73.28,16.89],[73.29,16.97],[73.33,16.97],[73.27,16.98],[73.26,17.05],[73.31,17.08],[73.19,17.3],[73.25,17.32],[73.17,17.4],[73.2,17.44],[73.14,17.56],[73.09,17.83],[73.13,17.83],[73.03,17.94],[73.01,18.02],[73.05,18.04],[72.99,18.05],[72.98,18.2],[72.93,18.21],[72.96,18.32],[72.89,18.46],[72.93,18.53],[72.86,18.64],[72.82,18.94],[72.79,18.94],[72.83,19.11],[72.78,19.13],[72.8,19.33],[72.67,19.76],[72.72,19.82],[72.66,19.81],[72.64,19.85],[72.68,19.96],[72.77,19.9],[72.7,20.08],[72.77,20.21],[72.76,20.33],[72.89,20.57],[72.78,20.9],[72.85,20.95],[72.76,20.93],[72.72,21.04],[72.76,21.05],[72.69,21.07],[72.72,21.14],[72.67,21.16],[72.63,21.08],[72.62,21.22],[72.65,21.23],[72.59,21.28],[72.7,21.46],[72.65,21.43],[72.67,21.52],[72.74,21.55],[72.64,21.52],[72.61,21.58],[72.7,21.65],[72.84,21.67],[72.54,21.66],[72.52,21.71],[72.64,21.95],[72.52,21.88],[72.5,21.98],[72.59,22.21],[72.75,22.17],[72.81,22.25],[72.88,22.22],[72.92,22.28],[72.75,22.23],[72.64,22.28],[72.54,22.24],[72.54,22.28],[72.49,22.2],[72.49,22.25],[72.36,22.38],[72.4,22.35],[72.37,22.32],[72.42,22.23],[72.4,22.2],[72.36,22.27],[72.39,22.17],[72.36,22.19],[72.34,22.12],[72.29,22.2],[72.32,22.13],[72.28,21.93],[72.24,22.05],[72.3,22.06],[72.3,22.11],[72.23,22.02],[72.17,22.04],[72.23,22.01],[72.22,21.96],[72.15,21.98],[72.25,21.9],[72.27,21.74],[72.18,21.82],[72.31,21.63],[72.24,21.46],[72.09,21.29],[72.11,21.2],[71.51,20.95],[71.44,20.87],[71.07,20.73],[70.85,20.75],[70.87,20.7],[70.82,20.69],[70.44,20.85],[70.1,21.1],[69.8,21.46],[69.22,21.96],[68.94,22.31],[69.07,22.48],[69.07,22.4],[69.19,22.42],[69.16,22.31],[69.23,22.26],[69.33,22.33],[69.49,22.34],[69.52,22.39],[69.5,22.44],[69.59,22.36],[69.58,22.32],[69.7,22.4],[69.67,22.45],[69.73,22.47],[69.8,22.4],[69.83,22.48],[69.91,22.46],[69.98,22.54],[70.16,22.55],[70.49,23.08],[70.4,23.03],[70.35,22.93],[70.2,22.99],[70.23,22.96],[70.16,22.94],[70.12,22.96],[70.14,23.01],[70.13,22.95],[70.09,22.95],[70.13,22.92],[69.8,22.85],[69.71,22.73],[69.63,22.8],[69.62,22.76],[69.45,22.78],[69.19,22.84],[68.65,23.15],[68.58,23.23],[68.63,23.21],[68.6,23.24],[68.67,23.27],[68.63,23.3],[68.69,23.31],[68.56,23.39],[68.48,23.55],[68.52,23.69],[68.76,23.87],[68.6,23.85],[68.53,23.76],[68.51,23.82],[68.66,23.92],[68.56,23.92],[68.55,23.97],[68.75,23.97],[68.76,24.29],[68.81,24.31],[68.87,24.21],[68.94,24.3],[69.01,24.22],[69.09,24.27],[69.19,24.24],[69.59,24.29],[69.73,24.17],[70.02,24.17],[70.11,24.29],[70.57,24.42],[70.58,24.25],[70.71,24.22],[70.88,24.25],[70.87,24.3],[70.95,24.35],[71.12,24.4],[71.11,24.44],[71.0,24.45],[70.99,24.55],[71.01,24.64],[71.1,24.69],[70.94,24.94],[70.89,25.15],[70.67,25.4],[70.66,25.71],[70.39,25.67],[70.28,25.71],[70.1,25.94],[70.09,26.09],[70.17,26.24],[70.17,26.55],[70.06,26.6],[69.8,26.6],[69.51,26.75],[69.51,27.01],[69.58,27.17],[70.02,27.56],[70.13,27.81],[70.37,28.01],[70.59,28.01],[70.68,27.92],[70.74,27.74],[70.88,27.71],[71.27,27.85],[71.66,27.88],[71.9,27.96],[71.94,28.13],[72.21,28.39],[72.3,28.67],[72.39,28.77],[72.95,29.03],[73.28,29.56],[73.4,29.94],[73.8,30.07],[73.97,30.19],[73.97,30.26],[73.89,30.36],[73.97,30.43],[73.93,30.44],[73.94,30.49],[73.96,30.46],[74.01,30.53],[74.08,30.53],[74.1,30.61],[74.29,30.74],[74.26,30.77],[74.33,30.85],[74.55,30.99],[74.57,31.05],[74.7,31.07],[74.69,31.13],[74.61,31.14],[74.58,31.09],[74.52,31.14],[74.53,31.32],[74.65,31.46],[74.58,31.5],[74.62,31.57],[74.49,31.72],[74.57,31.76],[74.61,31.89],[74.82,31.96],[74.93,32.07],[75.01,32.03],[75.18,32.07],[75.21,32.12],[75.27,32.1],[75.38,32.24],[75.34,32.34],[75.19,32.42],[75.13,32.4],[75.11,32.47],[75.03,32.49],[74.95,32.44],[74.88,32.48],[74.69,32.48],[74.63,32.6],[74.69,32.65],[74.65,32.7],[74.7,32.84],[74.64,32.81],[74.63,32.75],[74.37,32.76],[74.18,32.88],[73.99,32.94],[73.96,32.99],[73.83,33.01],[73.79,32.97],[73.74,33.07],[73.63,33.09],[73.66,33.21],[73.56,33.37],[73.63,33.53],[73.56,33.62],[73.59,33.88],[73.52,34.0],[73.48,34.29],[73.39,34.38],[73.45,34.57],[73.65,34.57],[73.7,34.65],[73.67,34.68],[73.75,34.79],[74.03,34.88],[74.11,35.02],[74.07,35.05],[74.13,35.11],[74.11,35.15],[73.81,35.24],[73.72,35.23],[73.7,35.36],[73.8,35.46],[73.78,35.53],[73.64,35.57],[73.41,35.56],[73.27,35.63],[73.14,35.72],[73.15,35.84],[73.1,35.88],[72.93,35.85],[72.83,35.89],[72.69,35.83],[72.53,35.92],[72.6,36.03],[72.53,36.07],[72.6,36.26],[72.69,36.25],[72.88,36.39],[72.88,36.44],[72.99,36.46],[73.0,36.51],[73.11,36.61],[73.09,36.7],[73.44,36.75],[73.63,36.69],[73.88,36.7],[73.9,36.75],[73.72,36.83],[73.69,36.91],[73.88,36.89],[74.06,36.81],[74.14,36.84],[74.17,36.9],[74.26,36.89],[74.43,36.99],[74.58,36.95],[74.58,37.04],[74.69,37.08],[74.75,37.01],[74.84,37.02],[74.92,36.91],[75.02,36.98],[75.1,36.94],[75.21,37.04],[75.33,37.06],[75.35,36.98],[75.43,36.96],[75.41,36.89],[75.47,36.81],[75.62,36.76],[75.77,36.57],[76.08,36.47],[76.25,36.35],[76.35,36.36],[76.56,36.17],[76.64,36.18],[76.8,36.05],[76.72,35.95],[76.81,35.84],[76.94,35.78],[77.12,35.8],[77.23,35.71],[77.36,35.72],[77.49,35.53],[77.32,35.54],[77.38,35.48],[77.72,35.48],[77.73,35.52],[77.98,35.46],[77.93,35.52],[77.95,35.61],[78.14,35.54],[78.2,35.67],[78.26,35.65],[78.27,35.72],[78.39,35.74],[78.42,35.79],[78.52,35.76],[78.66,35.86],[78.96,35.89],[79.13,35.84],[79.22,35.98],[79.38,36.0],[79.42,35.9],[79.74,35.8],[79.87,35.78],[80.0,35.84],[80.11,35.68],[80.29,35.61],[80.33,35.47],[80.18,35.17],[80.17,35.0],[80.07,34.83],[80.07,34.71],[79.86,34.69],[79.78,34.63],[79.79,34.49],[79.51,34.47],[79.59,34.24],[79.51,34.21],[79.43,34.02],[79.17,34.07],[79.11,34.02],[78.95,34.03],[78.91,33.98],[79.02,33.78],[79.06,33.78],[79.02,33.71],[79.09,33.69],[79.11,33.62],[78.92,33.63],[78.95,33.38],[79.1,33.29],[79.45,33.26],[79.39,33.04],[79.33,33.01],[79.63,32.74],[79.45,32.53],[79.32,32.59],[79.14,32.48],[79.12,32.38],[78.99,32.34],[78.83,32.44],[78.77,32.7],[78.62,32.6],[78.46,32.58],[78.4,32.53],[78.54,32.41],[78.46,32.24],[78.61,32.21],[78.61,32.12],[78.79,32.0],[78.71,31.79],[78.85,31.61],[78.72,31.51],[78.81,31.45],[78.79,31.4],[78.89,31.27],[78.93,31.26],[79.06,31.47],[79.14,31.43],[79.43,31.03],[79.52,31.03],[79.6,30.94],[79.75,31.0],[79.87,30.97],[80.12,30.77],[80.17,30.81],[80.24,30.76],[80.2,30.66],[80.23,30.57],[80.54,30.45],[80.6,30.48],[80.83,30.31],[81.03,30.25],[81.04,30.2],[80.94,30.18],[80.9,30.22],[80.74,30.0],[80.6,29.95],[80.5,29.8],[80.37,29.75],[80.41,29.6],[80.3,29.45],[80.25,29.44],[80.32,29.32],[80.3,29.2],[80.25,29.22],[80.27,29.14],[80.15,29.1],[80.07,28.83],[80.26,28.75],[80.51,28.56],[80.51,28.67],[80.57,28.69],[80.79,28.52],[80.91,28.49],[80.91,28.46],[81.21,28.36],[81.32,28.14],[81.43,28.17],[81.48,28.08],[81.89,27.86],[81.97,27.93],[82.07,27.92],[82.46,27.68],[82.71,27.73],[82.74,27.5],[83.18,27.45],[83.31,27.33],[83.39,27.37],[83.4,27.48],[83.61,27.47],[83.87,27.34],[83.85,27.45],[84.03,27.44],[84.15,27.52],[84.29,27.38],[84.63,27.34],[84.69,27.22],[84.65,27.05],[84.96,26.96],[85.06,26.88],[85.03,26.85],[85.2,26.87],[85.21,26.76],[85.34,26.74],[85.64,26.87],[85.73,26.82],[85.74,26.65],[85.85,26.61],[85.85,26.57],[86.03,26.67],[86.22,26.59],[86.35,26.62],[86.74,26.42],[86.9,26.46],[87.07,26.59],[87.09,26.45],[87.34,26.35],[87.46,26.44],[87.61,26.38],[87.68,26.44],[87.77,26.41],[87.79,26.47],[87.85,26.44],[87.89,26.49],[88.02,26.35],[88.1,26.43],[88.19,26.73],[88.13,26.99],[87.99,27.11],[88.07,27.34],[88.05,27.49],[88.2,27.79],[88.2,27.85],[88.13,27.87],[88.14,27.96],[88.4,27.98],[88.55,28.04],[88.63,28.13],[88.84,28.01],[88.89,27.86],[88.85,27.67],[88.77,27.56],[88.82,27.4],[88.93,27.33],[88.91,27.27],[88.81,27.25],[88.76,27.14],[88.88,27.11],[88.88,26.95],[88.93,27.0],[88.97,26.92],[89.03,26.94],[89.14,26.81],[89.38,26.87],[89.47,26.81],[89.65,26.78],[89.62,26.73],[89.76,26.74],[89.78,26.7],[90.13,26.75],[90.19,26.77],[90.22,26.85],[90.41,26.9],[90.56,26.8],[90.72,26.77],[91.06,26.78],[91.1,26.82],[91.34,26.78],[91.41,26.83],[91.5,26.79],[91.69,26.8],[91.89,26.92],[92.06,26.85],[92.12,26.96],[92.04,27.06],[92.03,27.16],[92.07,27.22],[92.04,27.27],[92.12,27.29],[92.06,27.33],[92.02,27.48],[91.65,27.48],[91.56,27.63],[91.64,27.76],[91.55,27.86],[91.83,27.81],[91.92,27.71],[92.22,27.86],[92.27,27.86],[92.32,27.78],[92.51,27.84],[92.57,27.82],[92.74,27.99],[92.67,28.06],[92.69,28.13],[92.97,28.26],[93.01,28.23],[93.03,28.3],[93.22,28.33],[93.24,28.4],[93.19,28.44],[93.28,28.5],[93.34,28.64],[93.85,28.71],[93.93,28.67],[94.01,28.77],[94.0,28.84],[94.16,28.95],[94.22,29.08],[94.44,29.23],[94.56,29.23],[94.63,29.35],[94.78,29.24],[94.8,29.16],[94.88,29.18],[95.03,29.13],[95.0,29.17],[95.26,29.11],[95.27,29.05],[95.45,29.03],[95.5,29.14],[95.55,29.13],[95.54,29.21],[95.6,29.26],[96.09,29.46],[96.25,29.23],[96.37,29.28],[96.4,29.25],[96.35,29.17],[96.12,29.07],[96.19,28.98],[96.17,28.9],[96.35,29.03],[96.53,29.08],[96.48,28.99],[96.62,28.77],[96.59,28.72],[96.48,28.68],[96.5,28.63],[96.33,28.53],[96.38,28.48],[96.27,28.41],[96.37,28.39],[96.4,28.34],[96.46,28.41],[96.67,28.46],[96.78,28.37],[96.9,28.38],[97.0,28.31],[97.09,28.36],[97.4,28.19],[97.33,28.15],[97.31,28.07],[97.42,28.01],[97.39,27.89],[97.26,27.9],[96.9,27.61],[96.94,27.52],[96.91,27.45],[97.17,27.14],[97.14,27.09],[96.87,27.18],[96.88,27.26],[96.71,27.37],[96.61,27.36],[96.52,27.29],[96.23,27.28],[96.04,27.19],[95.94,27.05],[95.81,27.01],[95.73,26.88],[95.67,26.9],[95.61,26.81],[95.53,26.82],[95.43,26.69],[95.3,26.65],[95.24,26.69],[95.15,26.61],[95.07,26.44],[95.14,26.38],[95.12,26.1],[95.18,26.07],[95.02,25.9],[95.05,25.76],[94.94,25.66],[94.9,25.56],[94.69,25.46],[94.64,25.4],[94.58,25.21],[94.74,25.13],[94.72,24.94],[94.32,24.33],[94.16,23.85],[93.95,23.94],[93.81,23.92],[93.75,24.0],[93.62,24.01],[93.51,23.94],[93.35,24.11],[93.33,23.98],[93.4,23.93],[93.44,23.68],[93.41,23.38],[93.36,23.35],[93.39,23.13],[93.3,23.0],[93.13,23.04],[93.17,22.92],[93.1,22.81],[93.14,22.58],[93.11,22.53],[93.19,22.42],[93.21,22.26],[93.14,22.24],[93.15,22.18],[93.04,22.2],[93.06,22.1],[93.01,22.1],[93.01,21.98],[92.95,22.03],[92.91,21.94],[92.87,22.06],[92.72,22.15],[92.68,22.02],[92.61,21.98],[92.52,22.7],[92.45,22.89],[92.38,22.93],[92.36,23.23],[92.41,23.24],[92.28,23.72],[92.22,23.65],[92.15,23.73],[92.05,23.65],[91.96,23.73],[91.98,23.48],[91.84,23.4],[91.78,23.28],[91.84,23.1],[91.62,22.94],[91.55,23.0],[91.51,23.19],[91.42,23.28],[91.38,23.2],[91.42,23.07],[91.37,23.07],[91.32,23.36],[91.16,23.6],[91.16,23.66],[91.2,23.65],[91.21,23.68],[91.15,23.73],[91.23,23.75],[91.24,23.92],[91.31,23.99],[91.39,23.98],[91.38,24.1],[91.6,24.08],[91.67,24.23],[91.76,24.14],[91.75,24.24],[91.85,24.23],[91.91,24.14],[91.93,24.34],[92.0,24.33],[91.98,24.39],[92.09,24.37],[92.17,24.42],[92.16,24.52],[92.23,24.5],[92.23,24.68],[92.28,24.79],[92.24,24.9],[92.5,24.87],[92.49,24.94],[92.42,24.98],[92.44,25.03],[92.07,25.19],[91.75,25.17],[91.65,25.12],[91.61,25.17],[91.48,25.13],[91.27,25.21],[90.73,25.15],[90.66,25.19],[90.45,25.14],[89.98,25.3],[89.84,25.3],[89.82,25.39],[89.88,25.62],[89.82,25.82],[89.89,25.94],[89.83,25.95],[89.87,25.98],[89.78,26.04],[89.8,26.09],[89.69,26.17],[89.7,26.22],[89.65,26.23],[89.66,26.17],[89.6,26.16],[89.63,26.12],[89.6,26.1],[89.65,26.07],[89.61,26.07],[89.58,25.97],[89.43,26.04],[89.36,26.01],[89.16,26.14],[89.09,26.4],[88.98,26.41],[88.97,26.46],[88.92,26.4],[89.0,26.3],[89.06,26.3],[89.05,26.24],[88.91,26.29],[88.85,26.23],[88.8,26.31],[88.68,26.27],[88.68,26.32],[88.75,26.35],[88.71,26.34],[88.63,26.47],[88.57,26.46],[88.44,26.55],[88.4,26.62],[88.34,26.47],[88.49,26.46],[88.53,26.36],[88.46,26.37],[88.36,26.29],[88.35,26.22],[88.18,26.15],[88.18,26.03],[88.1,25.92],[88.11,25.8],[88.27,25.81],[88.46,25.66],[88.45,25.6],[88.54,25.51],[88.7,25.47],[88.8,25.52],[88.85,25.36],[89.01,25.27],[88.92,25.17],[88.85,25.21],[88.81,25.17],[88.44,25.21],[88.45,25.03],[88.4,24.94],[88.35,24.94],[88.33,24.87],[88.27,24.88],[88.23,24.96],[88.14,24.93],[88.18,24.86],[88.01,24.66],[88.13,24.52],[88.34,24.38],[88.74,24.27],[88.75,24.14],[88.7,24.11],[88.73,24.0],[88.77,23.99],[88.74,23.91],[88.58,23.86],[88.57,23.64],[88.75,23.48],[88.8,23.5],[88.75,23.31],[88.7,23.3],[88.72,23.26],[89.0,23.21],[88.87,23.1],[88.85,23.01],[88.97,22.85],[88.92,22.76],[88.96,22.61],[88.84,22.51],[88.85,22.43],[88.77,22.56],[88.77,22.51],[88.69,22.52],[88.68,22.59],[88.67,22.55],[88.85,22.43],[88.88,22.36],[88.82,22.36],[88.94,22.3],[88.95,22.23],[88.84,22.29],[88.92,22.17],[88.84,22.21],[88.88,22.25],[88.84,22.22],[88.88,22.2],[88.81,22.21],[88.81,22.28],[88.84,22.17],[88.75,22.2],[88.79,22.26],[88.73,22.2],[88.64,22.21],[88.67,22.34],[88.63,22.22],[88.67,22.2],[88.62,22.11],[88.57,22.19],[88.64,22.05],[88.6,22.02],[88.6,22.07],[88.61,21.91],[88.58,21.89],[88.55,21.97],[88.57,21.9],[88.53,21.85],[88.49,21.88],[88.53,21.93],[88.49,21.97],[88.55,22.04],[88.49,21.97],[88.52,21.92],[88.47,21.9],[88.46,22.01],[88.46,21.92],[88.41,21.89],[88.38,21.97],[88.39,21.8],[88.36,21.92],[88.35,21.86],[88.27,21.88],[88.31,21.85],[88.26,21.81],[88.28,21.76],[88.25,21.8],[88.27,21.73],[88.16,21.88],[88.15,21.96],[88.22,22.08],[88.2,22.17],[88.07,22.21],[88.11,22.3],[88.05,22.22],[87.98,22.25],[87.95,22.41],[87.88,22.44],[87.94,22.37],[87.94,22.26],[88.01,22.2],[88.14,22.18],[88.19,22.1],[88.06,22.01],[87.96,22.1],[88.05,22.01],[87.97,21.84],[87.81,21.7],[87.41,21.54],[87.35,21.58],[87.4,21.53],[87.2,21.53],[86.95,21.36],[86.84,21.16],[86.97,20.79],[86.88,20.81],[86.79,20.75],[86.99,20.77],[87.01,20.71],[86.9,20.71],[87.06,20.72],[86.73,20.48],[86.71,20.4],[86.78,20.39],[86.78,20.33],[86.54,20.18],[86.38,19.95],[85.7,19.75],[85.34,19.58],[84.92,19.27],[84.77,19.08]],[[93.85,7.24],[93.95,7.0],[93.91,7.0],[93.95,6.96],[93.9,6.9],[93.9,6.81],[93.85,6.82],[93.83,6.76],[93.75,6.96],[93.66,7.01],[93.66,7.13],[93.69,7.19],[93.85,7.24]],[[92.52,10.9],[92.59,10.79],[92.6,10.68],[92.54,10.61],[92.57,10.58],[92.51,10.51],[92.39,10.53],[92.42,10.62],[92.38,10.78],[92.52,10.9]],[[92.7,12.24],[92.7,12.16],[92.76,12.18],[92.74,12.07],[92.78,12.05],[92.74,12.04],[92.77,12.0],[92.73,12.0],[92.72,11.85],[92.68,11.8],[92.75,11.93],[92.79,11.92],[92.76,11.7],[92.7,11.71],[92.67,11.65],[92.7,11.62],[92.72,11.69],[92.76,11.66],[92.71,11.48],[92.62,11.56],[92.64,11.64],[92.61,11.63],[92.59,11.72],[92.56,11.69],[92.51,11.85],[92.56,11.95],[92.61,11.86],[92.62,12.1],[92.7,12.24]],[[92.9,12.92],[92.98,12.71],[92.97,12.5],[92.91,12.41],[92.86,12.46],[92.9,12.42],[92.81,12.44],[92.9,12.32],[92.72,12.3],[92.68,12.61],[92.79,12.68],[92.73,12.67],[92.72,12.83],[92.9,12.92]],[[93.03,13.57],[93.02,13.43],[93.07,13.41],[93.03,13.37],[93.09,13.34],[93.07,13.3],[93.04,13.37],[92.95,13.34],[93.07,13.27],[93.03,13.08],[92.97,13.01],[92.9,13.08],[92.94,12.97],[92.88,12.98],[92.84,12.88],[92.79,12.91],[92.83,13.01],[92.79,13.02],[92.85,13.14],[92.81,13.15],[92.85,13.24],[92.84,13.4],[92.91,13.53],[93.03,13.57]]];
+
+const BASE = [
+ {n:"Kashmir Great Lakes",s:"Jammu & Kashmir",alt:4200,lat:34.30,lon:75.29,d:"Moderate",days:7,tags:["Lake","Pass"],note:"Seven alpine lakes, with the high point at Gadsar Pass."},
+ {n:"Vaishno Devi",s:"Jammu & Kashmir",alt:1585,lat:33.03,lon:74.95,d:"Easy",tags:["Pilgrimage"],note:"Katra up to the Bhawan, about 13 km each way."},
+ {n:"Sandakphu–Phalut",s:"West Bengal",alt:3636,lat:27.10,lon:88.00,d:"Moderate",days:6,tags:["Ridge","Summit"],note:"Highest point in West Bengal, with Everest and Kangchenjunga on one skyline."},
+ {n:"Devkund Waterfall",s:"Maharashtra",alt:300,lat:18.46,lon:73.38,d:"Easy",tags:["Waterfall"],note:"Plunge pool near Bhira, at the head of the Kundalika."},
+ {n:"Andharban",s:"Maharashtra",alt:650,lat:18.43,lon:73.42,d:"Moderate",tags:["Forest"],note:"Dense monsoon forest on the descent from Pimpri to Bhira."},
+ {n:"Adrai Jungle Trek",s:"Maharashtra",alt:900,lat:19.34,lon:73.74,d:"Easy",tags:["Forest"],note:"Jungle trail along the plateau rim."},
+ {n:"Lohgad",s:"Maharashtra",alt:1033,lat:18.709,lon:73.476,d:"Easy",tags:["Fort"],note:"The iron fort, with the Vinchu Kata ridge."},
+ {n:"Visapur",s:"Maharashtra",alt:1084,lat:18.722,lon:73.491,d:"Easy",tags:["Fort"],note:"Lohgad's taller twin across the saddle."},
+ {n:"Kalsubai",s:"Maharashtra",alt:1646,lat:19.601,lon:73.711,d:"Moderate",times:2,tags:["Summit","Pilgrimage"],note:"Highest peak in Maharashtra, with iron ladders and a small temple at the top."},
+ {n:"Duke's Nose",s:"Maharashtra",alt:1048,lat:18.736,lon:73.392,d:"Moderate",tags:["Summit"],note:"Nagphani, the hooded cliff above Khandala."},
+ {n:"Hidden Summer Waterfall (Khopoli)",s:"Maharashtra",alt:250,lat:18.79,lon:73.35,d:"Easy",tags:["Waterfall"],note:"Falls that keep running after the monsoon is gone."},
+ {n:"Naneghat",s:"Maharashtra",alt:838,lat:19.29,lon:73.67,d:"Moderate",tags:["Pass"],note:"Ancient trade pass with Satavahana-era cave inscriptions."},
+ {n:"Hidden Monsoon Waterfall (Murbad)",s:"Maharashtra",alt:300,lat:19.25,lon:73.39,d:"Easy",tags:["Waterfall"],note:"Monsoon-only falls near Murbad."},
+ {n:"Karjat Secret Waterfall Rappel",s:"Maharashtra",alt:250,lat:18.91,lon:73.33,d:"Moderate",tags:["Waterfall","Rappelling"],note:"Down the face of the falls on a rope."},
+ {n:"Blue Lagoon Waterfall (Murbad)",s:"Maharashtra",alt:280,lat:19.27,lon:73.44,d:"Easy",tags:["Waterfall","Lake"],note:"Blue-green pool at the foot of the falls."},
+ {n:"Pavagadh",s:"Gujarat",alt:800,lat:22.46,lon:73.51,d:"Easy",tags:["Pilgrimage","Summit"],note:"Hill shrine above Champaner, a UNESCO site."},
+ {n:"Girnar",s:"Gujarat",alt:1117,lat:21.53,lon:70.53,d:"Moderate",tags:["Pilgrimage","Summit"],note:"Roughly 10,000 stone steps to the top."},
+ {n:"Wei Sawdong",s:"Meghalaya",alt:1250,lat:25.24,lon:91.73,d:"Easy",tags:["Waterfall"],note:"Three-tier falls near Sohra, reached by a bamboo ladder."},
+ {n:"Double Decker Root Bridge",s:"Meghalaya",alt:950,lat:25.25,lon:91.67,d:"Moderate",tags:["Bridge","Forest"],note:"About 3,500 steps down from Tyrna to Nongriat."},
+ {n:"Chandrashila + Tungnath",s:"Uttarakhand",alt:3690,lat:30.49,lon:79.22,d:"Moderate",tags:["Summit","Pilgrimage"],note:"Past the world's highest Shiva temple, on to the summit."},
+ {n:"Deoria Tal",s:"Uttarakhand",alt:2438,lat:30.52,lon:79.13,d:"Easy",tags:["Lake"],note:"A lake that mirrors the Chaukhamba massif."},
+ {n:"Brahmatal",s:"Uttarakhand",alt:3734,lat:30.15,lon:79.61,d:"Moderate",days:6,tags:["Lake","Summit"],note:"Winter ridge with Trishul and Nanda Ghunti close by."},
+ {n:"Jalori Pass 360°",s:"Himachal Pradesh",alt:3200,lat:31.53,lon:77.37,d:"Moderate",tags:["Pass","Forest"],note:"Meadows, forest and ridgeline all around Jalori."},
+ {n:"Chhoie Waterfall",s:"Himachal Pradesh",alt:1900,lat:31.59,lon:77.35,d:"Easy",tags:["Waterfall","Forest"],note:"Forest walk to the falls near Jibhi."},
+ {n:"Yulla Kanda",s:"Himachal Pradesh",alt:3895,lat:31.63,lon:78.17,d:"Hard",days:2,tags:["Lake","Pilgrimage"],note:"Krishna temple on a high lake in Kinnaur."},
+ {n:"Hampta Pass",s:"Himachal Pradesh",alt:4270,lat:32.27,lon:77.33,d:"Moderate",days:5,tags:["Pass"],note:"Green Kullu valley to bare Lahaul in a single crossing."},
+ {n:"Bijli Mahadev",s:"Himachal Pradesh",alt:2460,lat:31.98,lon:77.20,d:"Easy",tags:["Pilgrimage","Summit"],note:"Temple above Kullu where lightning is said to strike the lingam."}
+].map((t,i) => ({id:'t'+(i+1), times:1, ...t}));
+
+const STATE_COLORS = {"Jammu & Kashmir":"#5b8db8","West Bengal":"#5f9a58","Maharashtra":"#2f8f83","Gujarat":"#d48a2a","Meghalaya":"#8ba63a","Uttarakhand":"#c4566e","Himachal Pradesh":"#7d68ad"};
+const SPARE = ["#c0703a","#4f7fc0","#b39a2e","#b0589c","#3e9aa0","#8a6bc0"];
+const colorOf = s => { if (STATE_COLORS[s]) return STATE_COLORS[s]; let h=0; for (const ch of s) h=(h*31+ch.charCodeAt(0))>>>0; return SPARE[h%SPARE.length]; };
+const fmt = n => Math.round(n).toLocaleString('en-IN');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const times = t => Math.max(1, +t.times || 1);
+const hasPos = t => t.lat != null && t.lon != null && t.lat !== '' && t.lon !== '' && Number.isFinite(+t.lat) && Number.isFinite(+t.lon);
+const shortName = n => n.replace(/\s*\(.*\)/,'');
+const hashStr = s => { let h=2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h>>>0; };
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+const lerp = (a,b,t) => a+(b-a)*t;
+const westEast = (a,b) => (hasPos(a)?+a.lon:999) - (hasPos(b)?+b.lon:999);
+
+let treks = load();
+let selectedId = null, hoverId = null, filterState = 'All';
+function load(){
+  try { const raw = localStorage.getItem(STORE); if (raw) { const d = JSON.parse(raw); if (Array.isArray(d) && d.length) return d; } } catch(e) {}
+  return JSON.parse(JSON.stringify(BASE));
+}
+function save(){ try { localStorage.setItem(STORE, JSON.stringify(treks)); } catch(e) {} }
+function toast(msg){ const el=$('#toast'); el.textContent=msg; el.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>el.hidden=true,2200); }
+const tip = $('#tip');
+function showTip(t, cx, cy){
+  tip.innerHTML = `<b>${esc(shortName(t.n))}</b><span>${esc(t.s)} · ${fmt(+t.alt)} m</span>`;
+  tip.style.left = Math.min(Math.max(cx,130), innerWidth-130)+'px'; tip.style.top = cy+'px'; tip.hidden = false;
+}
+const hideTip = () => tip.hidden = true;
+addEventListener('scroll', hideTip, {passive:true});
+
+/* =========================================================
+   Landscape painter (shared by the hero, postcards, thumbnails)
+   ========================================================= */
+let grainPattern = null;
+function grain(ctx){
+  if (!grainPattern){
+    const g = document.createElement('canvas'); g.width = g.height = 140; const x = g.getContext('2d'); const r = mulberry32(3);
+    for (let i=0;i<2600;i++){ x.fillStyle = r()<0.5 ? `rgba(0,0,0,${r()*0.5})` : `rgba(255,255,255,${r()*0.6})`; x.fillRect(r()*140, r()*140, 1, 1); }
+    grainPattern = g;
+  }
+  return ctx.createPattern(grainPattern, 'repeat');
+}
+function ridgeJagged(W, baseY, peaks, rnd, rough=0.3){
+  peaks = peaks.slice().sort((a,b) => a.x-b.x);
+  const key = [[-4, lerp(baseY, peaks[0].y, 0.3)]];
+  peaks.forEach((p,i) => {
+    if (i){ const q = peaks[i-1], lo = Math.max(p.y,q.y); key.push([(p.x+q.x)/2 + (rnd()-0.5)*(p.x-q.x)*0.35, lo + (baseY-lo)*(0.3+rnd()*0.35)]); }
+    key.push([p.x,p.y]);
+  });
+  key.push([W+4, lerp(baseY, peaks[peaks.length-1].y, 0.3)]);
+  const pts = [key[0]];
+  const sub = (a,b,d) => {
+    if (!d){ pts.push(b); return; }
+    const len = Math.hypot(b[0]-a[0], b[1]-a[1]);
+    const m = [(a[0]+b[0])/2 + (rnd()-0.5)*len*0.08, (a[1]+b[1])/2 + (rnd()-0.5)*len*rough];
+    m[1] = Math.max(m[1], Math.min(a[1],b[1]) + 1);
+    sub(a,m,d-1); sub(m,b,d-1);
+  };
+  for (let i=0;i<key.length-1;i++) sub(key[i], key[i+1], 5);
+  return {pts};
+}
+function ridgeRound(W, baseY, amp, rnd, freq=1){
+  const ph = [rnd()*6, rnd()*6, rnd()*6], pts = [];
+  for (let x=-4; x<=W+4; x+=Math.max(2, W/160)){
+    const y = baseY - amp*(0.55 + 0.3*Math.sin(x/W*3.1*freq+ph[0]) + 0.15*Math.sin(x/W*9*freq+ph[1]) + 0.06*Math.sin(x/W*27+ph[2]));
+    pts.push([x,y]);
+  }
+  return {pts};
+}
+function ridgeMesa(W, baseY, amp, rnd, n=3){
+  const plates = []; let x = -W*0.1;
+  for (let i=0;i<n;i++){
+    const w = W*(0.26+rnd()*0.24)*(4/Math.max(n,2))*0.6, x0 = x + W*(0.03+rnd()*0.1);
+    plates.push({x0, x1:x0+w, lvl:0.55+rnd()*0.45, step:rnd()<0.5});
+    x = x0 + w;
+  }
+  const edge = Math.max(W*0.045, 18), pts = [], edges = [];
+  const sm = v => v*v*(3-2*v);
+  const f = xx => {
+    let v = 0.12 + 0.05*Math.sin(xx/W*14);
+    for (const p of plates){
+      const up = Math.min(1, Math.max(0, (xx-p.x0)/edge)), dn = Math.min(1, Math.max(0, (p.x1-xx)/edge));
+      let h = p.lvl*sm(Math.min(up,dn));
+      if (p.step && xx > p.x0 + (p.x1-p.x0)*0.6) h = Math.min(h, p.lvl*0.78 + 0.22*p.lvl*Math.max(0,Math.min(1,(p.x0+(p.x1-p.x0)*0.6+edge-xx)/edge)));
+      v = Math.max(v, h);
+    }
+    return v;
+  };
+  for (let xx=-4; xx<=W+4; xx+=Math.max(1.5, W/260)){
+    pts.push([xx, baseY - amp*f(xx) + (rnd()-0.5)*amp*0.03]);
+  }
+  plates.forEach(p => { if (p.x1 > W*0.15 && p.x1 < W*0.9) edges.push({x:p.x1 - edge*0.5, y:baseY - amp*p.lvl, side:1}); if (p.x0 > W*0.1 && p.x0 < W*0.85) edges.push({x:p.x0 + edge*0.5, y:baseY - amp*p.lvl, side:-1}); });
+  return {pts, edges};
+}
+const pathOf = (pts, H) => { const p = new Path2D(); p.moveTo(pts[0][0], H+2); pts.forEach(q => p.lineTo(q[0], q[1])); p.lineTo(pts[pts.length-1][0], H+2); p.closePath(); return p; };
+const yAt = (pts, x) => { for (let i=1;i<pts.length;i++){ if (pts[i][0] >= x){ const a = pts[i-1], b = pts[i], t = (x-a[0])/((b[0]-a[0])||1); return lerp(a[1], b[1], t); } } return pts[pts.length-1][1]; };
+function topIn(pts, x0, x1){ let best = null; for (const p of pts) if (p[0]>=x0 && p[0]<=x1 && (!best || p[1] < best[1])) best = p; return best || pts[Math.floor(pts.length/2)]; }
+function fillLayer(ctx, pts, cols, H, topY){
+  const path = pathOf(pts, H);
+  const g = ctx.createLinearGradient(0, topY, 0, H); g.addColorStop(0, cols[0]); g.addColorStop(1, cols[1]);
+  ctx.fillStyle = g; ctx.fill(path); return path;
+}
+function snowCap(ctx, path, pts, W, H, color, depth){
+  ctx.save(); ctx.clip(path);
+  const top = Math.min(...pts.map(p => p[1]));
+  const g = ctx.createLinearGradient(0, top, 0, top+depth);
+  g.addColorStop(0, color); g.addColorStop(0.55, color.replace(/[\d.]+\)$/, '0.7)')); g.addColorStop(1, color.replace(/[\d.]+\)$/, '0)'));
+  ctx.fillStyle = g; ctx.fillRect(0, top-2, W, depth+2);
+  ctx.restore();
+}
+function mistBand(ctx, y, W, h, rgbaBase, a){
+  const g = ctx.createLinearGradient(0, y-h, 0, y+h);
+  g.addColorStop(0, rgbaBase+'0)'); g.addColorStop(0.5, rgbaBase+a+')'); g.addColorStop(1, rgbaBase+'0)');
+  ctx.fillStyle = g; ctx.fillRect(0, y-h, W, h*2);
+}
+function cloud(ctx, x, y, s, color){
+  for (let i=0;i<6;i++){
+    const cx = x + (i-2.5)*s*0.55, cy = y + Math.sin(i*1.7)*s*0.12, r = s*(0.45+0.25*Math.sin(i*2.3+1));
+    ctx.save(); ctx.translate(cx, cy); ctx.scale(1.6, 0.6);
+    const g = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+    g.addColorStop(0, color+'0.42)'); g.addColorStop(1, color+'0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, r, 0, 6.283); ctx.fill(); ctx.restore();
+  }
+}
+function birds(ctx, list, color){
+  ctx.strokeStyle = color; ctx.lineCap = 'round';
+  for (const b of list){
+    const f = Math.sin(b.ph)*b.s*0.35;
+    ctx.lineWidth = Math.max(1, b.s*0.14);
+    ctx.beginPath(); ctx.moveTo(b.x - b.s, b.y - f); ctx.quadraticCurveTo(b.x - b.s*0.4, b.y - b.s*0.3 - f*0.3, b.x, b.y); ctx.quadraticCurveTo(b.x + b.s*0.4, b.y - b.s*0.3 - f*0.3, b.x + b.s, b.y - f); ctx.stroke();
+  }
+}
+function conifer(ctx, x, y, h, color){
+  ctx.fillStyle = color; ctx.beginPath();
+  const w = h*0.34;
+  ctx.moveTo(x, y-h);
+  for (let i=1;i<=3;i++){ const yy = y - h + h*i/3.2; ctx.lineTo(x + w*(0.45+i*0.2), yy); ctx.lineTo(x + w*0.25*i*0.6, yy - h*0.05); }
+  ctx.lineTo(x + w*0.12, y); ctx.lineTo(x - w*0.12, y);
+  for (let i=3;i>=1;i--){ const yy = y - h + h*i/3.2; ctx.lineTo(x - w*0.25*i*0.6, yy - h*0.05); ctx.lineTo(x - w*(0.45+i*0.2), yy); }
+  ctx.closePath(); ctx.fill();
+}
+function roundTree(ctx, x, y, h, color){
+  ctx.fillStyle = color;
+  ctx.fillRect(x - h*0.04, y - h*0.45, h*0.08, h*0.45);
+  ctx.beginPath(); ctx.arc(x, y - h*0.62, h*0.36, 0, 6.283); ctx.arc(x - h*0.24, y - h*0.5, h*0.24, 0, 6.283); ctx.arc(x + h*0.25, y - h*0.52, h*0.26, 0, 6.283); ctx.fill();
+}
+function acacia(ctx, x, y, h, color){
+  ctx.strokeStyle = color; ctx.lineWidth = Math.max(1, h*0.06); ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x+h*0.05, y-h*0.6); ctx.stroke();
+  ctx.fillStyle = color; ctx.beginPath(); ctx.ellipse(x+h*0.05, y-h*0.68, h*0.5, h*0.13, 0, 0, 6.283); ctx.fill();
+}
+function trees(ctx, pts, W, H, kind, color, rnd, density, size){
+  const n = Math.round(W/density);
+  for (let i=0;i<n;i++){
+    const x = rnd()*W, y = yAt(pts, x) + size*0.15, h = size*(0.6+rnd()*0.7);
+    if (kind === 'conifer') conifer(ctx, x, y, h, color);
+    else if (kind === 'acacia'){ if (rnd() < 0.35) acacia(ctx, x, y, h*0.8, color); }
+    else roundTree(ctx, x, y, h*0.85, color);
+  }
+}
+function hiker(ctx, x, y, s, color){
+  ctx.fillStyle = color; ctx.strokeStyle = color; ctx.lineCap = 'round'; ctx.lineWidth = s*0.22;
+  ctx.beginPath(); ctx.arc(x, y - s*1.75, s*0.24, 0, 6.283); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(x, y - s*1.5); ctx.lineTo(x + s*0.05, y - s*0.75); ctx.lineTo(x - s*0.3, y); ctx.moveTo(x + s*0.05, y - s*0.75); ctx.lineTo(x + s*0.35, y); ctx.stroke();
+  ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x - s*0.42, y - s*1.48, s*0.34, s*0.6, s*0.1) : ctx.rect(x - s*0.42, y - s*1.48, s*0.34, s*0.6); ctx.fill();
+  ctx.lineWidth = s*0.1; ctx.beginPath(); ctx.moveTo(x + s*0.35, y - s*1.2); ctx.lineTo(x + s*0.55, y); ctx.stroke();
+}
+function temple(ctx, x, y, s, color, flag){
+  ctx.fillStyle = color;
+  ctx.fillRect(x - s*0.9, y - s*0.7, s*1.8, s*0.7);
+  ctx.beginPath(); ctx.moveTo(x - s*0.65, y - s*0.7); ctx.quadraticCurveTo(x - s*0.6, y - s*1.9, x, y - s*2.4); ctx.quadraticCurveTo(x + s*0.6, y - s*1.9, x + s*0.65, y - s*0.7); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.arc(x, y - s*2.5, s*0.16, 0, 6.283); ctx.fill();
+  ctx.strokeStyle = color; ctx.lineWidth = Math.max(1, s*0.08); ctx.beginPath(); ctx.moveTo(x, y - s*2.5); ctx.lineTo(x, y - s*3.4); ctx.stroke();
+  ctx.fillStyle = flag; ctx.beginPath(); ctx.moveTo(x, y - s*3.4); ctx.lineTo(x + s*0.9, y - s*3.15); ctx.lineTo(x, y - s*2.9); ctx.closePath(); ctx.fill();
+}
+function fort(ctx, x, y, s, color){
+  ctx.fillStyle = color;
+  const w = s*7, h = s*0.9;
+  ctx.fillRect(x - w/2, y - h, w, h + s*0.3);
+  for (let i=0;i<10;i++){ ctx.fillRect(x - w/2 + i*w/10 + s*0.1, y - h - s*0.4, w/20, s*0.42); }
+  ctx.beginPath(); ctx.arc(x - w/2, y - h*0.4, s*0.9, Math.PI, 0); ctx.rect(x - w/2 - s*0.9, y - h*0.4, s*1.8, h*0.4 + s*0.3); ctx.fill();
+  ctx.beginPath(); ctx.arc(x + w/2, y - h*0.4, s*0.9, Math.PI, 0); ctx.rect(x + w/2 - s*0.9, y - h*0.4, s*1.8, h*0.4 + s*0.3); ctx.fill();
+  ctx.fillRect(x - s*0.1, y - h - s*2.4, s*0.12, s*2);
+  ctx.fillStyle = '#e8892b'; ctx.beginPath(); ctx.moveTo(x, y - h - s*2.4); ctx.lineTo(x + s*1.1, y - h - s*2.1); ctx.lineTo(x, y - h - s*1.8); ctx.fill();
+}
+function waterfall(ctx, x, y0, y1, s, rnd){
+  const w = s*1.1;
+  const g = ctx.createLinearGradient(0, y0, 0, y1); g.addColorStop(0,'rgba(255,255,255,0.92)'); g.addColorStop(1,'rgba(240,248,250,0.75)');
+  ctx.fillStyle = g; ctx.beginPath();
+  ctx.moveTo(x - w*0.5, y0); ctx.bezierCurveTo(x - w*0.6, lerp(y0,y1,0.4), x - w*0.9, lerp(y0,y1,0.7), x - w*1.2, y1);
+  ctx.lineTo(x + w*1.2, y1); ctx.bezierCurveTo(x + w*0.9, lerp(y0,y1,0.7), x + w*0.6, lerp(y0,y1,0.4), x + w*0.5, y0); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = 'rgba(190,215,225,0.7)'; ctx.lineWidth = Math.max(0.6, s*0.08);
+  for (let i=0;i<7;i++){ const xx = x + (rnd()-0.5)*w*1.4; ctx.beginPath(); ctx.moveTo(xx, y0 + (y1-y0)*rnd()*0.4); ctx.lineTo(xx + (xx-x)*0.4, y1 - (y1-y0)*rnd()*0.2); ctx.stroke(); }
+  for (let i=0;i<9;i++){ const r = s*(1+rnd()*1.8); const cx = x + (rnd()-0.5)*s*5, cy = y1 - rnd()*s*1.2; const m = ctx.createRadialGradient(cx,cy,0,cx,cy,r); m.addColorStop(0,'rgba(255,255,255,0.75)'); m.addColorStop(1,'rgba(255,255,255,0)'); ctx.fillStyle = m; ctx.beginPath(); ctx.arc(cx,cy,r,0,6.283); ctx.fill(); }
+}
+function prayerFlags(ctx, a, b, s){
+  const cols = ['#3567b0','#f3f1ea','#c63c35','#3f8b47','#e6bf35'];
+  const mx = (a[0]+b[0])/2, my = Math.max(a[1],b[1]) + s*2.2;
+  ctx.strokeStyle = 'rgba(40,40,40,0.6)'; ctx.lineWidth = Math.max(0.6, s*0.08);
+  ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.quadraticCurveTo(mx, my, b[0], b[1]); ctx.stroke();
+  const n = 14;
+  for (let i=1;i<n;i++){
+    const t = i/n, x = (1-t)*(1-t)*a[0] + 2*(1-t)*t*mx + t*t*b[0], y = (1-t)*(1-t)*a[1] + 2*(1-t)*t*my + t*t*b[1];
+    ctx.fillStyle = cols[i%5]; ctx.fillRect(x - s*0.3, y, s*0.6, s*0.75);
+  }
+  ctx.fillStyle = 'rgba(40,40,40,0.75)'; ctx.fillRect(a[0]-s*0.06, a[1], s*0.12, s*3); ctx.fillRect(b[0]-s*0.06, b[1], s*0.12, s*3);
+}
+function lake(ctx, cx, cy, rx, ry, sky){
+  const g = ctx.createLinearGradient(0, cy-ry, 0, cy+ry);
+  g.addColorStop(0, sky[1]); g.addColorStop(1, sky[0]);
+  ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, 6.283); ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.55)'; ctx.lineWidth = 1;
+  for (let i=0;i<6;i++){ const y = cy - ry*0.5 + i*ry*0.22, w = rx*(0.2+0.12*((i*7)%5)); ctx.beginPath(); ctx.moveTo(cx - w + i*rx*0.07, y); ctx.lineTo(cx + w*0.7 + i*rx*0.05, y); ctx.stroke(); }
+}
+function rootBridge(ctx, W, H, s, trunk, leaf){
+  const xl = W*0.16, xr = W*0.84;
+  ctx.fillStyle = 'rgba(120,160,165,0.9)'; ctx.beginPath(); ctx.moveTo(0, H*0.93); ctx.bezierCurveTo(W*0.3, H*0.88, W*0.6, H*0.98, W, H*0.92); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill();
+  ctx.fillStyle = trunk;
+  [xl, xr].forEach(x => { ctx.beginPath(); ctx.moveTo(x - s*3, H); ctx.bezierCurveTo(x - s*1.6, H*0.7, x - s*2.4, H*0.45, x - s*1.2, H*0.2); ctx.lineTo(x + s*1.2, H*0.2); ctx.bezierCurveTo(x + s*2.4, H*0.45, x + s*1.6, H*0.7, x + s*3, H); ctx.closePath(); ctx.fill(); });
+  ctx.strokeStyle = trunk; ctx.lineCap = 'round';
+  [H*0.6, H*0.78].forEach((y, k) => {
+    for (let i=0;i<5;i++){ ctx.lineWidth = s*(0.5 - i*0.06); ctx.beginPath(); ctx.moveTo(xl + s*1.2, y + i*s*0.4 - s); ctx.quadraticCurveTo(W*0.5, y + s*4 + i*s*0.5 + k*s, xr - s*1.2, y + i*s*0.4 - s); ctx.stroke(); }
+    ctx.lineWidth = s*0.18; for (let i=0;i<9;i++){ const x = lerp(xl, xr, (i+1)/10); ctx.beginPath(); ctx.moveTo(x, y - s*1.6); ctx.lineTo(x, y + s*2.4 + Math.sin(i)*s); ctx.stroke(); }
+  });
+  ctx.fillStyle = leaf;
+  [xl, xr].forEach(x => { for (let i=0;i<7;i++){ ctx.beginPath(); ctx.arc(x + (i-3)*s*2.2, H*0.15 + Math.sin(i*1.3)*s*1.4, s*(2.6+Math.cos(i)*0.8), 0, 6.283); ctx.fill(); } });
+}
+
+const MOODS = {
+  alpine: {sky:['#86aed3','#f2dcc8'], sun:'255,241,216', mist:'rgba(240,244,250,', far:['#d3deeb','#b4c5d8'], mid:['#7f95ae','#667d96'], near:['#4e6a6a','#3e5856'], fore:['#26403a','#1a2e29'], tree:'#172a25', treeKind:'conifer', snow:'rgba(255,255,255,1)'},
+  green:  {sky:['#93bddd','#eaf1e6'], sun:'255,248,226', mist:'rgba(238,244,240,', far:['#ccd9e4','#b2c2d1'], mid:['#88a5a0','#708f88'], near:['#5c8561','#4b7350'], fore:['#2d4c34','#203a27'], tree:'#1b3322', treeKind:'conifer', snow:'rgba(255,255,255,1)'},
+  monsoon:{sky:['#a9bdb7','#e5ebe3'], sun:'250,250,240', mist:'rgba(236,241,236,', far:['#b9cbc1','#a6bbaf'], mid:['#86a68d','#6f9177'], near:['#4f7a58','#406a49'], fore:['#2a4a31','#1d3824'], tree:'#183021', treeKind:'round'},
+  cloud:  {sky:['#b9c9c6','#eceee8'], sun:'250,250,244', mist:'rgba(240,243,240,', far:['#b5c8bd','#a6bcb0'], mid:['#87a98d','#749a7b'], near:['#557f5a','#466f4c'], fore:['#2a4a30','#1d3623'], tree:'#173020', treeKind:'round'},
+  dry:    {sky:['#e7b07a','#f9e5c6'], sun:'255,236,200', mist:'rgba(250,236,214,', far:['#dcc3a1','#d0b28d'], mid:['#b8916a','#a07c58'], near:['#836446','#6e533a'], fore:['#4a3a2a','#382b1f'], tree:'#2f2419', treeKind:'acacia'}
+};
+function moodOf(t){
+  const a = +t.alt, tags = (t.tags||[]).map(x => x.toLowerCase());
+  if (a >= 2900 || (t.s === 'West Bengal' && a > 2500)) return 'alpine';
+  if (t.s === 'Meghalaya') return 'cloud';
+  if (t.s === 'Gujarat') return 'dry';
+  if (t.s === 'Maharashtra' || (tags.includes('waterfall') && a < 1500)) return 'monsoon';
+  return 'green';
+}
+function paintScene(cv, t){
+  const ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
+  ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,W,H);
+  const rnd = mulberry32(hashStr(t.id + t.n));
+  const M = MOODS[moodOf(t)], tags = (t.tags||[]).map(x => x.toLowerCase()), has = k => tags.includes(k);
+  const s = W/120; // detail unit
+  // sky
+  const sg = ctx.createLinearGradient(0,0,0,H*0.7); sg.addColorStop(0, M.sky[0]); sg.addColorStop(1, M.sky[1]);
+  ctx.fillStyle = sg; ctx.fillRect(0,0,W,H);
+  const sx = W*(0.15+rnd()*0.7), sy = H*(0.14+rnd()*0.14);
+  const sun = ctx.createRadialGradient(sx,sy,0,sx,sy,W*0.28); sun.addColorStop(0,`rgba(${M.sun},0.95)`); sun.addColorStop(0.07,`rgba(${M.sun},0.9)`); sun.addColorStop(0.08,`rgba(${M.sun},0.35)`); sun.addColorStop(1,`rgba(${M.sun},0)`);
+  ctx.fillStyle = sun; ctx.fillRect(0,0,W,H);
+  for (let i=0;i<3;i++) cloud(ctx, rnd()*W, H*(0.1+rnd()*0.22), W*(0.06+rnd()*0.06), 'rgba(255,255,255,');
+  const mood = moodOf(t);
+  const fx = W*(0.42+rnd()*0.16);
+  // far
+  let far;
+  if (mood === 'alpine' || mood === 'green'){
+    const pk = []; const n = 4 + Math.floor(rnd()*3);
+    for (let i=0;i<n;i++) pk.push({x: W*(i+0.2+rnd()*0.6)/n, y: H*(mood==='alpine'?0.2:0.32) + rnd()*H*0.16});
+    far = ridgeJagged(W, H*0.6, pk, rnd, 0.32);
+  } else if (mood === 'monsoon') far = ridgeMesa(W, H*0.6, H*0.2, rnd, 3);
+  else far = ridgeRound(W, H*0.56, H*0.16, rnd, 1.4);
+  const farTop = Math.min(...far.pts.map(p => p[1]));
+  const farPath = fillLayer(ctx, far.pts, M.far, H, farTop);
+  if (M.snow) snowCap(ctx, farPath, far.pts, W, H, M.snow, H*(mood==='alpine'?0.16:0.09));
+  mistBand(ctx, H*0.6, W, H*0.07, M.mist, mood==='cloud'?0.9:0.6);
+  // mid: the focal layer
+  let mid, focal;
+  if (mood === 'alpine'){
+    const peakY = H*(0.22 + (1 - Math.min(1, (+t.alt-2800)/1600))*0.12);
+    mid = ridgeJagged(W, H*0.74, [{x:fx, y:peakY}, {x:W*0.12, y:H*0.5}, {x:W*0.88, y:H*0.47}], rnd, 0.26);
+  } else if (mood === 'green'){
+    mid = ridgeJagged(W, H*0.76, [{x:fx, y:H*0.4}, {x:W*0.1, y:H*0.56}, {x:W*0.9, y:H*0.54}], rnd, 0.18);
+  } else if (mood === 'monsoon'){
+    mid = ridgeMesa(W, H*0.78, H*(0.24 + Math.min(1,+t.alt/1700)*0.12), rnd, 3);
+  } else if (mood === 'dry'){
+    mid = ridgeJagged(W, H*0.8, [{x:fx, y:H*0.3}, {x:W*0.15, y:H*0.68}, {x:W*0.85, y:H*0.66}], rnd, 0.12);
+  } else mid = ridgeRound(W, H*0.72, H*0.22, rnd, 1.1);
+  const midTop = Math.min(...mid.pts.map(p => p[1]));
+  const midPath = fillLayer(ctx, mid.pts, M.mid, H, midTop);
+  if (mood === 'alpine') snowCap(ctx, midPath, mid.pts, W, H, M.snow, H*0.12);
+  focal = topIn(mid.pts, W*0.3, W*0.7);
+  // features on the focal layer
+  const dark = M.fore[1];
+  if (has('waterfall') && mid.edges && mid.edges.length){
+    const e = mid.edges.reduce((a,b) => Math.abs(b.x-W/2) < Math.abs(a.x-W/2) ? b : a);
+    focal = [e.x, e.y]; mid.fallEdge = e;
+  }
+  if (has('fort') && mood === 'monsoon') fort(ctx, focal[0], focal[1] + s*0.4, s*1.15, dark);
+  else if (has('pilgrimage')) temple(ctx, focal[0], focal[1] + s*0.3, s*1.25, dark, '#e8892b');
+  if (has('pass') || (mood === 'alpine' && !has('pilgrimage'))){
+    const a = topIn(mid.pts, focal[0]-W*0.22, focal[0]-W*0.08), b = topIn(mid.pts, focal[0]+W*0.08, focal[0]+W*0.22);
+    if (has('pass')) prayerFlags(ctx, [a[0], a[1]-s*2.5], [b[0], b[1]-s*2.5], s*0.9);
+  }
+  mistBand(ctx, H*0.76, W, H*0.06, M.mist, mood==='cloud'?0.85:0.45);
+  // near
+  let near;
+  if (mood === 'monsoon') near = ridgeMesa(W, H*0.9, H*0.16, rnd, 4);
+  else near = ridgeRound(W, H*0.86, H*0.1, rnd, 1.6);
+  if (has('waterfall') && mid.fallEdge){
+    const e = mid.fallEdge, bottom = Math.min(yAt(near.pts, e.x) + H*0.02, H*0.92);
+    waterfall(ctx, e.x + e.side*s*0.3, e.y + s*0.2, bottom, s*1.1, rnd);
+    if (has('rappelling')){ ctx.strokeStyle = '#e8892b'; ctx.lineWidth = Math.max(1, s*0.15); ctx.beginPath(); ctx.moveTo(e.x + e.side*s*2.5, e.y - s*0.2); ctx.lineTo(e.x + e.side*s*3.4, lerp(e.y, bottom, 0.45)); ctx.stroke(); hiker(ctx, e.x + e.side*s*3.6, lerp(e.y, bottom, 0.45) + s*1.4, s*0.8, dark); }
+  } else if (has('waterfall')){
+    waterfall(ctx, focal[0], focal[1] + s*1.5, H*0.86, s*1.1, rnd);
+  }
+  if (!has('bridge')){
+    const nearTop = Math.min(...near.pts.map(p => p[1]));
+    fillLayer(ctx, near.pts, M.near, H, nearTop);
+  }
+  // lake
+  const isLake = has('lake') && !has('waterfall');
+  if (isLake) lake(ctx, W*0.5, H*0.88, W*0.36, H*0.07, M.sky);
+  if (has('waterfall') && has('lake')) lake(ctx, W*0.52, H*0.92, W*0.18, H*0.035, ['#3f9db0','#8fd0d6']);
+  // foreground
+  if (has('bridge')){
+    rootBridge(ctx, W, H, s, M.fore[1], M.fore[0]);
+  } else {
+    let fore = ridgeRound(W, H*1.02, H*0.1, rnd, 2);
+    if (isLake) fore = {pts: fore.pts.map(([x,y]) => [x, y + H*0.14*Math.exp(-(((x-W*0.5)/(W*0.32))**2))])};
+    fillLayer(ctx, fore.pts, M.fore, H, H*0.85);
+    const dense = has('forest') ? 8 : 16;
+    trees(ctx, fore.pts, W, H, M.treeKind, M.tree, rnd, dense, H*(has('forest')?0.2:0.14));
+  }
+  // hiker on the high point
+  if (!has('rappelling') && !has('bridge')){
+    const off = (has('pilgrimage') || (has('fort') && mood==='monsoon')) ? s*(has('fort')?6:2.6) : 0;
+    const hx = focal[0] + off, hy = yAt(mid.pts, hx);
+    hiker(ctx, hx, hy + s*0.15, s*0.85, dark);
+  }
+  const bl = Array.from({length: 2 + Math.floor(rnd()*3)}, () => ({x: W*(0.1+rnd()*0.8), y: H*(0.1+rnd()*0.25), s: s*(0.9+rnd()*0.6), ph: rnd()*6}));
+  birds(ctx, bl, 'rgba(40,45,50,0.7)');
+  // paper grain and soft vignette
+  ctx.globalAlpha = 0.08; ctx.fillStyle = grain(ctx); ctx.fillRect(0,0,W,H); ctx.globalAlpha = 1;
+  const v = ctx.createRadialGradient(W/2, H*0.45, W*0.3, W/2, H*0.5, W*0.8); v.addColorStop(0,'rgba(0,0,0,0)'); v.addColorStop(1,'rgba(20,25,20,0.22)');
+  ctx.fillStyle = v; ctx.fillRect(0,0,W,H);
+}
+
+/* =========================================================
+   Hero: a living landscape that follows the viewer's clock
+   ========================================================= */
+const PERIODS = {
+  night:{sky:['#0b1424','#1c2c44','#34445e'], far:['#5a6b84','#43536b'], mid:['#2e3c51','#253347'], near:['#1b2733','#151f29'], fore:['#0d1519','#090f12'], tree:'#070c0e', snow:'rgba(214,224,238,1)', mist:'rgba(150,170,200,', ink:'#eef2f6', label:'rgba(238,242,246,0.9)', sun:{x:0.8,y:0.17,c:'255,250,232',moon:true}, birds:false, stars:true, cloud:'rgba(190,200,220,'},
+  dawn: {sky:['#6c8cbb','#c8b1c4','#f6c99f'], far:['#cbc6d8','#b4b2c9'], mid:['#8890ab','#727c98'], near:['#506070','#41505e'], fore:['#26332f','#1b2622'], tree:'#141e1b', snow:'rgba(255,240,230,1)', mist:'rgba(250,232,225,', ink:'#1b2530', label:'rgba(27,37,48,0.85)', sun:{x:0.2,y:0.6,c:'255,214,168'}, birds:true, cloud:'rgba(255,225,215,'},
+  day:  {sky:['#78acdb','#b6d5ea','#eef3ea'], far:['#cbd9e7','#b1c4d7'], mid:['#88a4a9','#708e91'], near:['#5a835f','#486f4d'], fore:['#28452f','#1c3423'], tree:'#152a1c', snow:'rgba(255,255,255,1)', mist:'rgba(240,246,244,', ink:'#16261e', label:'rgba(22,38,30,0.85)', sun:{x:0.82,y:0.15,c:'255,250,228'}, birds:true, cloud:'rgba(255,255,255,'},
+  dusk: {sky:['#3b4b7d','#b37798','#f2a870'], far:['#a092b2','#8b80a2'], mid:['#5f5f85','#4f5175'], near:['#323b52','#283046'], fore:['#151b26','#0e131b'], tree:'#0a0e15', snow:'rgba(255,214,200,1)', mist:'rgba(240,200,200,', ink:'#f7f1ea', label:'rgba(247,241,234,0.92)', sun:{x:0.76,y:0.68,c:'255,196,138'}, birds:true, cloud:'rgba(255,200,180,'}
+};
+function periodNow(){ const h = new Date().getHours(); return h < 5 || h >= 20 ? 'night' : h < 8 ? 'dawn' : h < 17 ? 'day' : 'dusk'; }
+const hero = {c:$('#hero'), running:false, visible:true};
+function buildHero(){
+  const c = hero.c, r = c.getBoundingClientRect(), dpr = Math.min(devicePixelRatio||1, 2);
+  c.width = Math.round(r.width*dpr); c.height = Math.round(r.height*dpr);
+  const W = r.width, H = r.height; Object.assign(hero, {W, H, dpr, ctx:c.getContext('2d')});
+  const P = PERIODS[hero.period = periodNow()]; hero.P = P;
+  $('#heroCopy').style.setProperty('--hero-ink', P.ink);
+  const label = {night:'painted for the night sky', dawn:'painted for dawn', day:'painted for daylight', dusk:'painted for dusk'}[hero.period];
+  $('#clock').textContent = `${label} · the sky follows your clock`;
+  const narrow = W < 700, rnd = mulberry32(21);
+  const mk = () => { const k = document.createElement('canvas'); k.width = c.width; k.height = c.height; const x = k.getContext('2d'); x.setTransform(dpr,0,0,dpr,0,0); return [k,x]; };
+  // sky (static)
+  const [skyC, sx] = mk();
+  const g = sx.createLinearGradient(0,0,0,H*0.75); g.addColorStop(0,P.sky[0]); g.addColorStop(0.55,P.sky[1]); g.addColorStop(1,P.sky[2]);
+  sx.fillStyle = g; sx.fillRect(0,0,W,H);
+  const sunX = W*P.sun.x, sunY = H*P.sun.y, sr = Math.min(W,H)*0.045;
+  const glow = sx.createRadialGradient(sunX,sunY,0,sunX,sunY,Math.max(W,H)*0.5); glow.addColorStop(0,`rgba(${P.sun.c},0.55)`); glow.addColorStop(1,`rgba(${P.sun.c},0)`);
+  sx.fillStyle = glow; sx.fillRect(0,0,W,H);
+  sx.fillStyle = `rgba(${P.sun.c},1)`; sx.beginPath(); sx.arc(sunX, sunY, sr, 0, 6.283); sx.fill();
+  if (P.sun.moon){ const px = sx.getImageData(Math.round((sunX + sr*1.6)*dpr), Math.round(sunY*dpr), 1, 1).data; sx.fillStyle = `rgb(${px[0]},${px[1]},${px[2]})`; sx.beginPath(); sx.arc(sunX + sr*0.55, sunY - sr*0.25, sr*0.88, 0, 6.283); sx.fill(); }
+  hero.sky = skyC;
+  hero.stars = P.stars ? Array.from({length: Math.round(W*H/2400)}, () => ({x:rnd()*W, y:rnd()*H*0.6, r:rnd()*1.1+0.2, p:rnd()*6, s:0.4+rnd()*1.2})) : [];
+  hero.clouds = Array.from({length: narrow?3:5}, () => ({x:rnd()*W*1.2, y:H*(0.08+rnd()*0.3), s:W*(0.05+rnd()*0.05), v:6+rnd()*10}));
+  hero.birds = P.birds ? Array.from({length: narrow?4:7}, (_,i) => ({x:W*(0.35+rnd()*0.4) + i*14, y:H*(0.3+rnd()*0.12) + (i%2)*8, s:4+rnd()*3, ph:rnd()*6, v:14+rnd()*6})) : [];
+
+  // far range: the high treks as named peaks
+  const top = treks.filter(t => +t.alt > 0).slice().sort((a,b) => b.alt - a.alt).slice(0, narrow ? 3 : 6);
+  const maxA = Math.max(4300, ...top.map(t => +t.alt));
+  const baseFar = H*(narrow ? 0.72 : 0.67), amp = H*(narrow ? 0.2 : 0.36); hero.farBase = baseFar;
+  const xs = top.map((_,i) => W*((narrow?0.1:0.42) + (i+0.5)/top.length*(narrow?0.84:0.54)));
+  const order = top.slice().sort(westEast);
+  const peaks = order.map((t,i) => ({x: xs[i] + (rnd()-0.5)*W*0.03, y: baseFar - (+t.alt/maxA)*amp, t}));
+  const extra = [{x:W*0.05, y:baseFar - amp*0.42}, {x:W*0.2, y:baseFar - amp*0.5}, {x:W*0.32, y:baseFar - amp*0.38}];
+  const far = ridgeJagged(W, baseFar, peaks.concat(extra), rnd, 0.3);
+  const [farC, fx] = mk(); const fp = fillLayer(fx, far.pts, P.far, H, baseFar - amp); snowCap(fx, fp, far.pts, W, H, P.snow, H*0.12);
+  hero.far = farC; hero.peaks = peaks; hero.lab = null;
+  const mid = ridgeJagged(W, H*0.78, Array.from({length:7}, (_,i) => ({x:W*(i+0.3+rnd()*0.4)/7, y:H*(0.6+rnd()*0.1)})), rnd, 0.25);
+  const [midC, mx] = mk(); fillLayer(mx, mid.pts, P.mid, H, H*0.58); hero.mid = midC;
+  const near = ridgeMesa(W, H*0.92, H*0.13, rnd, narrow ? 2 : 4);
+  const [nearC, nx] = mk(); fillLayer(nx, near.pts, P.near, H, H*0.74); trees(nx, near.pts, W, H, 'round', P.near[1], rnd, 26, H*0.035); hero.near = nearC;
+  const fore = ridgeRound(W, H*1.02, H*0.07, rnd, 2.2);
+  const [foreC, ox] = mk(); fillLayer(ox, fore.pts, P.fore, H, H*0.9); trees(ox, fore.pts, W, H, 'conifer', P.tree, rnd, narrow?16:12, H*0.11);
+  ox.globalAlpha = 0.06; ox.fillStyle = grain(ox); ox.fillRect(0,0,W,H); ox.globalAlpha = 1;
+  hero.fore = foreC;
+  // drifting mist sprites
+  const band = H*0.26, mistC = document.createElement('canvas'); mistC.width = c.width; mistC.height = Math.round(band*dpr);
+  const mi = mistC.getContext('2d'); mi.setTransform(dpr,0,0,dpr,0,0);
+  for (let i=0;i<34;i++){
+    const x = rnd()*W, r = band*(0.22+rnd()*0.24), cy = band/2 + (rnd()-0.5)*band*0.1;
+    for (const dx of [-W, 0, W]){
+      mi.save(); mi.translate(x+dx, cy); mi.scale(3.2, 1);
+      const m = mi.createRadialGradient(0,0,0,0,0,r); m.addColorStop(0, P.mist+'0.32)'); m.addColorStop(1, P.mist+'0)');
+      mi.fillStyle = m; mi.fillRect(-r,-r,r*2,r*2); mi.restore();
+    }
+  }
+  hero.mist = mistC; hero.band = band;
+}
+function drawHero(ts){
+  const {ctx, W, H, dpr} = hero; if (!ctx) return;
+  const t = ts/1000;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.drawImage(hero.sky, 0, 0, W, H);
+  for (const s of hero.stars){ const a = reduced ? 0.7 : 0.3 + 0.7*(0.5+0.5*Math.sin(t*s.s + s.p)); ctx.fillStyle = `rgba(255,250,235,${a})`; ctx.fillRect(s.x, s.y, s.r, s.r); }
+  for (const c of hero.clouds){ const x = reduced ? c.x : ((c.x + t*c.v) % (W*1.4)) - W*0.2; cloud(ctx, x, c.y, c.s, hero.P.cloud); }
+  ctx.drawImage(hero.far, 0, 0, W, H);
+  const drift = reduced ? 0 : (t*8) % W;
+  const bd = hero.band, y1 = hero.farBase - bd*0.5, y2 = H*0.8 - bd*0.5;
+  ctx.drawImage(hero.mist, drift, y1, W, bd); ctx.drawImage(hero.mist, drift - W, y1, W, bd);
+  ctx.drawImage(hero.mid, 0, 0, W, H);
+  const d2 = reduced ? 0 : (t*14) % W;
+  ctx.globalAlpha = 0.85; ctx.drawImage(hero.mist, -d2, y2, W, bd); ctx.drawImage(hero.mist, W - d2, y2, W, bd); ctx.globalAlpha = 1;
+  ctx.drawImage(hero.near, 0, 0, W, H);
+  ctx.drawImage(hero.fore, 0, 0, W, H);
+  if (hero.birds.length){
+    const bl = hero.birds.map(b => ({x: reduced ? b.x : ((b.x + t*b.v) % (W*1.2)), y: b.y + (reduced ? 0 : Math.sin(t*0.8 + b.ph)*4), s: b.s, ph: reduced ? 1 : t*9 + b.ph}));
+    birds(ctx, bl, hero.period === 'dusk' ? 'rgba(30,25,40,0.75)' : 'rgba(30,40,40,0.65)');
+  }
+  // handwritten summit labels
+  ctx.textAlign = 'center';
+  if (!hero.lab || hero.lab.W !== W){
+    const boxes = [];
+    hero.lab = {W, list: hero.peaks.slice().sort((a,b) => a.x-b.x).map(p => {
+      ctx.font = '700 18px Caveat, "Segoe Print", cursive';
+      const w = Math.max(ctx.measureText(shortName(p.t.n)).width, 60) + 10, x = Math.min(Math.max(p.x, w/2+8), W - w/2 - 8);
+      let lift = 0;
+      while (boxes.some(b => x - w/2 < b.x + b.w && x + w/2 > b.x && p.y - 62 - lift < b.y + b.h && p.y - 24 - lift > b.y) && lift < 160) lift += 36;
+      boxes.push({x: x - w/2, y: p.y - 62 - lift, w, h: 38});
+      return {p, x, lift};
+    })};
+  }
+  for (const {p, x: lx, lift} of hero.lab.list){
+    const on = p.t.id === hoverId;
+    ctx.strokeStyle = hero.P.label; ctx.lineWidth = 1; ctx.setLineDash([2,3]);
+    ctx.beginPath(); ctx.moveTo(p.x, p.y - 6); ctx.lineTo(p.x, p.y - 24 - lift); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = hero.P.label;
+    ctx.font = `700 ${on?21:18}px Caveat, "Segoe Print", cursive`;
+    ctx.fillText(shortName(p.t.n), lx, p.y - 44 - lift);
+    ctx.font = '500 13px Figtree, system-ui, sans-serif';
+    ctx.fillText(fmt(+p.t.alt)+' m', lx, p.y - 29 - lift);
+  }
+}
+function heroLoop(ts){ drawHero(ts); if (hero.running) requestAnimationFrame(heroLoop); }
+function startHero(){ if (reduced){ drawHero(0); return; } if (!hero.running && hero.visible){ hero.running = true; requestAnimationFrame(heroLoop); } }
+new IntersectionObserver(es => es.forEach(e => { hero.visible = e.isIntersecting; if (!e.isIntersecting) hero.running = false; else startHero(); })).observe(hero.c);
+hero.c.addEventListener('pointermove', e => {
+  const r = hero.c.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  const p = (hero.peaks||[]).find(p => Math.abs(p.x - x) < 46 && y > p.y - 70 && y < p.y + 40);
+  hoverId = p ? p.t.id : null; hero.c.style.cursor = p ? 'pointer' : '';
+  if (reduced) drawHero(0);
+});
+hero.c.addEventListener('click', () => { if (hoverId){ selectTrek(hoverId); $('#atlas').scrollIntoView({behavior: reduced?'auto':'smooth'}); } });
+
+/* =========================================================
+   Watercolour map of India
+   ========================================================= */
+const K = Math.cos(22*Math.PI/180), S = 20, LON0 = 68, LAT1 = 37.6;
+const prj = (lon, lat) => [(lon-LON0)*K*S, (LAT1-lat)*S];
+const FULL = {x:0, y:0, w:+((97.7-LON0)*K*S).toFixed(1), h:(LAT1-6.2)*S};
+const svg = $('#map');
+let vb = {...FULL}, zoomState = 'All', anim = null;
+const ringPath = rings => rings.map(r => 'M' + r.map(([lo,la]) => prj(lo,la).map(v => v.toFixed(1)).join(' ')).join('L') + 'Z').join('');
+const NS = 'http://www.w3.org/2000/svg';
+function buildMapBase(){
+  const glyphsH = [[74.8,34.7],[75.9,34.1],[76.9,33.4],[77.9,32.7],[77.7,31.9],[78.7,31.3],[79.5,30.7],[80.2,30.1],[88.5,27.6],[92.1,27.9],[93.4,28.2],[94.8,28.4],[95.9,28.1]];
+  const glyphsW = [[73.65,19.9],[73.7,18.4],[73.85,17.0],[74.1,15.6],[74.7,14.0],[75.6,12.3],[76.6,10.6],[77.2,9.2]];
+  const mtn = ([lo,la], s) => { const [x,y] = prj(lo,la); return `<path class="glyph" d="M${(x-6*s).toFixed(1)} ${(y+3*s).toFixed(1)} L${(x-1.5*s).toFixed(1)} ${(y-4*s).toFixed(1)} L${(x+1*s).toFixed(1)} ${(y-1*s).toFixed(1)} L${(x+2.6*s).toFixed(1)} ${(y-2.8*s).toFixed(1)} L${(x+6*s).toFixed(1)} ${(y+3*s).toFixed(1)}"/><path class="glyph" d="M${(x-3.1*s).toFixed(1)} ${(y-1.6*s).toFixed(1)} L${(x-1.5*s).toFixed(1)} ${(y-0.8*s).toFixed(1)} L${(x).toFixed(1)} ${(y-1.8*s).toFixed(1)}"/>`; };
+  const hill = ([lo,la]) => { const [x,y] = prj(lo,la); return `<path class="glyph" d="M${(x-5).toFixed(1)} ${(y+2).toFixed(1)} Q${x.toFixed(1)} ${(y-5).toFixed(1)} ${(x+5).toFixed(1)} ${(y+2).toFixed(1)}"/>`; };
+  const country = ringPath(INDIA_GEO);
+  const [tx0, ty] = prj(68, 23.44), [tx1] = prj(97.7, 23.44);
+  const [as1x, as1y] = prj(69.6, 12.8), [bbx, bby] = prj(86.2, 15.6), [wgx, wgy] = prj(72.7, 17.2);
+  svg.innerHTML = `
+  <defs>
+    <filter id="wash" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="11" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.4 1.5" result="ga"/>
+      <feComposite in="d" in2="ga" operator="in"/>
+    </filter>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs>
+  <rect x="-400" y="-400" width="1400" height="1500" style="fill:var(--water)"/>
+  <g filter="url(#soft)"><path class="halo" d="${country}" stroke-width="16" stroke-opacity=".10"/><path class="halo" d="${country}" stroke-width="8" stroke-opacity=".16"/></g>
+  <path class="halo" d="${country}" stroke-width="3" stroke-opacity=".28"/>
+  <g id="statesG"></g>
+  <g id="washG" filter="url(#wash)"></g>
+  <path class="coastline" d="${country}"/>
+  <line class="tropic" x1="${tx0}" y1="${ty}" x2="${tx1}" y2="${ty}"/>
+  <text class="sea" x="${tx1-6}" y="${ty-5}" text-anchor="end" font-size="11">Tropic of Cancer</text>
+  <text class="sea" x="${as1x}" y="${as1y}" font-size="17" text-anchor="middle">Arabian Sea</text>
+  <text class="sea" x="${bbx}" y="${bby}" font-size="17" text-anchor="middle">Bay of Bengal</text>
+  <text class="sea" x="${wgx}" y="${wgy}" font-size="11" text-anchor="middle" transform="rotate(-72 ${wgx} ${wgy})">Western Ghats</text>
+  <g id="glyphs">${glyphsH.map(p => mtn(p, 1)).join('')}${glyphsW.map(hill).join('')}</g>
+  <g id="trailsG"></g>
+  <g id="pinsG"></g>
+  <g id="labelsG"></g>
+  <g id="hintG"></g>`;
+  $('#statesG').innerHTML = STATES_GEO.map(st => `<path class="st" data-n="${esc(st.n)}" d="${ringPath(st.r)}"/>`).join('');
+  svg.setAttribute('viewBox', `${FULL.x} ${FULL.y} ${FULL.w} ${FULL.h}`);
+}
+function renderMap(){
+  const visited = {}; treks.forEach(t => visited[t.s] = (visited[t.s]||0) + times(t));
+  svg.querySelectorAll('.st').forEach(p => { const v = visited[p.dataset.n]; p.classList.toggle('visited', !!v); });
+  $('#washG').innerHTML = STATES_GEO.filter(st => visited[st.n]).map(st => `<path d="${ringPath(st.r)}" fill="${colorOf(st.n)}" fill-opacity=".55" pointer-events="none"/>`).join('');
+  // trails: each state's treks joined like a walked path
+  const groups = {}; treks.filter(hasPos).forEach(t => (groups[t.s] ||= []).push(t));
+  $('#trailsG').innerHTML = Object.entries(groups).map(([st, arr]) => {
+    if (arr.length < 2) return '';
+    const pts = arr.map(t => prj(+t.lon, +t.lat)); const out = [pts.shift()];
+    while (pts.length){ const l = out[out.length-1]; let bi = 0, bd = 1e9; pts.forEach((p,i) => { const d = (p[0]-l[0])**2 + (p[1]-l[1])**2; if (d < bd){ bd = d; bi = i; } }); out.push(pts.splice(bi,1)[0]); }
+    let d = `M${out[0][0].toFixed(2)} ${out[0][1].toFixed(2)}`;
+    for (let i=1;i<out.length;i++){ const a = out[i-1], b = out[i], mx = (a[0]+b[0])/2 + (b[1]-a[1])*0.18, my = (a[1]+b[1])/2 - (b[0]-a[0])*0.18; d += ` Q${mx.toFixed(2)} ${my.toFixed(2)} ${b[0].toFixed(2)} ${b[1].toFixed(2)}`; }
+    return `<path class="trail" d="${d}" stroke="${colorOf(st)}"/>`;
+  }).join('');
+  $('#pinsG').innerHTML = treks.filter(hasPos).slice().sort((a,b) => a.alt - b.alt).map(t => {
+    const [x,y] = prj(+t.lon, +t.lat), c = colorOf(t.s);
+    return `<g class="pin${t.id===selectedId?' sel':''}" data-id="${t.id}" tabindex="0" role="button" aria-label="${esc(t.n)}, ${fmt(+t.alt)} metres"><circle class="ring" cx="${x}" cy="${y}" stroke="${c}"/><circle class="dot" cx="${x}" cy="${y}" fill="${c}"/></g>`;
+  }).join('');
+  const chips = ['All', ...Object.keys(visited)];
+  $('#zoomChips').innerHTML = chips.map(s => `<button class="chip" type="button" data-z="${esc(s)}" aria-pressed="${s===zoomState}" style="--c:${s==='All'?'var(--ink)':colorOf(s)}"><i></i>${s==='All'?'All of India':esc(s)}</button>`).join('');
+  scaleMap();
+}
+function zoomTarget(state){
+  if (state === 'All') return {...FULL};
+  const pts = treks.filter(t => t.s === state && hasPos(t)).map(t => prj(+t.lon, +t.lat));
+  let x0, x1, y0, y1;
+  if (pts.length){ x0 = Math.min(...pts.map(p => p[0])); x1 = Math.max(...pts.map(p => p[0])); y0 = Math.min(...pts.map(p => p[1])); y1 = Math.max(...pts.map(p => p[1])); }
+  else { const st = STATES_GEO.find(s => s.n === state); if (!st) return {...FULL}; const all = st.r.flat().map(([lo,la]) => prj(lo,la)); x0 = Math.min(...all.map(p => p[0])); x1 = Math.max(...all.map(p => p[0])); y0 = Math.min(...all.map(p => p[1])); y1 = Math.max(...all.map(p => p[1])); }
+  const cx = (x0+x1)/2, cy = (y0+y1)/2, ar = FULL.w/FULL.h;
+  let w = Math.max(x1-x0, (y1-y0)*ar) * 1.9, h;
+  w = Math.max(w, 46); h = w/ar;
+  return {x: cx - w/2, y: cy - h/2, w, h};
+}
+function zoomTo(state){
+  zoomState = state;
+  const from = {...vb}, to = zoomTarget(state), t0 = performance.now(), dur = reduced ? 0 : 900;
+  cancelAnimationFrame(anim);
+  const step = now => {
+    const k = dur ? Math.min(1, (now - t0)/dur) : 1, e = k < .5 ? 4*k*k*k : 1 - Math.pow(-2*k+2, 3)/2;
+    vb = {x: lerp(from.x,to.x,e), y: lerp(from.y,to.y,e), w: lerp(from.w,to.w,e), h: lerp(from.h,to.h,e)};
+    svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+    scaleMap();
+    if (k < 1) anim = requestAnimationFrame(step); else labelPins();
+  };
+  anim = requestAnimationFrame(step);
+  $('#zoomChips').querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.z === state));
+  if (state === 'All') labelPins(); else $('#labelsG').innerHTML = '';
+}
+function scaleMap(){
+  const z = vb.w / FULL.w;
+  svg.querySelectorAll('.pin').forEach(g => {
+    const t = treks.find(x => x.id === g.dataset.id); if (!t) return;
+    const r = (2.6 + (+t.alt/4300)*3.2) * Math.max(z, 0.07);
+    g.querySelector('.dot').setAttribute('r', r); g.querySelector('.dot').setAttribute('stroke-width', r*0.35);
+    g.querySelector('.ring').setAttribute('r', r*1.3); g.querySelector('.ring').setAttribute('stroke-width', r*0.3);
+  });
+  svg.querySelectorAll('.trail').forEach(p => { p.setAttribute('stroke-width', 1.3*z); p.setAttribute('stroke-dasharray', `${1.5*z} ${3*z}`); });
+  svg.querySelectorAll('.glyph').forEach(p => p.style.strokeWidth = 0.8*Math.max(z,0.15));
+  svg.querySelectorAll('.coastline').forEach(p => p.style.strokeWidth = 0.8*Math.max(z,0.12));
+  svg.querySelectorAll('.st').forEach(p => p.style.strokeWidth = 0.7*Math.max(z,0.12));
+}
+function labelPins(){
+  const z = vb.w / FULL.w, fs = 15*z;
+  const inView = treks.filter(hasPos).filter(t => { const [x,y] = prj(+t.lon,+t.lat); return x > vb.x && x < vb.x+vb.w && y > vb.y && y < vb.y+vb.h; });
+  let list;
+  if (zoomState === 'All'){
+    list = treks.filter(t => t.id === selectedId && hasPos(t));
+    const mh = treks.filter(t => t.s === 'Maharashtra' && hasPos(t));
+    if (mh.length >= 4){
+      const [x,y] = prj(68.4, 17.6), [tx,ty] = prj(73.15, 18.75), sx = x + 58, sy = y - 13;
+      $('#hintG').innerHTML = `<g class="hint" data-z="Maharashtra"><text x="${x}" y="${y}" font-size="15">${mh.reduce((a,t)=>a+times(t),0)} treks hiding here</text><path d="M${sx} ${sy} Q ${sx+4} ${ty} ${tx-5} ${ty+1}" fill="none" style="stroke:var(--ink)" stroke-width="1"/><path d="M${tx-10} ${ty-3} L${tx-5} ${ty+1} L${tx-11} ${ty+4}" fill="none" style="stroke:var(--ink)" stroke-width="1"/></g>`;
+    } else $('#hintG').innerHTML = '';
+  } else { list = inView; $('#hintG').innerHTML = ''; }
+  const placed = [];
+  $('#labelsG').innerHTML = list.slice().sort((a,b) => b.alt - a.alt).map(t => {
+    const [x,y] = prj(+t.lon,+t.lat), name = shortName(t.n).replace(' Waterfall',' Falls').replace(' Jungle Trek','');
+    const w = name.length*fs*0.42, h = fs;
+    let lx = x + fs*0.55, anchor = 'start';
+    if (lx + w > vb.x + vb.w - 2) { lx = x - fs*0.55; anchor = 'end'; }
+    const box = anchor === 'start' ? [lx, y - h*0.7, w, h] : [lx - w, y - h*0.7, w, h];
+    if (placed.some(b => box[0] < b[0]+b[2] && box[0]+box[2] > b[0] && box[1] < b[1]+b[3] && box[1]+box[3] > b[1])) return '';
+    placed.push(box);
+    return `<text class="lbl" x="${lx}" y="${y + fs*0.3}" font-size="${fs}" stroke-width="${fs*0.22}" text-anchor="${anchor}">${esc(name)}</text>`;
+  }).join('');
+}
+svg.addEventListener('click', e => {
+  const pin = e.target.closest('.pin'); if (pin){ selectTrek(pin.dataset.id); return; }
+  const hint = e.target.closest('.hint'); if (hint){ zoomTo(hint.dataset.z); return; }
+  const st = e.target.closest('.st.visited');
+  if (st && zoomState !== st.dataset.n){ zoomTo(st.dataset.n); return; }
+  if (!st && zoomState !== 'All') zoomTo('All');
+});
+svg.addEventListener('keydown', e => { const pin = e.target.closest('.pin'); if (pin && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); selectTrek(pin.dataset.id); } });
+svg.addEventListener('pointerover', e => { const pin = e.target.closest('.pin'); if (pin){ const t = treks.find(x => x.id === pin.dataset.id), r = pin.querySelector('.dot').getBoundingClientRect(); showTip(t, r.left + r.width/2, r.top); } });
+svg.addEventListener('pointerout', e => { if (e.target.closest('.pin')) hideTip(); });
+$('#zoomChips').addEventListener('click', e => { const b = e.target.closest('.chip'); if (b) zoomTo(b.dataset.z); });
+
+/* =========================================================
+   Postcard
+   ========================================================= */
+const pcCanvas = $('#pc');
+function orderList(){ return treks.slice().sort(westEast); }
+function selectTrek(id, opts={}){
+  const t = treks.find(x => x.id === id); if (!t) return;
+  selectedId = id;
+  svg.querySelectorAll('.pin').forEach(g => g.classList.toggle('sel', g.dataset.id === id));
+  const r = pcCanvas.getBoundingClientRect(), dpr = Math.min(devicePixelRatio||1, 2);
+  pcCanvas.width = Math.max(320, Math.round(r.width*dpr)); pcCanvas.height = Math.round(pcCanvas.width*0.75);
+  paintScene(pcCanvas, t);
+  const when = t.when ? new Date(t.when+'-01T00:00:00').toLocaleDateString('en-IN',{month:'long',year:'numeric'}) : '';
+  $('#pcName').textContent = shortName(t.n);
+  $('#pcMeta').textContent = [t.s, fmt(+t.alt)+' m', t.d, t.days ? t.days+' days' : '', times(t) > 1 ? `done ${times(t)} times` : '', when].filter(Boolean).join(' · ');
+  $('#pcNote').textContent = t.note || '';
+  const pm = esc(t.s.toUpperCase()), id2 = 'pmArc';
+  $('#postmark').innerHTML = `<defs><path id="${id2}" d="M50,50 m-34,0 a34,34 0 1,1 68,0 a34,34 0 1,1 -68,0"/></defs>
+    <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <text font-family="Figtree,sans-serif" font-size="9.5" font-weight="700" fill="currentColor" letter-spacing="1"><textPath href="#${id2}" textLength="208" lengthAdjust="spacing">${pm} · ${esc(t.d.toUpperCase())} ·</textPath></text>
+    <text x="50" y="49" text-anchor="middle" font-family="Gloock,serif" font-size="15" fill="currentColor">${fmt(+t.alt)}</text>
+    <text x="50" y="61" text-anchor="middle" font-family="Figtree,sans-serif" font-size="8" font-weight="700" fill="currentColor" letter-spacing="1.5">METRES</text>`;
+  if (zoomState === 'All') labelPins();
+  document.querySelectorAll('.card.on').forEach(c => c.classList.remove('on'));
+  const card = document.querySelector(`.card[data-id="${id}"]`); if (card) card.classList.add('on');
+}
+$('#prevBtn').addEventListener('click', () => { const l = orderList(), i = l.findIndex(t => t.id === selectedId); selectTrek(l[(i-1+l.length)%l.length].id); });
+$('#nextBtn').addEventListener('click', () => { const l = orderList(), i = l.findIndex(t => t.id === selectedId); selectTrek(l[(i+1)%l.length].id); });
+$('#pcEdit').addEventListener('click', () => selectedId && openForm(selectedId));
+
+/* =========================================================
+   Cairn
+   ========================================================= */
+function renderCairn(){
+  const stones = [];
+  treks.forEach(t => { for (let i=0;i<times(t);i++) stones.push(t); });
+  stones.sort((a,b) => b.alt - a.alt);
+  const rnd = mulberry32(17), W = 340, maxA = Math.max(4300, ...stones.map(t => +t.alt));
+  let y = 0; const parts = [];
+  const list = stones.map(t => { const w = 58 + (+t.alt/maxA)*170 + rnd()*14, h = 13 + (+t.alt/maxA)*16 + rnd()*4; return {t, w, h}; });
+  const total = list.reduce((a,s) => a + s.h*0.84, 0) + 40;
+  y = total;
+  list.forEach((s,i) => {
+    const cx = W/2 + (rnd()-0.5)*14, cy = y - s.h/2, n = 16, pts = [];
+    const tilt = (rnd()-0.5)*0.12; for (let k=0;k<n;k++){ const a = k/n*6.283, j = 1 + (rnd()-0.5)*0.22, sq = Math.sin(a) > 0 ? 0.82 : 1.08; pts.push([cx + Math.cos(a)*s.w/2*j, cy + Math.sin(a)*s.h/2*j*sq + Math.cos(a)*s.w*tilt]); }
+    let d = `M${((pts[n-1][0]+pts[0][0])/2).toFixed(1)} ${((pts[n-1][1]+pts[0][1])/2).toFixed(1)}`;
+    for (let k=0;k<n;k++){ const a = pts[k], b = pts[(k+1)%n]; d += ` Q${a[0].toFixed(1)} ${a[1].toFixed(1)} ${((a[0]+b[0])/2).toFixed(1)} ${((a[1]+b[1])/2).toFixed(1)}`; }
+    parts.push(`<g class="stone" data-id="${s.t.id}"><path d="${d}" style="fill:color-mix(in srgb, ${colorOf(s.t.s)} ${16+Math.round(rnd()*14)}%, var(--stone))"/><path d="${d}" fill="url(#shade)" stroke="none"/><title>${esc(s.t.n)} · ${fmt(+s.t.alt)} m</title></g>`);
+    y -= s.h*0.84;
+  });
+  const grass = [];
+  for (let i=0;i<40;i++){ const x = 10 + i*8 + rnd()*4, h = 6 + rnd()*10; grass.push(`M${x.toFixed(1)} ${total+4} q ${(rnd()*4-2).toFixed(1)} ${(-h/2).toFixed(1)} ${(rnd()*6-3).toFixed(1)} ${(-h).toFixed(1)}`); }
+  const svgC = $('#cairn');
+  svgC.setAttribute('viewBox', `0 ${y - 30} ${W} ${total - y + 40}`);
+  svgC.innerHTML = `<defs><linearGradient id="shade" x1="0" y1="0" x2="0.15" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".32"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient></defs><ellipse cx="${W/2}" cy="${total+3}" rx="${W*0.45}" ry="6" style="fill:var(--line)"/>${parts.reverse().join('')}<path class="grass" d="${grass.join(' ')}"/>
+    <g transform="translate(${W/2} ${y + 4})"><line x1="0" y1="0" x2="0" y2="-26" style="stroke:var(--ink)" stroke-width="1.5"/><path d="M0 -26 L16 -22 L0 -17 Z" style="fill:var(--marigold)"/></g>`;
+  const sum = treks.reduce((a,t) => a + (+t.alt||0)*times(t), 0);
+  const refs = [{a:8849,l:'Everest',v:'8,849 m'},{a:11000,l:'Jets cruising',v:'~11 km'},{a:25000,l:'Thickest part of the ozone layer',v:'~25 km'},{a:50000,l:'Top of the stratosphere',v:'~50 km'},{a:100000,l:'Edge of space',v:'100 km'}];
+  const passed = refs.filter(r => r.a <= sum), next = refs.find(r => r.a > sum);
+  $('#cairnLine').innerHTML = `${stones.length} stones. Stand their summits on top of each other and you'd be <em>${(sum/1000).toFixed(1)} km</em> up, ${(sum/8849).toFixed(1)} Everests high${passed.length ? `, past ${passed[passed.length-1].l === 'Jets cruising' ? 'the cruising jets' : 'the ' + passed[passed.length-1].l.toLowerCase()}` : ''}.`;
+  $('#ladder').innerHTML = refs.map(r => `<div class="${r.a <= sum ? 'passed' : r === next ? 'next' : ''}"><span>${r.l}</span><span>${r === next ? fmt(r.a - sum)+' m to go' : r.v}</span></div>`).join('');
+  svgC.querySelectorAll('.stone').forEach(p => p.addEventListener('click', () => selectTrek(p.dataset.id)));
+}
+
+/* =========================================================
+   Patches
+   ========================================================= */
+const ICONS = {
+  peak:'<path class="ico" d="M-16 10 L-4 -10 L2 -1 L7 -7 L17 10 Z"/><path class="ico" d="M-8 -3 L-4 -10 L0 -4"/>',
+  snow:'<path class="ico" d="M0 -14 V14 M-12 -7 L12 7 M-12 7 L12 -7 M-3 -11 L0 -8 L3 -11 M-3 11 L0 8 L3 11"/>',
+  fort:'<path class="ico" d="M-15 10 V-4 H-11 V-8 H-7 V-4 H-3 V-8 H3 V-4 H7 V-8 H11 V-4 H15 V10 Z M-3 10 V3 A3 3 0 0 1 3 3 V10"/>',
+  drop:'<path class="ico" d="M0 -14 C 6 -5 10 0 10 5 A10 10 0 0 1 -10 5 C -10 0 -6 -5 0 -14 Z"/><path class="ico" d="M-5 5 A5 5 0 0 0 0 10"/>',
+  map:'<path class="ico" d="M-15 -9 L-5 -12 L5 -9 L15 -12 V9 L5 12 L-5 9 L-15 12 Z M-5 -12 V9 M5 -9 V12"/>',
+  lake:'<path class="ico" d="M-16 -2 L-8 -12 L-2 -5 L4 -11 L16 -2"/><path class="ico" d="M-14 4 Q -7 1 0 4 T 14 4 M-10 10 Q -4 7 2 10 T 12 10"/>',
+  temple:'<path class="ico" d="M-10 10 H10 M-8 10 V2 H8 V10 M-6 2 Q -6 -8 0 -12 Q 6 -8 6 2 M0 -12 V-17 L6 -15 L0 -13"/>',
+  rope:'<path class="ico" d="M-6 -14 C 8 -10 -10 -4 4 0 C 14 4 -6 8 2 14"/><circle class="ico" cx="-6" cy="-14" r="2"/>',
+  roots:'<path class="ico" d="M-15 -12 V12 M15 -12 V12 M-15 -2 Q 0 8 15 -2 M-15 4 Q 0 14 15 4 M-8 1 V7 M0 3 V10 M8 1 V7"/>',
+  again:'<path class="ico" d="M10 -6 A12 12 0 1 0 12 4"/><path class="ico" d="M4 -8 L10 -6 L11 -12"/>',
+  tent:'<path class="ico" d="M-16 10 L0 -12 L16 10 Z M0 -12 V10 M-5 10 L0 2 L5 10"/>',
+  boot:'<path class="ico" d="M-10 -12 H2 V0 L12 4 Q 15 6 14 10 H-10 Z M-10 4 H2"/>'
+};
+function renderPatches(){
+  const count = f => treks.filter(f).reduce((a,t) => a+times(t), 0);
+  const has = tag => t => (t.tags||[]).some(x => x.toLowerCase() === tag);
+  const states = new Set(treks.map(t => t.s)).size, trips = count(() => true), mh = count(t => t.s === 'Maharashtra');
+  const repeat = treks.filter(t => times(t) > 1);
+  const B = [
+    {t:'4,000 m Club', arc:'ABOVE FOUR THOUSAND METRES', ico:'peak', n:count(t => +t.alt >= 4000), min:1, c:'#5b8db8', sub:n => `${n} high crossings`},
+    {t:'Above the Snowline', arc:'ABOVE 3,500 METRES · HIMALAYA', ico:'snow', n:count(t => +t.alt >= 3500), min:3, c:'#7fa6c9', sub:n => `${n} treks above 3,500 m`},
+    {t:'Sahyadri Regular', arc:'WESTERN GHATS · MAHARASHTRA', ico:'fort', n:mh, min:10, c:'#2f8f83', sub:n => `${n} Sahyadri treks`},
+    {t:'Waterfall Chaser', arc:'MONSOON · FALLS · PLUNGE POOLS', ico:'drop', n:count(has('waterfall')), min:5, c:'#4f86a6', sub:n => `${n} waterfalls`},
+    {t:'Seven States', arc:'INDIA ON FOOT · STATE LINES', ico:'map', n:states, min:7, c:'#d48a2a', sub:n => `${n} states walked`},
+    {t:'High Lakes', arc:'ALPINE LAKES · TAL · SAR · KANDA', ico:'lake', n:count(t => has('lake')(t) && +t.alt > 2000), min:3, c:'#5f9a9a', sub:n => `${n} mountain lakes`},
+    {t:'Pilgrim Paths', arc:'TEMPLE STEPS · HILL SHRINES', ico:'temple', n:count(has('pilgrimage')), min:3, c:'#c4566e', sub:n => `${n} shrines reached`},
+    {t:'On the Rope', arc:'RAPPEL · ON BELAY · DESCEND', ico:'rope', n:count(has('rappelling')), min:1, c:'#c0703a', sub:() => 'Rappelled a waterfall'},
+    {t:'Living Roots', arc:'KHASI HILLS · LIVING BRIDGES', ico:'roots', n:count(has('bridge')), min:1, c:'#8ba63a', sub:() => 'Crossed a root bridge'},
+    {t:'Back for More', arc:'SAME MOUNTAIN · ONE MORE TIME', ico:'again', n:repeat.length, min:1, c:'#7d68ad', sub:() => repeat.map(t => shortName(t.n)).slice(0,2).join(', ')},
+    {t:'Five Days Out', arc:'TENT · STOVE · FIVE DAYS OR MORE', ico:'tent', n:count(t => +t.days >= 5), min:2, c:'#5d7f4e', sub:n => `${n} long expeditions`},
+    {t:'5,000 m Club', arc:'ABOVE FIVE THOUSAND METRES', ico:'peak', n:count(t => +t.alt >= 5000), min:1, c:'#5b8db8', sub:() => 'Next big one'}
+  ];
+  $('#patches').innerHTML = B.map((b,i) => {
+    const ok = b.n >= b.min, id = 'pa'+i, rot = ((i*37)%13) - 6;
+    return `<figure class="patch${ok?'':' locked'}" style="--c:${b.c};--r:${rot}deg">
+      <svg viewBox="0 0 140 140" aria-hidden="true">
+        <defs><path id="${id}" d="M70,70 m-49,0 a49,49 0 1,1 98,0 a49,49 0 1,1 -98,0"/></defs>
+        <circle cx="70" cy="70" r="64" class="bg"/><circle cx="70" cy="70" r="58" class="stitch"/>
+        <text class="arc"><textPath href="#${id}" textLength="300" lengthAdjust="spacing">${b.arc} ·</textPath></text>
+        <g transform="translate(70 70)">${ICONS[b.ico]}</g>
+      </svg>
+      <figcaption>${b.t}<span>${ok ? esc(b.sub(b.n)) : 'Still out there'}</span></figcaption>
+    </figure>`;
+  }).join('');
+}
+
+/* =========================================================
+   Stats, logbook
+   ========================================================= */
+function renderStats(){
+  const trips = treks.reduce((a,t) => a+times(t), 0), states = new Set(treks.map(t => t.s));
+  const top = treks.slice().sort((a,b) => b.alt - a.alt)[0];
+  const sum = treks.reduce((a,t) => a + (+t.alt||0)*times(t), 0);
+  const falls = treks.filter(t => (t.tags||[]).some(x => x.toLowerCase() === 'waterfall')).reduce((a,t) => a+times(t), 0);
+  $('#kicker').textContent = `field journal · ${trips} treks · ${states.size} states`;
+  $('#heroLine').textContent = `From monsoon waterfalls in the Sahyadri to snow passes in Himachal, every trail you've walked, painted in one place.`;
+  $('#stats').innerHTML = `
+    <div class="stat"><b>${trips}</b><span>treks walked${trips !== treks.length ? `, ${treks.length} different trails` : ''}</span></div>
+    <div class="stat"><b>${states.size}</b><span>states, Kashmir to Meghalaya</span></div>
+    <div class="stat"><b>${top ? fmt(top.alt) : 0}<small>m</small></b><span>highest point, ${top ? esc(shortName(top.n)) : 'none yet'}</span></div>
+    <div class="stat"><b>${falls}</b><span>waterfalls chased</span></div>`;
+  $('#stateList').innerHTML = [...states].map(s => `<option value="${esc(s)}">`).join('');
+}
+function renderLog(){
+  const states = ['All', ...new Set(treks.map(t => t.s))];
+  if (!states.includes(filterState)) filterState = 'All';
+  $('#chips').innerHTML = states.map(s => `<button class="chip" type="button" data-s="${esc(s)}" aria-pressed="${s===filterState}" style="--c:${s==='All'?'var(--ink)':colorOf(s)}"><i></i>${s==='All'?'All states':esc(s)}</button>`).join('');
+  const sort = $('#sort').value;
+  const list = treks.filter(t => filterState === 'All' || t.s === filterState)
+    .sort(sort === 'alt' ? (a,b) => b.alt - a.alt : sort === 'az' ? (a,b) => a.n.localeCompare(b.n) : westEast);
+  $('#logTitle').textContent = `${treks.length} trails, ${treks.reduce((a,t) => a+times(t), 0)} treks`;
+  $('#cards').innerHTML = list.length ? list.map(t => {
+    const when = t.when ? new Date(t.when+'-01T00:00:00').toLocaleDateString('en-IN',{month:'short',year:'numeric'}) : '';
+    return `<article class="card${t.id===selectedId?' on':''}" data-id="${t.id}" style="--c:${colorOf(t.s)}" tabindex="0">
+      <div class="thumb"><canvas data-paint="${t.id}" aria-hidden="true"></canvas></div>
+      <div class="cbody">
+        <div class="ctop"><span class="st-name"><i></i>${esc(t.s)}</span><span class="diff d-${esc(t.d)}">${esc(t.d)}</span></div>
+        <h3>${esc(t.n)}${times(t)>1?`<span class="x">×${times(t)}</span>`:''}</h3>
+        <div class="altrow"><span>High point</span><b>${fmt(+t.alt)} m</b></div>
+        ${t.note ? `<p class="note">${esc(t.note)}</p>` : ''}
+        <div class="meta">${when?`<span class="tag when">${when}</span>`:''}${t.days?`<span class="tag">${+t.days} days</span>`:''}${(t.tags||[]).map(x => `<span class="tag">${esc(x)}</span>`).join('')}<button class="tbtn" type="button" data-edit="${t.id}">Edit</button></div>
+      </div>
+    </article>`;
+  }).join('') : `<p class="empty">No treks in this state yet.</p>`;
+  const queue = [...document.querySelectorAll('canvas[data-paint]')], job = ++renderLog.job;
+  const next = () => {
+    if (job !== renderLog.job) return;
+    const cv = queue.shift(); if (!cv) return;
+    const t = treks.find(x => x.id === cv.dataset.paint);
+    if (t){ const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio||1, 2); cv.width = Math.max(240, Math.round((r.width||280)*dpr)); cv.height = Math.round(cv.width*9/16); paintScene(cv, t); }
+    setTimeout(next, 16);
+  };
+  setTimeout(next, 60);
+}
+renderLog.job = 0;
+$('#chips').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; filterState = b.dataset.s; renderLog(); });
+$('#sort').addEventListener('change', renderLog);
+$('#cards').addEventListener('click', e => {
+  const ed = e.target.closest('[data-edit]'); if (ed){ e.stopPropagation(); openForm(ed.dataset.edit); return; }
+  const c = e.target.closest('.card'); if (!c) return;
+  const t = treks.find(x => x.id === c.dataset.id);
+  if (t && hasPos(t) && zoomState !== t.s && t.s === 'Maharashtra') zoomTo(t.s);
+  selectTrek(c.dataset.id); $('#atlas').scrollIntoView({behavior: reduced?'auto':'smooth'});
+});
+$('#cards').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('card')){ e.preventDefault(); e.target.click(); } });
+
+/* =========================================================
+   Add / edit form, backup
+   ========================================================= */
+let editing = null;
+const F = id => $('#f-'+id);
+function openForm(id){
+  editing = id ? treks.find(t => t.id === id) : null;
+  const t = editing || {n:'', s:'', alt:'', d:'Moderate', times:1, tags:[]};
+  $('#formTitle').textContent = editing ? 'Edit trek' : 'Add a trek';
+  F('name').value = t.n; F('state').value = t.s; F('alt').value = t.alt; F('diff').value = t.d || 'Moderate';
+  F('when').value = t.when || ''; F('days').value = t.days || ''; F('times').value = times(t);
+  F('lat').value = t.lat ?? ''; F('lon').value = t.lon ?? ''; F('tags').value = (t.tags||[]).join(', '); F('note').value = t.note || '';
+  $('#delBtn').hidden = !editing; $('#delBtn').textContent = 'Delete'; $('#formErr').hidden = true;
+  $('#overlay').hidden = false; F('name').focus();
+}
+function closeForm(){ $('#overlay').hidden = true; editing = null; }
+$('#addBtn').addEventListener('click', () => openForm(null));
+$('#cancelBtn').addEventListener('click', closeForm);
+$('#overlay').addEventListener('click', e => { if (e.target.id === 'overlay') closeForm(); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#overlay').hidden) closeForm(); });
+$('#delBtn').addEventListener('click', e => {
+  const b = e.currentTarget;
+  if (b.textContent === 'Delete'){ b.textContent = 'Tap again to delete'; return; }
+  const gone = editing.id; treks = treks.filter(t => t !== editing); save(); closeForm();
+  if (selectedId === gone) selectedId = null; renderAll(); toast('Trek deleted');
+});
+$('#form').addEventListener('submit', e => {
+  e.preventDefault();
+  const name = F('name').value.trim(), st = F('state').value.trim(), alt = parseFloat(F('alt').value);
+  if (!name || !st || !(alt > 0)){ const er = $('#formErr'); er.textContent = 'Add a name, a state and a high point in metres to save.'; er.hidden = false; return; }
+  const lat = F('lat').value === '' ? null : parseFloat(F('lat').value), lon = F('lon').value === '' ? null : parseFloat(F('lon').value);
+  const data = {n:name, s:st, alt:Math.round(alt), d:F('diff').value, when:F('when').value || '', days: F('days').value ? +F('days').value : undefined,
+    times: Math.max(1, +F('times').value || 1), lat, lon, tags: F('tags').value.split(',').map(x => x.trim()).filter(Boolean).map(x => x[0].toUpperCase()+x.slice(1)), note: F('note').value.trim()};
+  let id;
+  if (editing){ Object.assign(editing, data); id = editing.id; } else { id = 'u'+Date.now().toString(36); treks.push({id, ...data}); }
+  const wasNew = !editing; save(); closeForm(); selectedId = id; renderAll(); toast(wasNew ? 'Trek added to the atlas' : 'Trek saved');
+});
+$('#copyBtn').addEventListener('click', () => {
+  const txt = JSON.stringify(treks);
+  const fallback = () => { $('#restoreBox').hidden = false; const ta = $('#restoreText'); ta.value = txt; ta.select(); toast('Selected. Copy it from the box'); };
+  try { navigator.clipboard.writeText(txt).then(() => toast('Backup copied'), fallback); } catch(e){ fallback(); }
+});
+$('#restoreBtn').addEventListener('click', () => { $('#restoreBox').hidden = false; $('#restoreText').value = ''; $('#restoreErr').hidden = true; $('#restoreText').focus(); });
+$('#restoreCancel').addEventListener('click', () => $('#restoreBox').hidden = true);
+$('#restoreLoad').addEventListener('click', () => {
+  try { const d = JSON.parse($('#restoreText').value); if (!Array.isArray(d) || !d.every(t => t && t.n && t.s)) throw 0;
+    treks = d; save(); $('#restoreBox').hidden = true; selectedId = null; renderAll(); toast('Backup loaded');
+  } catch(e){ const er = $('#restoreErr'); er.textContent = "That text isn't a trek backup. Paste the full text from Copy backup."; er.hidden = false; }
+});
+$('#resetBtn').addEventListener('click', e => {
+  const b = e.currentTarget;
+  if (b.dataset.armed){ treks = JSON.parse(JSON.stringify(BASE)); save(); selectedId = null; renderAll(); toast('Original list restored'); delete b.dataset.armed; b.textContent = 'Reset to original list'; return; }
+  b.dataset.armed = '1'; b.textContent = 'Tap again to reset'; setTimeout(() => { delete b.dataset.armed; b.textContent = 'Reset to original list'; }, 3500);
+});
+
+function renderAll(){
+  renderStats(); buildHero(); drawHero(performance.now()); renderMap(); renderCairn(); renderPatches(); renderLog();
+  if (!selectedId || !treks.find(t => t.id === selectedId)) selectedId = (treks.slice().sort((a,b) => b.alt - a.alt)[0] || {}).id;
+  if (selectedId) selectTrek(selectedId);
+  labelPins();
+}
+buildMapBase();
+renderAll(); startHero();
+let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { buildHero(); drawHero(performance.now()); if (selectedId) selectTrek(selectedId); }, 180); });
+if (document.fonts) document.fonts.ready.then(() => { hero.lab = null; buildHero(); drawHero(performance.now()); });
+setInterval(() => { if (periodNow() !== hero.period){ buildHero(); drawHero(performance.now()); } }, 60000);
+})();
+</script>
+
+</body>
+</html>
