@@ -33,7 +33,17 @@ My treks across India, kept as a hand-painted field journal instead of a spreads
 | Gujarat | Girnar, Pavagadh |
 | Maharashtra | Kalsubai (twice), Lohgad, Visapur, Duke's Nose, Naneghat, Andharban, Adrai Jungle Trek, Devkund Waterfall, Hidden Summer Waterfall (Khopoli), Hidden Monsoon Waterfall (Murbad), Blue Lagoon Waterfall (Murbad), Karjat Secret Waterfall Rappel |
 
-Altitudes and map positions in the atlas are approximate.
+### By difficulty
+
+| Grade | Treks |
+| --- | --- |
+| Difficult | Girnar |
+| Moderate–Difficult | Kashmir Great Lakes, Double Decker Root Bridge |
+| Moderate | Hampta Pass, Chandrashila + Tungnath, Sandakphu–Phalut, Chhoie Waterfall, Kalsubai, Devkund Waterfall, Karjat Secret Waterfall Rappel |
+| Easy–Moderate | Yulla Kanda, Brahmatal, Jalori Pass 360°, Vaishno Devi, Wei Sawdong, Visapur, Duke's Nose, Naneghat, Andharban |
+| Easy | Bijli Mahadev, Deoria Tal, Lohgad, Pavagadh, Adrai Jungle Trek, and the three hidden waterfalls near Khopoli and Murbad |
+
+Grades follow the five-step scale Indian trek operators use, checked against operator and guide pages. Altitudes and map positions are approximate.
 
 ## How it works
 
